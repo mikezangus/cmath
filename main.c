@@ -1,40 +1,46 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#define MAXLEN 1000
+#define MAXLEN 100
 char input[MAXLEN];
+
+typedef struct equation{
+    int count;
+    int n1;
+    int n2;
+    char sym;
+} Equation;
+
+Equation equation;
+int get_input(void);
+Equation process(void);
+void solve(int, int, char);
+
 
 int get_input(void)
 {
     printf("\nEnter your input:\n> ");
     if (fgets(input, sizeof(input), stdin) != NULL) {
-        printf("\nYour input via get_input():\n%s", input);
+        printf("\nYour input: %s\n", input);
     } else {
         printf("Error getting input");
     }
     return 0;
 }
 
-typedef struct {
-    int n1;
-    int n2;
-    char sym;
-} Equation;
-
-Equation parse_input(void)
+Equation process(void)
 {
-    int num_count = 0;
-    Equation equation;
+    equation.count = 0;
     for (int i = 0; input[i] != '\0'; i++) {
+        if (equation.count > 1)
+            solve(equation.n1, equation.n2, equation.sym);
         if (isdigit(input[i])) {
             int num = input[i] - '0';
-            if (num_count == 0)
+            if (equation.count == 0)
                 equation.n1 = num;
-            else if (num_count == 1)
+            else if (equation.count == 1)
                 equation.n2 = num;
-            else
-                printf("More than 2 numbers: %d", num);
-            num_count++;
+            equation.count++;
         } else if (input[i] == '+' | input[i] == '-') {
             equation.sym = input[i];
         } else {
@@ -45,22 +51,23 @@ Equation parse_input(void)
     return equation;
 }
 
-int marshall(int n1, int n2, char sym)
+void solve(int n1, int n2, char sym)
 {
+    int answer;
     if (sym == '+')
-        return n1 + n2;
+        answer = n1 + n2;
     else if (sym == '-')
-        return n1 - n2;
-    else
-        return 0;
+        answer = n1 - n2;
+    printf("Answer: %d\n", answer);
+    equation.n1 = answer;
+    equation.n2 = 0;
+    equation.count = 1;
+    
 }
 
 int main(void)
 {
     get_input();
-    printf("\nYour input via main():\n%s", input);
-    Equation equation = parse_input();
-    int answer = marshall(equation.n1, equation.n2, equation.sym);
-    printf("Answer: %d", answer);
+    process();
     return 0;
 }
