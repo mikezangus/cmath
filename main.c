@@ -1,73 +1,92 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <math.h>
 
 #define MAXLEN 100
 char input[MAXLEN];
 
-typedef struct equation{
-    int count;
-    int n1;
-    int n2;
-    char sym;
-} Equation;
-
-Equation equation;
-int get_input(void);
-Equation process(void);
-void solve(int, int, char);
-
-
-int get_input(void)
+void get_input(void)
 {
     printf("\nEnter your input:\n> ");
     if (fgets(input, sizeof(input), stdin) != NULL) {
         printf("\nYour input: %s\n", input);
     } else {
-        printf("Error getting input");
+        printf("Error getting input\n");
     }
-    return 0;
 }
 
-Equation process(void)
+struct {
+    char n1[MAXLEN];
+    char n2[MAXLEN];
+    int n1_count;
+    int n2_count;
+    char sign;
+    double dn1;
+    double dn2;
+    double result;
+} equation;
+
+void separate(void)
 {
-    equation.count = 0;
+    equation.n1_count = 0;
+    equation.n2_count = 0;
+    equation.sign = '0';
     for (int i = 0; input[i] != '\0'; i++) {
-        if (equation.count > 1)
-            solve(equation.n1, equation.n2, equation.sym);
         if (isdigit(input[i])) {
-            int num = input[i] - '0';
-            if (equation.count == 0)
-                equation.n1 = num;
-            else if (equation.count == 1)
-                equation.n2 = num;
-            equation.count++;
-        } else if (input[i] == '+' | input[i] == '-') {
-            equation.sym = input[i];
-        } else {
-            printf("Invalid: %c", input[i]);
+            if (equation.sign == '0') {
+                equation.n1[equation.n1_count] = input[i];
+                equation.n1_count++;
+            } else {
+                equation.n2[equation.n2_count] = input[i];
+                equation.n2_count++;
+            }
+        } else if (input[i] == '+' || input[i] == '-') {
+            equation.sign = input[i];
         }
-        printf("[%d]: %c\n", i, input[i]);
     }
-    return equation;
+    printf("\nn1: ");
+    for (int i = 0; equation.n1[i] != '\0'; i++)
+        printf("%c", equation.n1[i]);
+    printf("\nn2: ");
+    for (int i = 0; equation.n2[i] != '\0'; i++)
+        printf("%c", equation.n2[i]);
+    printf("\nsign: %c\n", equation.sign);
 }
 
-void solve(int n1, int n2, char sym)
+void convert(void)
 {
-    int answer;
-    if (sym == '+')
-        answer = n1 + n2;
-    else if (sym == '-')
-        answer = n1 - n2;
-    printf("Answer: %d\n", answer);
-    equation.n1 = answer;
-    equation.n2 = 0;
-    equation.count = 1;
-    
+    int len1, len2;
+    for (len1 = 0; isdigit(equation.n1[len1]); len1++)
+        ;;
+    for (len2 = 0; isdigit(equation.n2[len2]); len2++)
+        ;;
+    for (int i = 0; isdigit(equation.n1[i]); i++) {
+        equation.dn1 += (equation.n1[i] - '0') * (1 * pow(10, len1 - 1 - i));
+    }
+    for (int i = 0; isdigit(equation.n2[i]); i++) {
+        equation.dn2 += (equation.n2[i] - '0') * (1 * pow(10, len2 - 1 - i));
+    }
+    printf("N1: %f\n", equation.dn1);
+    printf("N2: %f\n", equation.dn2);
 }
+
+void calculate(void)
+{
+    equation.result = 0;
+    if (equation.sign == '+') {
+        equation.result = equation.dn1 + equation.dn2;
+    } else if (equation.sign == '-') {
+        equation.result = equation.dn1 - equation.dn2;
+    }
+}
+
 
 int main(void)
 {
     get_input();
-    process();
+    separate();
+    convert();
+    calculate();
+    printf("Result: %f\n", equation.result);
     return 0;
 }
