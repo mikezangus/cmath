@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "header.h"
 
-void calculate(void)
+int calculate(void)
 {
-    eq.result = 0;
+    eq.result = 0.0;
     switch (eq.sign) {
     case '+':
         eq.result = eq.n1d + eq.n2d;
@@ -15,8 +15,17 @@ void calculate(void)
         eq.result = eq.n1d * eq.n2d;
         break;
     case '/':
-        eq.result = eq.n1d / eq.n2d;
-        break;
+        if (eq.n2d == 0) {
+            printf("Error: Unable to divide by 0\n");
+            return;
+        } else {
+            eq.result = eq.n1d / eq.n2d;
+            break;
+        }
+    default:
+        printf("Error: Unable to calculate.\nSign: %c\n", eq.sign);
+        return 0;
     }
     printf("Result: %f\n", eq.result);
+    return 0;
 }

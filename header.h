@@ -3,7 +3,7 @@
 void get_input(void);
 void parse(void);
 void convert(void);
-void calculate(void);
+int calculate(void);
 
 struct equation {
     char n1c[MAXLEN];
