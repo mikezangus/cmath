@@ -17,7 +17,7 @@ int calculate(void)
     case '/':
         if (eq.n2d == 0) {
             printf("Error: Unable to divide by 0\n");
-            return;
+            return 0;
         } else {
             eq.result = eq.n1d / eq.n2d;
             break;
