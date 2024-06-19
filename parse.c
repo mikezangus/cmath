@@ -15,7 +15,7 @@ void parse(void)
                 eq.n2c[eq.n2c_cnt] = input[i];
                 eq.n2c_cnt++;
             }
-        } else if (input[i] == '+' || input[i] == '-') {
+        } else if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/') {
             eq.sign = input[i];
         }
     }

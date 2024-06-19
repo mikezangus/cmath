@@ -4,9 +4,19 @@
 void calculate(void)
 {
     eq.result = 0;
-    if (eq.sign == '+')
+    switch (eq.sign) {
+    case '+':
         eq.result = eq.n1d + eq.n2d;
-    else if (eq.sign == '-')
+        break;
+    case '-':
         eq.result = eq.n1d - eq.n2d;
+        break;
+    case '*':
+        eq.result = eq.n1d * eq.n2d;
+        break;
+    case '/':
+        eq.result = eq.n1d / eq.n2d;
+        break;
+    }
     printf("Result: %f\n", eq.result);
 }
