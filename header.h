@@ -1,6 +1,7 @@
 #define MAXLEN 100
 
 void get_input(void);
+void create_terms(void);
 void parse(void);
 void convert(void);
 int calculate(void);
@@ -17,3 +18,4 @@ struct equation {
 };
 extern struct equation eq;
 extern char input[MAXLEN];
+char terms[MAXLEN][MAXLEN];
