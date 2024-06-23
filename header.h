@@ -1,3 +1,6 @@
+#ifndef HEADER_H
+#define HEADER_H
+
 #define MAXLEN 100
 
 void get_input(void);
@@ -17,3 +20,5 @@ struct equation {
     double result;
 };
 extern struct equation eq;
+
+#endif
