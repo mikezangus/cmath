@@ -10,6 +10,7 @@ int main(void)
     get_input();
     create_terms();
     for (int i = 0; terms[i][0] != '\0'; i++) {
+        printf("\n----------------------------------------\nTerm %d\n", i + 1);
         parse(i);
         convert(i);
         if (!calculate()) {

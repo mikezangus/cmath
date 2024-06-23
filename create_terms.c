@@ -1,6 +1,6 @@
-#include <stdlib.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "header.h"
 
@@ -33,7 +33,7 @@ void create_terms(void)
     for (int i = 0; input[i] != '\0'; i++) {
         if (isdigit(input[i])) {
             term[term_idx++] = input[i];
-        } else if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/' || input[i] == '^') {
+        } else if (is_oprtr(input[i])) {
             if (!multi_term) {
                 term[term_idx++] = input[i];
                 multi_term++;

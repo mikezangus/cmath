@@ -1,9 +1,12 @@
 #ifndef HEADER_H
 #define HEADER_H
 
+#include <stdbool.h>
+
 #define MAXLEN 100
 
 void get_input(void);
+bool is_oprtr(char);
 void create_terms(void);
 void parse(int);
 void convert(int);

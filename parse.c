@@ -1,12 +1,10 @@
-#include <stdio.h>
 #include <ctype.h>
+#include <stdio.h>
 #include <string.h>
 #include "header.h"
 
-
 void parse(int terms_idx)
 {
-    printf("\n----------------------------------------\nTERM %d\n", terms_idx + 1);
     printf("\n1. Parse\n");
     memset(eq.op1c, '\0', MAXLEN);
     memset(eq.op2c, '\0', MAXLEN);
@@ -15,7 +13,7 @@ void parse(int terms_idx)
     int oprtr_cnt = 0;
     char *term = terms[terms_idx];
     for (int i = 0; term[i] != '\0'; i++) {
-        if (term[i] == '+' || term[i] == '-' || term[i] == '*' || term[i] == '/' || term[i] == '^') {
+        if (is_oprtr(term[i])) {
             eq.oprtr = term[i];
             oprtr_cnt++;
         } else if (isdigit(term[i])) {
