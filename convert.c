@@ -17,6 +17,6 @@ void convert(int term_idx)
     for (int i = 0; eq.op2c[i] != '\0'; i++) {
         eq.op2d = eq.op2d * 10 + (eq.op2c[i] - '0');
     }
-    printf("Operand 1: %f\n", eq.op1d);
-    printf("Operand 2: %f\n", eq.op2d);
+    printf("   Operand 1: %f\n", eq.op1d);
+    printf("   Operand 2: %f\n", eq.op2d);
 }

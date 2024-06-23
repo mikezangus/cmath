@@ -9,8 +9,7 @@ int main(void)
 {
     get_input();
     create_terms();
-    static int i;
-    for (i = 0; terms[i][0] != '\0'; i++) {
+    for (int i = 0; terms[i][0] != '\0'; i++) {
         parse(i);
         convert(i);
         if (!calculate()) {

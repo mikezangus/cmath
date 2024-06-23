@@ -18,7 +18,7 @@ int calculate(void)
         break;
     case '/':
         if (eq.op2d == 0) {
-            printf("Error: Attempted divide by 0\n");
+            printf("   Error: Attempted divide by 0\n");
             return 0;
         } else {
             eq.result = eq.op1d / eq.op2d;
@@ -28,9 +28,9 @@ int calculate(void)
         eq.result = pow(eq.op1d, eq.op2d);
         break;
     default:
-        printf("Error: Unable to calculate.\nSign: %c\n", eq.oprtr);
+        printf("   Error: Unable to calculate.\nSign: %c\n", eq.oprtr);
         return 0;
     }
-    printf("Term result: %f\n----------------------------------------\n", eq.result);
+    printf("   Term result: %f\n----------------------------------------\n", eq.result);
     return 1;
 }
