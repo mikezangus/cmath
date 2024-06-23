@@ -20,7 +20,7 @@ void init_term(void)
 void copy_term_to_terms(void)
 {
     for (int i = 0; term[i] != '\0'; i++) {
-        printf("Copying char '%c' from array term[%d] to array terms[%d]\n", term[i], i, terms_idx);
+        printf("Copying '%c' term[%d] -> terms[%d]\n", term[i], i, terms_idx);
     }
     strcpy(terms[terms_idx], term);
     terms_idx++;
@@ -35,7 +35,7 @@ void create_terms(void)
         if (isdigit(input[i])) {
             term[term_idx] = input[i];
             term_idx++;
-        } else if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/') {
+        } else if (input[i] == '+' || input[i] == '-' || input[i] == '*' || input[i] == '/' || input[i] == '^') {
             if (!multi_term) {
                 term[term_idx] = input[i];
                 term_idx++;

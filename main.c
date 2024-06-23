@@ -9,11 +9,14 @@ int main(void)
 {
     get_input();
     create_terms();
-    for (int i = 0; terms[i][0] != '\0'; i++) {
-        printf("\n\n--------------------\nLOOP [%d]\n--------------------\n", i);
+    static int i;
+    for (i = 0; terms[i][0] != '\0'; i++) {
         parse(i);
         convert(i);
-        calculate();
+        if (!calculate()) {
+            return 0;
+        }
     }
+    printf("\n\nResult: %f\n", eq.result);
     return 0;
 }
