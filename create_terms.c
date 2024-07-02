@@ -30,16 +30,16 @@ void create_terms(void)
 {
     int multi_term = 0;
     init_new_term();
-    for (int i = 0; input[i] != '\0'; i++) {
-        if (isdigit(input[i])) {
-            term[term_idx++] = input[i];
-        } else if (is_oprtr(input[i])) {
+    for (int i = 0; input_raw[i] != '\0'; i++) {
+        if (isdigit(input_raw[i])) {
+            term[term_idx++] = input_raw[i];
+        } else if (is_oprtr(input_raw[i])) {
             if (!multi_term) {
-                term[term_idx++] = input[i];
+                term[term_idx++] = input_raw[i];
                 multi_term++;
             } else {
                 copy_term_to_terms();
-                term[term_idx++] = input[i];
+                term[term_idx++] = input_raw[i];
             }
         }
     }

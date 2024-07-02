@@ -12,7 +12,8 @@ void parse(int);
 void convert(int);
 int calculate(void);
 
-extern char input[MAXLEN];
+extern char input_raw[MAXLEN];
+extern char input_parens[MAXLEN];
 extern char terms[MAXLEN][MAXLEN];
 struct equation {
     char op1c[MAXLEN];

@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "header.h"
 
-char input[MAXLEN];
+char input_raw[MAXLEN];
+char input_parens[MAXLEN];
 char terms[MAXLEN][MAXLEN];
 struct equation eq;
 
