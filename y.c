@@ -1,83 +1,87 @@
+#include <stdio.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
+#define MAXLEN 100
 
-char input[100] = "1*2+3/5*4+4*4*4";
-int len;
-int prev_oprtr_pos = 0;
-int prev_prec_oprtr_pos = 0;
-int parens_open = 0;
+char input[MAXLEN] = "(((1*2) + 3) - 4)";
+char terms[MAXLEN][MAXLEN];
+char term[MAXLEN];
+int term_idx = 0;
+int terms_idx = 0;
+int l_parens[MAXLEN];
+int r_parens[MAXLEN];
+int l_parens_i = 0;
+int r_parens_i = 0;
 
 
-bool is_oprtr(char c)
+struct parentheses {
+    int left;
+    int right;
+} parens;
+
+void find_delta(void)
 {
-    return c == '+' || c == '-' || c == '*' || c == '/' || c == '^';
-}
-
-bool is_precedent_oprtr(char c)
-{
-    return c == '*' || c == '/' || c == '^';
-}
-
-int insert_space(void)
-{
-    int pos;
-    if (prev_oprtr_pos != prev_prec_oprtr_pos && !parens_open) {
-        pos = prev_oprtr_pos + 1;
-    } else {
-        pos = prev_oprtr_pos;
+    int min = 100;
+    int l_i;
+    int r_i;
+    for (int l_i = 0; l_i < l_parens_i; l_i++) {
+        printf("\n---------------\nLEFT INDEX = %d\n", l_i);
+        for (int r_i = 0; r_i < r_parens_i; r_i++) {
+            printf("\nRIGHT INDEX = %d\n", r_i);
+            printf("Left: %d | Right %d\n", l_parens[l_i], r_parens[r_i]);
+            int temp = abs(l_parens[l_i] - r_parens[r_i]);
+            printf("Temp: %d\n", temp);
+            if (temp < min) {
+                parens.left = l_parens[l_i];
+                parens.right = r_parens[r_i];
+                printf("Struct | Left: %d, Right: %d\n", parens.left, parens.right);
+                min = temp;
+            }
+        }
     }
-    for (int i = len; i >= pos; i--) {
-        input[i] = input[i - 1];
-    }
-    input[pos] = '\0';
-    len++;
-    return pos;
+    printf("\nFinish:\nMin: %d\n", min);
+    printf("Left: %d, Right: %d\n", parens.left, parens.right);
 }
 
-void insert_paren(int pos)
+void init_new_term(void)
 {
-    input[pos] = parens_open ? ')' : '(';
-    parens_open ^= 1;
-    printf("Inserted parenthesis: %s\n", input);
+    term_idx = 0;
+    memset(term, '\0', MAXLEN);
 }
 
-void handle_paren(void)
+void copy_term_to_terms(void)
 {
-    int pos = insert_space();
-    insert_paren(pos);
+    for (int i = 0; term[i] != '\0'; i++) {
+        printf("Copying '%c' term[%d] -> terms[%d]\n", term[i], i, terms_idx);
+    }
+    strcpy(terms[terms_idx++], term);
+    init_new_term();
 }
 
-void handle_oprtr(int *i)
+void find_parens(int i)
 {
-    if (parens_open) {
-        prev_oprtr_pos = *i;
-        handle_paren();
+    if (input[i] == '(') {
+        l_parens[l_parens_i++] = i;
+    } else if (input[i] == ')') {
+        r_parens[r_parens_i++] = i;
     }
-    if (is_precedent_oprtr(input[*i])) {
-        handle_paren();
-        (*i)++;
-        prev_prec_oprtr_pos = *i;
-    }
-    prev_oprtr_pos = *i;
 }
 
 int main(void)
 {
-    len = strlen(input);
-    printf("\nStarting equation: %s\n", input);
-    for (int i = 0; i <= len; i++) {
-        printf("\nLOOP [%d] %c\n------------------------------\n", i + 1, input[i]);
-        printf("Current equation: %s\n", input);
-        if (is_oprtr(input[i])) {
-            handle_oprtr(&i);
-        }
-        if (i == len && parens_open) {
-            insert_paren(i);
-            len++;
-        }
+    for (int i = 0; input[i] != '\0'; i++) {
+        find_parens(i);
     }
-    printf("\nEnding equation: %s\n", input);
+    
+    for (int i = 0; i < l_parens_i; i++) {
+        printf("L: %d\n", l_parens[i]);
+    }
+    for (int i = 0; i < r_parens_i; i++) {
+        printf("R: %d\n", r_parens[i]);
+    }
+    find_delta();
+    return 0;
 }
