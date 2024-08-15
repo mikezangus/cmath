@@ -1,38 +1,35 @@
-#include <ctype.h>
 #include <stdio.h>
+#include <ctype.h>
 #include <string.h>
 #include "header.h"
+#include <stdbool.h>
 
-void parse(int terms_idx)
+extern char input[];
+extern int l_bound;
+extern int r_bound;
+
+void parse()
 {
-    printf("\n1. Parse\n");
-    memset(eq.op1c, '\0', MAXLEN);
-    memset(eq.op2c, '\0', MAXLEN);
-    int op1c_cnt = 0;
-    int op2c_cnt = 0;
+    int i_op1s = 0;
+    int i_op2s = 0;
     int oprtr_cnt = 0;
-    char *term = terms[terms_idx];
-    for (int i = 0; term[i] != '\0'; i++) {
-        if (is_oprtr(term[i])) {
-            eq.oprtr = term[i];
+    memset(eq.op1s, '\0', MAXLEN);
+    memset(eq.op2s, '\0', MAXLEN);
+    eq.oprtr = '\0';
+    for (int i = l_bound; i <= r_bound; i++) {
+        if (is_oprtr(input[i]) && oprtr_cnt == 0) {
+            eq.oprtr = input[i];
             oprtr_cnt++;
-        } else if (isdigit(term[i])) {
-            if (!oprtr_cnt) {
-                eq.op1c[op1c_cnt++] = term[i];
-            } else {
-                eq.op2c[op2c_cnt++] = term[i];
-            }
+            continue;
+        } else if ((isdigit(input[i]) || input[i] == '.') && oprtr_cnt == 0) {
+            eq.op1s[i_op1s++] = input[i];
+            continue;
+        } else if ((isdigit(input[i]) || input[i] == '.') && oprtr_cnt == 1) {
+            eq.op2s[i_op2s++] = input[i];
+            continue;
+        } else {
+            break;
         }
-        if (terms_idx) {
-            strcpy(eq.op1c, "0");
-        }
     }
-    printf("   Operator: %c\n", eq.oprtr);
-    for (int i = 0; eq.op1c[i] != '\0'; i++) {
-        printf("   Operand 1 [%d]: %c\n", i, eq.op1c[i]);
-    }
-    for (int i = 0; eq.op2c[i] != '\0'; i++) {
-        printf("   Operand 2 [%d]: %c\n", i, eq.op2c[i]);
-    }
-    printf("   Previous result: %f\n", eq.result);
+    printf("Parsed:\n%s %c %s\n", eq.op1s, eq.oprtr, eq.op2s);
 }

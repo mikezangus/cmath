@@ -1,36 +1,28 @@
 #include <math.h>
-#include <stdio.h>
 #include "header.h"
+#include <stdio.h>
 
-int calculate(void)
+void calculate(void)
 {
-    printf("\n3. Calculate\n");
-    eq.result = 0.0;
     switch (eq.oprtr) {
     case '+':
-        eq.result = eq.op1d + eq.op2d;
+        eq.resultd = eq.op1d + eq.op2d;
         break;
     case '-':
-        eq.result = eq.op1d - eq.op2d;
+        eq.resultd = eq.op1d - eq.op2d;
         break;
     case '*':
-        eq.result = eq.op1d * eq.op2d;
+        eq.resultd = eq.op1d * eq.op2d;
         break;
     case '/':
-        if (eq.op2d == 0) {
-            printf("   Error: Attempted divide by 0\n");
-            return 0;
-        } else {
-            eq.result = eq.op1d / eq.op2d;
+        if (eq.op2d == 0.0) {
             break;
         }
-    case '^':
-        eq.result = pow(eq.op1d, eq.op2d);
+        eq.resultd = eq.op1d / eq.op2d;
         break;
-    default:
-        printf("   Error: Unable to calculate.\nSign: %c\n", eq.oprtr);
-        return 0;
+    case '^':
+        eq.resultd = pow(eq.op1d, eq.op2d);
+        break;
     }
-    printf("   Term result: %f\n----------------------------------------\n", eq.result);
-    return 1;
+    printf("%f %c %f = %f\n", eq.op1d, eq.oprtr, eq.op2d, eq.resultd);
 }
