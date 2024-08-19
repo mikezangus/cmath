@@ -7,7 +7,7 @@
 extern char input[];
 extern int l_bound;
 extern int r_bound;
-extern bool parens;
+extern bool parens_exist;
 
 int l_paren;
 int r_paren;
@@ -56,7 +56,7 @@ static void scan_parens(void)
 static void count_oprtrs(void)
 {
     int start = -1;
-    if (parens) {
+    if (parens_exist) {
         start = l_paren + 2;
     } else {
         start = 1;
@@ -78,16 +78,16 @@ void find_bounds(void)
     int first_digit = find_first_digit();
     int last_digit = find_last_digit();
 
-    if (parens == true) {
+    if (parens_exist == true) {
         scan_parens();
     }
     count_oprtrs();
-    if (parens) {
+    if (parens_exist) {
         l_bound = l_paren + 1;
         if (oprtr_cnt < 2) {
             r_bound = r_paren - 1;
         } 
-    } else if (!parens) {
+    } else if (!parens_exist) {
         l_bound = first_digit;
         if (oprtr_cnt < 2) {
             r_bound = last_digit;

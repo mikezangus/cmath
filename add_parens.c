@@ -72,7 +72,6 @@ static void find_l_digit(int pos)
         }
         l_digit = i + 1;
     }
-
 }
 
 static void find_r_digit(int pos)

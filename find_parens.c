@@ -2,15 +2,15 @@
 #include <stdio.h>
 
 extern char input[];
-extern bool parens;
+extern bool parens_exist;
 
-void parens_exist(void)
+void find_parens(void)
 {
     for (int i = 0; input[i] != '\0'; i++) {
         if (input[i] == '(') {
-            parens = true;
+            parens_exist = true;
             return;
         }
     }
-    parens = false;
+    parens_exist = false;
 }
