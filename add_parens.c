@@ -22,10 +22,8 @@ static bool check_surroundings(int pos)
     if (!isdigit(input[pos - 1]) && !isdigit(input[pos + 1])) {
         return false;
     } else if (isdigit(input[pos - 1]) && !isdigit(input[pos + 1])) {
-        printf("R special\n");
         r_special = true;
     } else if (!isdigit(input[pos - 1]) && isdigit(input[pos + 1])) {
-        printf("L special\n");
         l_special = true;
     }
     return true;
@@ -79,7 +77,7 @@ static void find_l_digit(int pos)
 
 static void find_r_digit(int pos)
 {
-    if (r_special == true) {
+    if (r_special) {
         r_digit = handle_r_special(pos);
     } else {
         int i;
@@ -100,8 +98,11 @@ static bool check_parens(int l, int r)
 
 static void add_paren(int pos, char type)
 {
-    int len = strlen(input);
-    for (int i = len + 1; i >= pos; i--) {
+    if (type != '(' && type != ')') {
+        return;
+    }
+    int start = strlen(input) + 1;
+    for (int i = start; i >= pos; i--) {
         input[i] = input[i - 1];
     }
     input[pos] = type;
