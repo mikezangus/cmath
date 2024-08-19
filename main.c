@@ -5,22 +5,26 @@
 
 struct equation eq;
 
-char input[MAXLEN] = "((1+2)^(5+6+7))/8";
-// char input[100] = "1*2+3*4+4*5^6*7+8";
+// char input[MAXLEN] = "((1+2)^(5+6+7))/8";
+char input[MAXLEN] = "1*2+3*4+4*5^6*7+8";
 // char input[MAXLEN] = "(((1*2)+3)-4)";
+
+// char input[MAXLEN] = "1x=2";
 
 int l_bound;
 int r_bound;
 bool parens;
+
+int var;
 
 int main(void)
 {
     add_parens();
     while (verify_oprtr() && verify_parens()) {
     // for (int i = 0; i < 6; i++) {
-        l_bound = r_bound = -1;
+        l_bound = r_bound = var = -1;
         printf(
-            "\n---------------------------------------\nLoop starting input:\n%s\n---------------------------------------\n",
+            "\n\n---------------------------------------\nLoop starting input:\n%s\n---------------------------------------\n",
             input
         );
         parens_exist();
