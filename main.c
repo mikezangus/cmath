@@ -27,6 +27,7 @@ int main(void)
         add_mult();
     }
 
+
     while (verify_oprtr() && verify_parens()) {
     // for (int i = 0; i < 6; i++) {
         l_bound = r_bound = -1;
@@ -34,6 +35,9 @@ int main(void)
             "\n\n---------------------------------------\nLoop starting input:\n%s\n---------------------------------------\n",
             input
         );
+        if (handle_x1()) {
+            continue;
+        }
         find_parens();
         find_bounds();
         parse();

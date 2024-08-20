@@ -17,6 +17,7 @@ bool verify_oprtr(void);
 void find_parens(void);
 void find_var(void);
 void add_mult(void);
+bool handle_x1(void);
 
 
 struct equation {
