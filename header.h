@@ -14,7 +14,9 @@ void find_bounds(void);
 bool verify_parens(void);
 void replace_str(void);
 bool verify_oprtr(void);
-void parens_exist(void);
+void find_parens(void);
+void find_var(void);
+void add_mult(void);
 
 
 struct equation {

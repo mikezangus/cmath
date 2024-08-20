@@ -14,15 +14,22 @@ char input[MAXLEN] = "1x=2";
 int l_bound;
 int r_bound;
 bool parens_exist;
-
-int var;
+bool var_exists;
+int i_var;
 
 int main(void)
 {
+    var_exists = false;
+    i_var = -1;
     add_parens();
+    find_var();
+    if (i_var >= 0) {
+        add_mult();
+    }
+
     while (verify_oprtr() && verify_parens()) {
     // for (int i = 0; i < 6; i++) {
-        l_bound = r_bound = var = -1;
+        l_bound = r_bound = -1;
         printf(
             "\n\n---------------------------------------\nLoop starting input:\n%s\n---------------------------------------\n",
             input
