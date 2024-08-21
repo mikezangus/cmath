@@ -5,7 +5,7 @@ extern char input[];
 extern bool var_exists;
 extern int i_var;
 
-void find_var(void)
+void check_var_exists(void)
 {
     for (int i = 0; input[i] != '\0'; i++) {
         if (input[i] == 'x') {

@@ -4,7 +4,7 @@
 extern char input[];
 extern bool parens_exist;
 
-void find_parens(void)
+void check_parens_exist(void)
 {
     for (int i = 0; input[i] != '\0'; i++) {
         if (input[i] == '(') {

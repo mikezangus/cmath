@@ -14,8 +14,8 @@ void find_bounds(void);
 bool verify_parens(void);
 void replace_str(void);
 bool verify_oprtr(void);
-void find_parens(void);
-void find_var(void);
+void check_parens_exist(void);
+void check_var_exists(void);
 void add_mult(void);
 bool handle_x1(void);
 
