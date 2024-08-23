@@ -11,7 +11,7 @@ void convert_d_to_str(void);
 void find_bounds(void);
 void find_nearest_parens(char *);
 void parse(void);
-void replace_str(char *);
+void insert_result(char *);
 
 extern char input[];
 

@@ -30,7 +30,7 @@ int main(void)
         convert_str_to_d();
         calculate();
         convert_d_to_str();
-        replace_str(input);
+        insert_result(input);
     }
     printf("\nSolved equation: %s\n", input);
 }

@@ -12,7 +12,7 @@ static int check_if_between_parens(char *s)
     return 0;
 }
 
-void replace_str(char *s)
+void insert_result(char *s)
 {
     int start = bounds.l;
     int end = bounds.r;
