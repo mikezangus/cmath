@@ -3,7 +3,7 @@
 #include "main.h"
 #include "./utils/utils.h"
 
-void parse(void)
+void parse_equation(void)
 {
     memset(eq.op1s, '\0', MAXLEN);
     memset(eq.op2s, '\0', MAXLEN);

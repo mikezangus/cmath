@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "main.h"
 
-void calculate(void)
+void calculate_result(void)
 {
     switch (eq.oprtr) {
     case '+':

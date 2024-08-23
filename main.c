@@ -26,9 +26,9 @@ int main(void)
             find_nearest_parens(input);
         }
         find_bounds();
-        parse();
+        parse_equation();
         convert_str_to_d();
-        calculate();
+        calculate_result();
         convert_d_to_str();
         insert_result(input);
     }
