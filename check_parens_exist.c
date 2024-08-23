@@ -1,16 +1,13 @@
-#include <stdbool.h>
-#include <stdio.h>
-
-extern char input[];
-extern bool parens_exist;
-
-void check_parens_exist(void)
+int check_parens_exist(char *s)
 {
-    for (int i = 0; input[i] != '\0'; i++) {
-        if (input[i] == '(') {
-            parens_exist = true;
-            return;
+    int l = 0;
+    for (char *p = s; *p != '\0'; p++) {
+        if (*p == '(') {
+            l = 1;
+        }
+        if (*p == ')' && l) {
+            return 1;
         }
     }
-    parens_exist = false;
+    return 0;
 }

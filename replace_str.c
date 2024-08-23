@@ -1,61 +1,26 @@
-#include "header.h"
-#include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
+#include "main.h"
+#include "./utils/utils.h"
 
-extern char input[];
-extern int l_bound;
-extern int r_bound;
+#include <stdio.h>
 
-int start = -1;
-int end = -1;
-
-static void check_parens(void)
+static int check_if_between_parens(char *s)
 {
-    if (input[l_bound - 1] == '(' && input[r_bound + 1] == ')') {
-        start = l_bound - 1;
-        end = r_bound + 1;
-    } else {
-        start = l_bound;
-        end = r_bound;
+    if (s[bounds.l - 1] == '(' && s[bounds.r + 1] == ')') {
+        return 1;
     }
+    return 0;
 }
 
-static void collapse_space(void)
+void replace_str(char *s)
 {
-    int len = strlen(input);
-    for (int i = start; i <= end; i++) {
-        input[i] = '\0';
+    int start = bounds.l;
+    int end = bounds.r;
+    if (check_if_between_parens(s)) {
+        start--;
+        end++;
     }
-    for (int i = start; i < len; i++) {
-        input[i] = input[i + (end - start) + 1];
-    }
-}
-
-static void add_space(void)
-{
-    int input_len = strlen(input) - 1;
-    int result_len = strlen(eq.results);
-    for (int i = input_len + result_len; i >= start + result_len; i--) {
-        input[i] = input[i - result_len];
-    }
-    for (int i = start; i < start + result_len; i++) {
-        input[i] = '\0';
-    }
-}
-
-static void insert_str(void)
-{
-    int j = 0;
-    for (int i = start; i < start + strlen(eq.results); i++) {
-        input[i] = eq.results[j++];
-    }
-}
-
-void replace_str(void)
-{
-    check_parens();
-    collapse_space();
-    add_space();
-    insert_str();
+    collapse_str(s, start, end);
+    expand_str(s, eq.results, start);
+    insert_str(s, eq.results, start);
 }

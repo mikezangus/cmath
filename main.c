@@ -1,52 +1,36 @@
 #include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include "header.h"
+#include "main.h"
 
-struct equation eq;
 
-// char input[MAXLEN] = "((1+2)^(5+6+7))/8";
-// char input[MAXLEN] = "1*2+3*4+4*5^6*7+8";
-// char input[MAXLEN] = "(((1*2)+3)-4)";
+char input[100] = "1+2*3^4-5";
 
-char input[MAXLEN] = "1x=2";
+struct Equation eq;
+struct Parens parens;
+struct Bounds bounds;
+struct Switches sw;
 
-int l_bound;
-int r_bound;
-bool parens_exist;
-bool var_exists;
-int i_var;
+static void init(void)
+{
+    parens.l = parens.r = -1;
+    bounds.l = bounds.r = -1;
+    sw.parens_exist = 0;
+}
 
 int main(void)
 {
-    var_exists = false;
-    i_var = -1;
     add_parens();
-    find_var();
-    if (i_var >= 0) {
-        add_mult();
-    }
-
-
-    while (verify_oprtr() && verify_parens()) {
-    // for (int i = 0; i < 6; i++) {
-        l_bound = r_bound = -1;
-        printf(
-            "\n\n---------------------------------------\nLoop starting input:\n%s\n---------------------------------------\n",
-            input
-        );
-        if (handle_x1()) {
-            continue;
+    while (check_oprtr_exists(input)) {
+        printf("\nStarting equation: %s\n", input);
+        init();
+        if ((sw.parens_exist = check_parens_exist(input))) {
+            find_nearest_parens(input);
         }
-        find_parens();
         find_bounds();
         parse();
         convert_str_to_d();
         calculate();
         convert_d_to_str();
-        replace_str();
-
+        replace_str(input);
     }
-    printf("\nSolved input:\n%s\n", input);
-    return 0;
+    printf("\nSolved equation: %s\n", input);
 }

@@ -1,43 +1,43 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
 #include <ctype.h>
-#include "header.h"
+#include <stdio.h>
+#include <string.h>
+#include "main.h"
+#include "./utils/utils.h"
 
-extern char input[];
+int l_special;
+int r_special;
 
-int l_digit;
-int r_digit;
-bool l_special;
-bool r_special;
-
-static void init(void)
+static int is_between_digits(int i)
 {
-    l_digit = r_digit = 0;
-    l_special = r_special = false;
+    l_special = r_special = 0;
+    int l = input[i - 1];
+    int r = input[i + 1];
+    if (!isdigit(l) && !isdigit(r)) {
+        return 0;
+    }
+    if (isdigit(l)) {
+        r_special = !isdigit(r);
+    }
+    if (isdigit(r)) {
+        l_special = !isdigit(l);
+    }
+    return 1;
 }
 
-static bool check_surroundings(int pos)
+static void weigh(int i, int *scale)
 {
-    if (!isdigit(input[pos - 1]) && !isdigit(input[pos + 1])) {
-        return false;
-    } else if (isdigit(input[pos - 1]) && !isdigit(input[pos + 1])) {
-        r_special = true;
-    } else if (!isdigit(input[pos - 1]) && isdigit(input[pos + 1])) {
-        l_special = true;
+    if (input[i] == '(') {
+        (*scale)++;
+    } else if (input[i] == ')') {
+        (*scale)--;
     }
-    return true;
 }
 
 static int handle_l_special(int start)
 {
     int scale = 0;
-    for (int i = start - 1; input[i]  != '\0'; i--) {
-        if (input[i] == '(') {
-            scale++;
-        } else if (input[i] == ')') {
-            scale--;
-        }
+    for (int i = start - 1; input[i] != '\0'; i--) {
+        weigh(i, &scale);
         if (scale == 0) {
             return i;
         }
@@ -49,11 +49,7 @@ static int handle_r_special(int start)
 {
     int scale = 0;
     for (int i = start + 1; input[i] != '\0'; i++) {
-        if (input[i] == '(') {
-            scale++;
-        } else if (input[i] == ')') {
-            scale--;
-        }
+        weigh(i, &scale);
         if (scale == 0) {
             return i;
         }
@@ -61,98 +57,80 @@ static int handle_r_special(int start)
     return -1;
 }
 
-static void find_l_digit(int pos)
+static int find_l_digit(int i)
 {
     if (l_special) {
-        l_digit = handle_l_special(pos);
+        return handle_l_special(i);
     } else {
-        int i;
-        for (i = pos - 1; isdigit(input[i]); i--) {
+        int j;
+        for (j = i - 1; isdigit(input[j]); j--) {
             ;;
         }
-        l_digit = i + 1;
+        return j + 1;
     }
 }
 
-static void find_r_digit(int pos)
+static int find_r_digit(int i)
 {
     if (r_special) {
-        r_digit = handle_r_special(pos);
+        return handle_r_special(i);
     } else {
-        int i;
-        for (i = pos + 1; isdigit(input[i]); i++) {
+        int j;
+        for (j = i + 1; isdigit(input[j]); j++) {
             ;;
         }
-        r_digit = i - 1;
+        return j - 1;
     }
 }
 
-static bool check_parens(int l, int r)
+static void add_paren(int i, char p)
 {
-    if (input[l - 1 == '('] && input[r + 1] == ')') {
-        return false;
-    }
-    return true;
-}
-
-static void add_paren(int pos, char type)
-{
-    if (type != '(' && type != ')') {
+    if (p != '(' && p != ')') {
         return;
     }
-    int start = strlen(input) + 1;
-    for (int i = start; i >= pos; i--) {
-        input[i] = input[i - 1];
-    }
-    input[pos] = type;
+    expand_str(input, " ", i);
+    input[i] = p;
 }
 
-static bool sequence(int i)
+static int sequence(int *i)
 {
-    init();
-    if (!check_surroundings(i)) {
-        return false;
+    if (!is_between_digits(*i)) {
+        return 0;
     }
-    find_l_digit(i);
-    find_r_digit(i);
-    if (!check_parens(l_digit, r_digit)) {
-        return false;
-    }
-    add_paren(l_digit, '(');
-    add_paren(r_digit + 2, ')');
+    int i_l_digit = find_l_digit(*i);
+    int i_r_digit = find_r_digit(*i);
+    add_paren(i_l_digit, '(');
+    add_paren(i_r_digit + 2, ')');
     printf("New input: %s\n", input);
-    return true;
+    (*i)++;
+    return 1;
+}
+
+static void print_status(char p, int i)
+{
+    printf(
+        "\nPrecedent %c [%d/%lu] | %c\nStarting input: %s\n",
+        p, i + 1, strlen(input), input[i], input
+    );
 }
 
 void add_parens(void)
 {
     for (int i = 0; input[i] != '\0'; i++) {
-        printf(
-            "\n\nPrecedent 1 [%d/%lu] | %c\nStarting input: %s\n",
-            i + 1, strlen(input), input[i], input
-        );
+        print_status('1', i);
         if (is_prec1_oprtr(input[i])) {
-            if (sequence(i)) {
-                i++;
-            }
-            continue;
+            sequence(&i);
         } else {
             printf("No changes\n");
         }
     }
     for (int i = 0; input[i] != '\0'; i++) {
-        printf(
-            "\n\nPrecedent 2 [%d/%lu] | %c\nStarting input: %s\n",
-            i + 1, strlen(input), input[i], input
-        );
+        print_status('2', i);
         if (is_prec2_oprtr(input[i])) {
-            if (sequence(i)) {
-                i++;
-            }
-            continue;
+            sequence(&i);
         } else {
             printf("No changes\n");
         }
     }
-    printf("\n\n\nFinal input: %s\n", input);
+    printf("\nFinal input: %s\n", input);
 }

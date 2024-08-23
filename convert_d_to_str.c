@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "header.h"
+#include "main.h"
 
 void convert_d_to_str(void)
 {

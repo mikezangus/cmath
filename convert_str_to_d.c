@@ -1,19 +1,19 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include "header.h"
+#include "main.h"
 
-static double convert(char s[])
+static double convert(char *s)
 {
+    int fractional = 0;
+    int digit = 0;
     double result = 0.0;
     double divisor = 10.0;
-    bool fractional = false;
-    for (int i = 0; s[i] != '\0'; i++) {
-        if (s[i] == '.') {
-            fractional = true;
+
+    for (char *p = s; *p != '\0'; p++) {
+        if (*p == '.') {
+            fractional = 1;
             continue;
         }
-        int digit = s[i] - '0';
-        if (!fractional) {
+        digit = *p - '0';
+        if  (!fractional) {
             result = result * 10 + digit;
         } else {
             result += digit / divisor;

@@ -4,6 +4,8 @@
         "ctype.h": "c",
         "stdbool.h": "c",
         "header.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "default.h": "c",
+        "utils.h": "c"
     }
 }
