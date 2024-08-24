@@ -10,6 +10,7 @@
                 "-g",
 
                 "${workspaceFolder}/main.c",
+                "${workspaceFolder}/clean_input.c",
                 "${workspaceFolder}/set_workflow.c",
 
                 "${workspaceFolder}/workflows/arithmetic/solve_arithmetic.c",

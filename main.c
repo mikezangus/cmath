@@ -3,7 +3,7 @@
 #include "./general/general.h"
 #include "./workflows/arithmetic/arithmetic.h"
 
-char input[MAXLEN] = "1*2+3*4+4*5^6*7-8/9";
+char input[MAXLEN] = "1 * 2+3*4+4*5^6*7-8/9";
 
 struct Equation eq;
 struct Parens parens;
@@ -12,6 +12,7 @@ struct Switches sw;
 
 int main(void)
 {
+    clean_input();
     add_parens();
     set_workflow();
     if (sw.arithmetic) {

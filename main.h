@@ -1,5 +1,6 @@
 #define MAXLEN 100
 
+void clean_input(void);
 void set_workflow(void);
 
 extern char input[];
