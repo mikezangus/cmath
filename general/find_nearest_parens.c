@@ -1,11 +1,11 @@
 #include "../main.h"
 
-void find_nearest_parens(char *s)
+void find_nearest_parens(void)
 {
-    for (int i = 0; s[i] != '\0'; i++) {
-        if (s[i] == '(') {
+    for (int i = 0; input[i] != '\0'; i++) {
+        if (input[i] == '(') {
             parens.l = i;
-        } else if (s[i] == ')') {
+        } else if (input[i] == ')') {
             parens.r = i;
             return;
         }

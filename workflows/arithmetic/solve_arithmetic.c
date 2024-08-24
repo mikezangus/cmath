@@ -3,7 +3,7 @@
 
 void solve_arithmetic(void)
 {
-    while (check_oprtr_exists(input)) {
+    while (check_oprtr_exists()) {
         solve();
     }
 }

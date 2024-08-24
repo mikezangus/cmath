@@ -15,13 +15,13 @@ void solve(void)
 {
     printf("\nStarting equation: %s\n", input);
     init();
-    if ((sw.parens_exist = check_parens_exist(input))) {
-        find_nearest_parens(input);
+    if ((sw.parens_exist = check_parens_exist())) {
+        find_nearest_parens();
     }
     find_bounds();
     parse_equation();
     convert_str_to_d();
     calculate_result();
     convert_d_to_str();
-    insert_result(input);
+    insert_result();
 }

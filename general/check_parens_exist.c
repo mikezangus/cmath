@@ -1,7 +1,9 @@
-int check_parens_exist(char *s)
+#include "../main.h"
+
+int check_parens_exist(void)
 {
     int l = 0;
-    for (char *p = s; *p != '\0'; p++) {
+    for (char *p = input; *p != '\0'; p++) {
         if (*p == '(') {
             l = 1;
         }
