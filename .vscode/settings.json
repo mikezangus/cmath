@@ -6,6 +6,9 @@
         "header.h": "c",
         "string.h": "c",
         "default.h": "c",
-        "utils.h": "c"
+        "utils.h": "c",
+        "main.h": "c",
+        "arithmetic.h": "c",
+        "general.h": "c"
     }
 }

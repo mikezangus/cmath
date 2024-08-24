@@ -1,5 +1,4 @@
 #include <string.h>
-#include "utils.h"
 
 void expand_str(char *destination_str, char *insertion_str, int i_insertion)
 {
