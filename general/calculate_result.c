@@ -1,6 +1,6 @@
 #include <math.h>
 #include <stdio.h>
-#include "main.h"
+#include "../main.h"
 
 void calculate_result(void)
 {

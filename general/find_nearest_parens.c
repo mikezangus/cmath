@@ -1,4 +1,4 @@
-#include "main.h"
+#include "../main.h"
 
 void find_nearest_parens(char *s)
 {

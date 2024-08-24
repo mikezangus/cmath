@@ -1,8 +1,8 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include "main.h"
-#include "./utils/utils.h"
+#include "../main.h"
+#include "../utils/utils.h"
 
 int l_special;
 int r_special;

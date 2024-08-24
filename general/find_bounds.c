@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <string.h>
-#include "main.h"
-#include "./utils/utils.h"
+#include "../main.h"
+#include "../utils/utils.h"
 
 static int find_first_digit(void)
 {

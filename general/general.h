@@ -1,0 +1,11 @@
+void add_parens(void);
+void calculate_result(void);
+int check_oprtr_exists(char *);
+int check_parens_exist(char *);
+void convert_d_to_str(void);
+void convert_str_to_d(void);
+void find_bounds(void);
+void find_nearest_parens(char *);
+void insert_result(char *);
+void parse_equation(void);
+void solve(void);

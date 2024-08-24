@@ -1,5 +1,4 @@
-#include "./utils/utils.h"
-
+#include "../utils/utils.h"
 
 int check_oprtr_exists(char *s)
 {
