@@ -1,11 +1,13 @@
 #include <string.h>
+#include "algebraic.h"
+#include "../../main.h"
 
-void insert_eqzero(char *s)
+void insert_eqzero(void)
 {
     char t[] = "=0";
-    int i = strlen(s);
+    int i = strlen(input);
     for (int j = 0; t[j] != '\0'; j++) {
-        s[i++] = t[j];
+        input[i++] = t[j];
 
     }
 }

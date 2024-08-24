@@ -2,8 +2,9 @@
 #include "main.h"
 #include "./general/general.h"
 #include "./workflows/arithmetic/arithmetic.h"
+#include "./workflows/algebraic/algebraic.h"
 
-char input[MAXLEN] = "1 * 2+3*4+4*5^6*7-8/9";
+char input[MAXLEN] = "11+2x*3";
 
 struct Equation eq;
 struct Parens parens;
@@ -13,12 +14,12 @@ struct Switches sw;
 int main(void)
 {
     clean_input();
-    add_parens();
     set_workflow();
     if (sw.arithmetic) {
         solve_arithmetic();
     } else if (sw.alg_1var) {
-        ;;
+        process_algebraic();
     }
     printf("\nSolved equation: %s\n", input);
 }
+         

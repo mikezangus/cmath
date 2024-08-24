@@ -9,6 +9,7 @@
         "utils.h": "c",
         "main.h": "c",
         "arithmetic.h": "c",
-        "general.h": "c"
+        "general.h": "c",
+        "algebraic.h": "c"
     }
 }
