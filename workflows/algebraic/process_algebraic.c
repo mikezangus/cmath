@@ -6,7 +6,7 @@
 
 int i_eqsign;
 
-void process_algebraic(void)
+int process_algebraic(void)
 {
 
 
@@ -15,7 +15,7 @@ void process_algebraic(void)
 
 
     add_parens();
-    // while(check_oprtr_exists()) {
+    // while(check_oprtr_exists() && check_parens_balanced()) {
     for (int i = 0; i < 3; i++) {
         printf("\n\n-----------------------------\nNEW LOOP: %s\n------------------------------\n", input);
         i_eqsign = 0;
@@ -31,5 +31,6 @@ void process_algebraic(void)
         printf("Input: %s\n", input);
     }
     remove_x1();
+    return 1;
 
 }

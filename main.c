@@ -4,7 +4,7 @@
 #include "./workflows/arithmetic/arithmetic.h"
 #include "./workflows/algebraic/algebraic.h"
 
-char input[MAXLEN] = "11+2x*3";
+char input[MAXLEN] = "1+1/2+1*2)";
 
 struct Equation eq;
 struct Parens parens;
@@ -16,10 +16,18 @@ int main(void)
     clean_input();
     set_workflow();
     if (sw.arithmetic) {
-        solve_arithmetic();
+        if (process_arithmetic()) {
+            printf("\nSolved equation: %s\n", input);
+            return 0;
+        } else {
+            return -1;
+        }
     } else if (sw.alg_1var) {
-        process_algebraic();
+        if (process_arithmetic()) {
+            printf("\nSolved equation: %s\n", input);
+            return 0;
+        } else {
+            return -1;
+        }
     }
-    printf("\nSolved equation: %s\n", input);
 }
-         

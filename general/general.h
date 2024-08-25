@@ -1,6 +1,7 @@
 void add_parens(void);
 void calculate_result(void);
 int check_oprtr_exists(void);
+int check_parens_balanced(void);
 int check_parens_exist(void);
 void convert_d_to_str(void);
 void convert_str_to_d(void);

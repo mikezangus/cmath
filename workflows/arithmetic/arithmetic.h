@@ -1,2 +1,2 @@
-void solve_arithmetic(void);
+int process_arithmetic(void);
 void find_bounds_ari(void);

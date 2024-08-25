@@ -13,7 +13,7 @@
                 "${workspaceFolder}/clean_input.c",
                 "${workspaceFolder}/set_workflow.c",
 
-                "${workspaceFolder}/workflows/arithmetic/solve_arithmetic.c",
+                "${workspaceFolder}/workflows/arithmetic/process_arithmetic.c",
                 "${workspaceFolder}/workflows/arithmetic/find_bounds_ari.c",
 
                 "${workspaceFolder}/workflows/algebraic/find_eqsign.c",
@@ -33,6 +33,7 @@
                 "${workspaceFolder}/general/add_parens.c",
                 "${workspaceFolder}/general/calculate_result.c",
                 "${workspaceFolder}/general/check_oprtr_exists.c",
+                "${workspaceFolder}/general/check_parens_balanced.c",
                 "${workspaceFolder}/general/check_parens_exist.c",
                 "${workspaceFolder}/general/convert_d_to_str.c",
                 "${workspaceFolder}/general/convert_str_to_d.c",

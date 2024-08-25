@@ -1,10 +1,14 @@
 #include "../../main.h"
 #include "../../general/general.h"
 
-void solve_arithmetic(void)
+int process_arithmetic(void)
 {
     add_parens();
     while (check_oprtr_exists()) {
+        if (!check_parens_balanced()) {
+            return 0;
+        }
         solve();
     }
+    return 1;
 }
