@@ -36,14 +36,14 @@ static void insert_denom(int *i, int i_insertion)
     expand_str(input, "/1", i_insertion);
     insert_str(input, "/1", i_insertion);
     (*i) = (i_insertion + 2);
+    init();
 }
 
-void insert_denoms(void)
+static void process(void)
 {
     init();
     for (int i = 0; input[i] != '\0'; i++) {
         if (is_oprtr(input[i])) {
-            init();
             continue;
         }
         if (i_first_digit < 0) {
@@ -54,8 +54,17 @@ void insert_denoms(void)
         }
         if (input[i_first_digit - 1] != '/' && input[i_last_digit + 1] != '/') {
             insert_denom(&i, i_last_digit + 1);
-            init();
             continue;
+        }
+    }
+}
+
+void insert_denoms(void)
+{
+    for (char *p = input; *p != '\0'; p++) {
+        if (*p == '/') {
+            process();
+            break;
         }
     }
 }
