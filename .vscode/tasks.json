@@ -15,6 +15,7 @@
 
                 "${workspaceFolder}/workflows/arithmetic/process_arithmetic.c",
                 "${workspaceFolder}/workflows/arithmetic/find_bounds_ari.c",
+                "${workspaceFolder}/workflows/arithmetic/insert_denoms.c",
 
                 "${workspaceFolder}/workflows/algebraic/find_eqsign.c",
                 "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
