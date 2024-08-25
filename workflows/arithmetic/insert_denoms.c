@@ -44,6 +44,7 @@ static void process(void)
     init();
     for (int i = 0; input[i] != '\0'; i++) {
         if (is_oprtr(input[i])) {
+            init();
             continue;
         }
         if (i_first_digit < 0) {
