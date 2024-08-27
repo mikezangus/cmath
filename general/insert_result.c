@@ -4,19 +4,17 @@
 
 #include <stdio.h>
 
-static int check_if_between_parens(void)
+static int check_if_between_parens(int start, int end)
 {
-    if (input[bounds.l - 1] == '(' && input[bounds.r + 1] == ')') {
+    if (input[start - 1] == '(' && input[end + 1] == ')') {
         return 1;
     }
     return 0;
 }
 
-void insert_result(void)
+void insert_result(int start, int end)
 {
-    int start = bounds.l;
-    int end = bounds.r;
-    if (check_if_between_parens()) {
+    if (check_if_between_parens(start, end)) {
         start--;
         end++;
     }

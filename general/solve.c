@@ -13,13 +13,13 @@ static void init(void)
     sw.parens_exist = 0;
 }
 
-void sequence(void)
+void sequence(int l_bound, int r_bound)
 {
-    parse_equation();
+    parse_equation(l_bound, r_bound);
     convert_str_to_d();
     calculate_result();
     convert_d_to_str();
-    insert_result();
+    insert_result(l_bound, r_bound);
 }
 
 void solve(void)
@@ -31,12 +31,12 @@ void solve(void)
     }
     if (sw.arithmetic) {
         find_bounds_ari();
-        sequence();
+        sequence(bounds.l, bounds.r);
     } else if (sw.alg_1var) {
         find_bounds_alg('l');
-        sequence();
+        sequence(bounds.l, bounds.r);
         find_bounds_alg('r');
-        sequence();
+        sequence(bounds.l, bounds.r);
     }
     // find_bounds();
 

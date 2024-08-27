@@ -3,7 +3,7 @@
 #include "../main.h"
 #include "../utils/utils.h"
 
-void parse_equation(void)
+void parse_equation(int l_bound, int r_bound)
 {
     memset(eq.op1s, '\0', MAXLEN);
     memset(eq.op2s, '\0', MAXLEN);
@@ -13,7 +13,7 @@ void parse_equation(void)
     int i_op2 = 0;
     int cnt = 0;
 
-    for (char *p = &input[bounds.l]; p <= &input[bounds.r]; p++) {
+    for (char *p = &input[l_bound]; p <= &input[r_bound]; p++) {
         if (is_oprtr(*p) && !cnt) {
             eq.oprtr = *p;
             cnt++;

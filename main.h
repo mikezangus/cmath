@@ -30,6 +30,7 @@ extern struct Bounds bounds;
 
 struct Switches {
     int parens_exist;
+    int division;
     int arithmetic;
     int alg_1var;
 };

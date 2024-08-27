@@ -14,7 +14,7 @@ int process_algebraic(void)
     insert_mult();
 
 
-    add_parens();
+    add_parens_default();
     // while(check_oprtr_exists() && check_parens_balanced()) {
     for (int i = 0; i < 3; i++) {
         printf("\n\n-----------------------------\nNEW LOOP: %s\n------------------------------\n", input);

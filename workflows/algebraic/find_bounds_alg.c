@@ -47,31 +47,18 @@ static int find_second_oprtr(int start, int end)
     int cnt = 0;
     int i;
     if (parens_exist) {
-        printf("\n\nParens exist\n");
-        for (i = start + 2; input[i] != '\0' && i <= end; i++) {
-            printf("[%d] %c\n", i, input[i]);
-            if (is_oprtr(input[i])) {
-                cnt++;
-                if (cnt > 1) {
-                    return i - 1;
-                }
-            }
-        }
-    } else {
-        printf("\n\nNo parens\n");
-
-        for (i = start; input[i] != '\0' && i <= end; i++) {
-            printf("[%d] %c\n", i, input[i]);
-            if (is_oprtr(input[i])) {
-                printf("%d oprtr #%d\n", i, cnt + 1);
-                cnt++;
-                if (cnt > 1) {
-                    return i - 1;
-                }
+        start += 2;
+    }
+    for (i = start; input[i] != '\0' && i <= end; i++) {
+        printf("[%d] %c\n", i, input[i]);
+        if (is_oprtr(input[i])) {
+            printf("%d oprtr #%d\n", i, cnt + 1);
+            cnt++;
+            if (cnt > 1) {
+                return i - 1;
             }
         }
     }
-
     printf("No op2 found\n");
     return end + 1;
 }

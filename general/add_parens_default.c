@@ -16,9 +16,11 @@ static int is_between_digits(int i)
         return 0;
     }
     if (isdigit(l)) {
+        /* eg 1*(1+1) */
         r_special = !isdigit(r);
     }
     if (isdigit(r)) {
+        /* eg (1+1)*1 */
         l_special = !isdigit(l);
     }
     return 1;
@@ -114,7 +116,7 @@ static void print_status(char p, int i)
     );
 }
 
-void add_parens(void)
+void add_parens_default(void)
 {
     for (int i = 0; input[i] != '\0'; i++) {
         print_status('1', i);
@@ -123,6 +125,9 @@ void add_parens(void)
         } else {
             printf("No changes\n");
         }
+    }
+    if (sw.division) {
+        return;
     }
     for (int i = 0; input[i] != '\0'; i++) {
         print_status('2', i);

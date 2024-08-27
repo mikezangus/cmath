@@ -4,7 +4,7 @@
 #include "./workflows/arithmetic/arithmetic.h"
 #include "./workflows/algebraic/algebraic.h"
 
-char input[MAXLEN] = "1+1/2+1*2)";
+char input[MAXLEN] = "3/2+2^2-1";
 
 struct Equation eq;
 struct Parens parens;

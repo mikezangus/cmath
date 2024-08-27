@@ -14,8 +14,10 @@
                 "${workspaceFolder}/set_workflow.c",
 
                 "${workspaceFolder}/workflows/arithmetic/process_arithmetic.c",
+                "${workspaceFolder}/workflows/arithmetic/find_i_parens.c",
                 "${workspaceFolder}/workflows/arithmetic/find_bounds_ari.c",
                 "${workspaceFolder}/workflows/arithmetic/insert_denoms.c",
+                "${workspaceFolder}/workflows/arithmetic/parse_denoms.c",
 
                 "${workspaceFolder}/workflows/algebraic/find_eqsign.c",
                 "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
@@ -31,8 +33,10 @@
 
 
 
-                "${workspaceFolder}/general/add_parens.c",
+                "${workspaceFolder}/general/add_parens_div.c",
+                "${workspaceFolder}/general/add_parens_default.c",
                 "${workspaceFolder}/general/calculate_result.c",
+                "${workspaceFolder}/general/check_division_exists.c",
                 "${workspaceFolder}/general/check_oprtr_exists.c",
                 "${workspaceFolder}/general/check_parens_balanced.c",
                 "${workspaceFolder}/general/check_parens_exist.c",
