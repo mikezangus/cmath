@@ -4,7 +4,6 @@
 #include "../main.h"
 #include "../workflows/arithmetic/arithmetic.h"
 #include "../workflows/algebraic/algebraic.h"
-#include "../utils/utils.h"
 
 static void init(void)
 {
@@ -45,8 +44,6 @@ void solve(void)
     }
     if (sw.arithmetic) {
         find_bounds_ari();
-        print_str("", input);
-        printf("Bounds - L: %d | R: %d\n", bounds.l, bounds.r);
         sequence(bounds.l, bounds.r);
     }
     // else if (sw.alg_1var) {

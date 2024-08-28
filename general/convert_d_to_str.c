@@ -6,5 +6,4 @@ void convert_d_to_str(double d, char *s)
 {
     memset(s, '\0', MAXLEN);
     snprintf(s, sizeof(s), "%.17g", d);
-    printf("Converted %.2f to %s\n", d, s);
 }

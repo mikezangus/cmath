@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <stdio.h>
 #include <string.h>
 #include "../../main.h"
 #include "../../utils/utils.h"
@@ -61,4 +62,6 @@ void find_bounds_ari(void)
             bounds.r = find_last_digit();
         }
     }
+    print_str("", input);
+    printf("Bounds - L: %d | R: %d\n", bounds.l, bounds.r);
 }

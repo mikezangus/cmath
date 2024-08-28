@@ -23,5 +23,5 @@ void calculate_result(double op1, char oprtr, double op2, double *result)
         *result = pow(op1, op2);
         break;
     }
-    printf("%f %c %f = %f\n", op1, oprtr, op2, *result);
+    printf("\nCalculation:\n%.2f %c %.2f = %.2f\n", op1, oprtr, op2, *result);
 }
