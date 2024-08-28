@@ -6,13 +6,20 @@ void set_workflow(void);
 extern char input[];
 
 struct Equation {
-    char op1s[MAXLEN];
+    char op1ns[MAXLEN];
+    char op1ds[MAXLEN];
     char oprtr;
-    char op2s[MAXLEN];
+    char op2ns[MAXLEN];
+    char op2ds[MAXLEN];
+    double op1nd;
+    double op1dd;
+    double op2nd;
+    double op2dd;
+    double resultnd;
+    double resultdd;
+    char resultns[MAXLEN];
+    char resultds[MAXLEN];
     char results[MAXLEN];
-    double op1d;
-    double op2d;
-    double resultd;
 };
 extern struct Equation eq;
 

@@ -116,7 +116,7 @@ static void print_status(char p, int i)
     );
 }
 
-void add_parens_default(void)
+void add_parens(void)
 {
     for (int i = 0; input[i] != '\0'; i++) {
         print_status('1', i);
@@ -126,12 +126,9 @@ void add_parens_default(void)
             printf("No changes\n");
         }
     }
-    if (sw.division) {
-        return;
-    }
     for (int i = 0; input[i] != '\0'; i++) {
         print_status('2', i);
-        if (is_prec2_oprtr(input[i])) {
+        if (input[i] == '*') {
             sequence(&i);
         } else {
             printf("No changes\n");

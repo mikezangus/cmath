@@ -1,28 +1,27 @@
 #include <math.h>
 #include <stdio.h>
-#include "../main.h"
 
-void calculate_result(void)
+void calculate_result(double op1, char oprtr, double op2, double *result)
 {
-    switch (eq.oprtr) {
+    switch (oprtr) {
     case '+':
-        eq.resultd = eq.op1d + eq.op2d;
+        *result = op1 + op2;
         break;
     case '-':
-        eq.resultd = eq.op1d - eq.op2d;
+        *result = op1 - op2;
         break;
     case '*':
-        eq.resultd = eq.op1d * eq.op2d;
+        *result = op1 * op2;
         break;
     case '/':
-        if (eq.op2d == 0.0) {
+        if (op2 == 0.0) {
             break;
         }
-        eq.resultd = eq.op1d / eq.op2d;
+        *result = op1 / op2;
         break;
     case '^':
-        eq.resultd = pow(eq.op1d, eq.op2d);
+        *result = pow(op1, op2);
         break;
     }
-    printf("%f %c %f = %f\n", eq.op1d, eq.oprtr, eq.op2d, eq.resultd);
+    printf("%f %c %f = %f\n", op1, oprtr, op2, *result);
 }

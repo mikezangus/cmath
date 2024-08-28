@@ -2,8 +2,9 @@
 #include <string.h>
 #include "../main.h"
 
-void convert_d_to_str(void)
+void convert_d_to_str(double d, char *s)
 {
-    memset(eq.results, '\0', MAXLEN);
-    snprintf(eq.results, sizeof(eq.results), "%.17g", eq.resultd);
+    memset(s, '\0', MAXLEN);
+    snprintf(s, sizeof(s), "%.17g", d);
+    printf("Converted %.2f to %s\n", d, s);
 }

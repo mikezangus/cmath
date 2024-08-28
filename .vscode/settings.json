@@ -10,6 +10,8 @@
         "main.h": "c",
         "arithmetic.h": "c",
         "general.h": "c",
-        "algebraic.h": "c"
+        "algebraic.h": "c",
+        "__config": "c",
+        "algorithm": "c"
     }
 }

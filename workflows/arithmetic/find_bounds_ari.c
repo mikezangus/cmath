@@ -34,7 +34,7 @@ static int check_if_multiple_ops(void)
     }
     int cnt = 0;
     for (int i = start; input[i] != ')' && input[i] != '\0'; i++) {
-        if (is_oprtr(input[i])) {
+        if (is_oprtr(input[i]) && input[i] != '/') {
             cnt++;
             if (cnt == 2) {
                 return i;

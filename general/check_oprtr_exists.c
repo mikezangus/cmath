@@ -4,7 +4,7 @@
 int check_oprtr_exists(void)
 {
     for (char *p = input + 1; *p != '\0'; p++) {
-        if (is_oprtr(*p)) {
+        if (is_oprtr(*p) && *p != '/') {
             return 1;
         }
     }

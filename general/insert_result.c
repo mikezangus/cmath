@@ -12,13 +12,13 @@ static int check_if_between_parens(int start, int end)
     return 0;
 }
 
-void insert_result(int start, int end)
+void insert_result(char *destination, int l_bound, int r_bound, char *insertion)
 {
-    if (check_if_between_parens(start, end)) {
-        start--;
-        end++;
+    if (check_if_between_parens(l_bound, r_bound)) {
+        l_bound--;
+        r_bound++;
     }
-    collapse_str(input, start, end);
-    expand_str(input, eq.results, start);
-    insert_str(input, eq.results, start);
+    collapse_str(input, l_bound, r_bound);
+    expand_str(input, insertion, l_bound);
+    insert_str(input, insertion, l_bound);
 }
