@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "../main.h"
 
-double get_gcd(long long int a, long long int b)
+long long int get_gcd(long long int a, long long int b)
 {
     long long int temp;
     while (b != 0) {
