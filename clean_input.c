@@ -1,9 +1,7 @@
-#include "main.h"
-
-void clean_input(void)
+void clean_input(char *s)
 {
-    char *p1 = input;
-    char *p2 = input;
+    char *p1 = s;
+    char *p2 = s;
     while (*p1 != '\0') {
         if (*p1 != ' ') {
             *p2 = *p1;

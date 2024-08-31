@@ -1,33 +1,26 @@
-#define MAXLEN 100
+#define NUM_MAXLEN 26
+#define STR_MAXLEN 100
 
-void clean_input(void);
-void set_workflow(void);
-
-extern char input[];
+void clean_input(char *s);
+void set_workflow(char *s);
 
 struct Equation {
-    char op1ns[MAXLEN];
-    char op1ds[MAXLEN];
+    char op1ns[NUM_MAXLEN];
+    char op1ds[NUM_MAXLEN];
     char oprtr;
-    char op2ns[MAXLEN];
-    char op2ds[MAXLEN];
+    char op2ns[NUM_MAXLEN];
+    char op2ds[NUM_MAXLEN];
     double op1nd;
     double op1dd;
     double op2nd;
     double op2dd;
     double resultnd;
     double resultdd;
-    char resultns[MAXLEN];
-    char resultds[MAXLEN];
-    char results[MAXLEN];
+    char resultns[NUM_MAXLEN];
+    char resultds[NUM_MAXLEN];
+    char results[STR_MAXLEN];
 };
 extern struct Equation eq;
-
-struct Parens {
-    int l;
-    int r;
-};
-extern struct Parens parens;
 
 struct Bounds {
     int l;
@@ -35,10 +28,8 @@ struct Bounds {
 };
 extern struct Bounds bounds;
 
-struct Switches {
-    int parens_exist;
-    int division;
+struct Flows {
     int arithmetic;
     int alg_1var;
 };
-extern struct Switches sw;
+extern struct Flows flows;

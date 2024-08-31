@@ -1,38 +1,37 @@
 #include "main.h"
+#include <stdio.h>
 
 static void init(void)
 {
-    sw.arithmetic = sw.alg_1var = 0;
+    flows.arithmetic = flows.alg_1var = 0;
 }
 
-int is_arithmetic(void)
+int is_arithmetic(char *s)
 {
-    for (char *p = input; *p != '\0'; p++) {
+    for (char *p = s; *p != '\0'; p++) {
         if (*p == 'x') {
             return 0;
         }
     }
-    return 1;
+    return flows.arithmetic = 1;
 }
 
-int is_algebraic(void)
+int is_algebraic(char *s)
 {
-    for (char *p = input; *p != '\0'; p++) {
+    for (char *p = s; *p != '\0'; p++) {
         if (*p == 'x') {
-            return 1;
+            return flows.alg_1var = 1;
         }
     }
     return 0;
 }
 
-void set_workflow(void)
+void set_workflow(char *s)
 {
     init();
-    if (is_arithmetic()) {
-        sw.arithmetic = 1;
-        return;
-    } else if (is_algebraic()) {
-        sw.alg_1var = 1;
-        return;
+    if (is_arithmetic(s)) {
+        ;;
+    } else if (is_algebraic(s)) {
+        ;;
     }
 }
