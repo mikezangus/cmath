@@ -1,34 +1,22 @@
 #include <stdio.h>
 #include "main.h"
-#include "./general/general.h"
 #include "./workflows/arithmetic/arithmetic.h"
 #include "./workflows/algebraic/algebraic.h"
 
-char input[MAXLEN] = "182*15^4-4/20^4";
-// char input[MAXLEN] = "10/20+10/30";
-
-struct Equation eq;
-struct Parens parens;
-struct Bounds bounds;
-struct Switches sw;
+struct Flows flows;
 
 int main(void)
 {
-    clean_input();
-    set_workflow();
-    if (sw.arithmetic) {
-        if (process_arithmetic()) {
-            printf("\nSolved equation: %s\n", input);
-            return 0;
-        } else {
-            return -1;
-        }
-    } else if (sw.alg_1var) {
-        if (process_arithmetic()) {
-            printf("\nSolved equation: %s\n", input);
-            return 0;
-        } else {
-            return -1;
-        }
+    char input[STR_MAXLEN];
+    printf("\nEnter input:\n> ");
+    fgets(input, sizeof(input), stdin);
+    clean_input(input);
+    set_workflow(input);
+    if (flows.arithmetic) {
+        process_arithmetic(input);
+    } else {
+        return 1;
     }
+    printf("\nSolved equation: %s\n", input);
+    return 0;
 }

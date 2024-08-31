@@ -1,15 +1,13 @@
-// int find_eqsign(void);
-// void insert_eqzero(void);
-// void insert_mult(void);
-// void strip_parens(void);
-// void isolate(void);
+// int check_eqsign_exists(char *s);
+// void clear_add_zero(char *s);
+// void clear_parens(char *s);
+// void find_bounds_alg(int i, int *l_bound, int *r_bound);
+// void find_bounds_balance(int *l_bound, int *r_bound);
+// void insert_eqsign(char *s);
+// void insert_mult(char *s);
 // int process_algebraic(void);
-// void find_bounds_alg(char c);
-// void remove_plus0(void);
-// void remove_x1(void);
 
-// extern int i_eqsign;
-
-// // extern char input[];
-
-// // #define MAXLEN 100
+// struct Eq_Alg {
+//     char balance[100];
+// };
+// extern struct Eq_Alg eq_alg;

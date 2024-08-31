@@ -14,39 +14,43 @@
                 "${workspaceFolder}/set_workflow.c",
 
                 "${workspaceFolder}/workflows/arithmetic/process_arithmetic.c",
-                "${workspaceFolder}/workflows/arithmetic/find_bounds_ari.c",
+   
+                "${workspaceFolder}/workflows/arithmetic/find_bounds.c",
+                "${workspaceFolder}/workflows/arithmetic/parse_equation.c",
+                "${workspaceFolder}/workflows/arithmetic/solve.c",
 
-                "${workspaceFolder}/workflows/algebraic/find_eqsign.c",
-                "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
-                "${workspaceFolder}/workflows/algebraic/insert_mult.c",
-                "${workspaceFolder}/workflows/algebraic/isolate.c",
-                "${workspaceFolder}/workflows/algebraic/process_algebraic.c",
-                "${workspaceFolder}/workflows/algebraic/strip_parens.c",
+
+                "${workspaceFolder}/workflows/algebraic/check_eqsign_exists.c",
+                "${workspaceFolder}/workflows/algebraic/clear_add_zero.c",
+                "${workspaceFolder}/workflows/algebraic/clear_parens.c",
                 "${workspaceFolder}/workflows/algebraic/find_bounds_alg.c",
-                "${workspaceFolder}/workflows/algebraic/remove_plus0.c",
-                "${workspaceFolder}/workflows/algebraic/remove_x1.c",
+                "${workspaceFolder}/workflows/algebraic/find_bounds_balance.c",
+                "${workspaceFolder}/workflows/algebraic/insert_eqsign.c",
+                "${workspaceFolder}/workflows/algebraic/insert_mult.c",
+                "${workspaceFolder}/workflows/algebraic/process_algebraic.c",
+
 
                 "${workspaceFolder}/general/add_parens.c",
+
                 "${workspaceFolder}/general/calculate_result.c",
-                "${workspaceFolder}/general/check_division_exists.c",
-                "${workspaceFolder}/general/check_oprtr_exists.c",
-                "${workspaceFolder}/general/check_parens_balanced.c",
-                "${workspaceFolder}/general/check_parens_exist.c",
                 "${workspaceFolder}/general/convert_d_to_str.c",
                 "${workspaceFolder}/general/convert_str_to_d.c",
                 "${workspaceFolder}/general/create_result_str.c",
+
                 "${workspaceFolder}/general/equate_denoms.c",
-                "${workspaceFolder}/general/find_bounds.c",
-                "${workspaceFolder}/general/find_nearest_parens.c",
+
                 "${workspaceFolder}/general/init_eq.c",
                 "${workspaceFolder}/general/insert_denom.c",
                 "${workspaceFolder}/general/insert_result.c",
-                "${workspaceFolder}/general/parse_equation.c",
-                "${workspaceFolder}/general/reduce_fractions.c",
-                "${workspaceFolder}/general/solve.c",
+
+                "${workspaceFolder}/general/reduce_fraction.c",
+
+
+                "${workspaceFolder}/general/verifications/oprtr_exists.c",
+                "${workspaceFolder}/general/verifications/parens_balanced.c",
+                "${workspaceFolder}/general/verifications/verify.c",
                 
                 "${workspaceFolder}/utils/collapse_str.c",
-                "${workspaceFolder}/utils/expand_str.c",
                 "${workspaceFolder}/utils/insert_str.c",
                 "${workspaceFolder}/utils/is_oprtr.c",
                 "${workspaceFolder}/utils/print_str.c",
