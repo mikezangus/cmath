@@ -1,13 +1,13 @@
 #include "../../general/general.h"
+#include "../../general/verifications/verifications.h"
+#include "./arithmetic.h"
 
-int process_arithmetic(void)
+int process_arithmetic(char *s)
 {
     add_parens();
-    while (check_oprtr_exists()) {
-        if (!check_parens_balanced()) {
-            return 0;
-        }
-        solve();
+    while (verify(s)) {
+        init_eq();
+        solve(s);
     }
     return 1;
 }
