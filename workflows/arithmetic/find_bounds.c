@@ -1,17 +1,8 @@
 #include <ctype.h>
+#include <string.h>
 #include "../../utils/utils.h"
 
 #include <stdio.h>
-
-static int parens_exist(char *s)
-{
-    for (char *p = s; *p != '\0'; p++) {
-        if (*p == '(') {
-            return 1;
-        }
-    }
-    return 0;
-}
 
 static void find_closest_parens(char *s, int *l_bound, int *r_bound)
 {
@@ -74,7 +65,7 @@ static int find_i_r_bound(char *s, int i_oprtr)
 
 void find_bounds(char *s, int *l_bound, int *r_bound)
 {
-    if (parens_exist(s)) {
+    if (strchr(s, '(')) {
         find_closest_parens(s, l_bound, r_bound);
     } else {
         int i_oprtr;
