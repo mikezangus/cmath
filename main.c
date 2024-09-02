@@ -14,6 +14,8 @@ int main(void)
     set_workflow(input);
     if (flows.arithmetic) {
         process_arithmetic(input);
+    } else if (flows.alg_1var) {
+        process_algebraic(input);
     } else {
         return 1;
     }

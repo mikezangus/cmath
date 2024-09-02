@@ -20,17 +20,10 @@
                 "${workspaceFolder}/workflows/arithmetic/solve.c",
 
 
-                "${workspaceFolder}/workflows/algebraic/check_eqsign_exists.c",
-                "${workspaceFolder}/workflows/algebraic/clear_add_zero.c",
-                "${workspaceFolder}/workflows/algebraic/clear_parens.c",
-                "${workspaceFolder}/workflows/algebraic/find_bounds_alg.c",
-                "${workspaceFolder}/workflows/algebraic/find_bounds_balance.c",
-                "${workspaceFolder}/workflows/algebraic/insert_eqsign.c",
+                "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
                 "${workspaceFolder}/workflows/algebraic/insert_mult.c",
                 "${workspaceFolder}/workflows/algebraic/process_algebraic.c",
 
-
-                "${workspaceFolder}/general/add_parens.c",
 
                 "${workspaceFolder}/general/calculate_result.c",
                 "${workspaceFolder}/general/convert_d_to_str.c",
@@ -41,6 +34,7 @@
 
                 "${workspaceFolder}/general/init_eq.c",
                 "${workspaceFolder}/general/insert_denom.c",
+                "${workspaceFolder}/general/insert_parens.c",
                 "${workspaceFolder}/general/insert_result.c",
 
                 "${workspaceFolder}/general/reduce_fraction.c",
@@ -54,6 +48,7 @@
                 "${workspaceFolder}/utils/insert_str.c",
                 "${workspaceFolder}/utils/is_oprtr.c",
                 "${workspaceFolder}/utils/print_str.c",
+                "${workspaceFolder}/utils/weigh_chars.c",
 
                 "-o",
                 "${workspaceFolder}/main"

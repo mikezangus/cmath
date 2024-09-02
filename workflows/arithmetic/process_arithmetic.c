@@ -4,7 +4,7 @@
 
 int process_arithmetic(char *s)
 {
-    add_parens(s);
+    insert_parens(s);
     while (verify(s)) {
         init_eq();
         solve(s);

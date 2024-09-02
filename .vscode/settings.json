@@ -12,6 +12,7 @@
         "general.h": "c",
         "algebraic.h": "c",
         "__config": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "_stdio.h": "c"
     }
 }
