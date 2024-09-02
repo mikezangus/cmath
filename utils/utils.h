@@ -8,3 +8,5 @@ int is_prec2_oprtr(char c);
 int is_prec3_oprtr(char c);
 
 void print_str(char *m, char *s);
+
+void weigh_chars(char c, int *scale, char weight1, char weight2);
