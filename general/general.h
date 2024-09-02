@@ -1,4 +1,4 @@
-void add_parens(void);
+void add_parens(char *s);
 
 void calculate_result(double op1, char oprtr, double op2, double *result);
 void convert_d_to_str(double d, char *s);
