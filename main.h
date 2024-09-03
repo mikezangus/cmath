@@ -1,3 +1,6 @@
+#ifndef MAIN_H
+#define MAIN_H
+
 #define NUM_MAXLEN 26
 #define STR_MAXLEN 100
 
@@ -33,3 +36,5 @@ struct Flows {
     int alg_1var;
 };
 extern struct Flows flows;
+
+#endif // MAIN_H

@@ -1,6 +1,6 @@
 #include <ctype.h>
 #include <string.h>
-#include "../../utils/utils.h"
+#include "../utils/utils.h"
 
 #include <stdio.h>
 
@@ -48,7 +48,7 @@ static int find_i_oprtr(char *s, int prec)
 static int find_i_l_bound(char *s, int i_oprtr)
 {
     int i;
-    for (i = i_oprtr - 1; (isdigit(s[i]) || s[i] == '/') && i >= 0; i--) {
+    for (i = i_oprtr - 1; (isdigit(s[i]) || s[i] == '/' || s[i] == 'x') && i >= 0; i--) {
         ;;
     }
     return i == 0 && *s == '-' ? i : i + 1;
@@ -57,7 +57,7 @@ static int find_i_l_bound(char *s, int i_oprtr)
 static int find_i_r_bound(char *s, int i_oprtr)
 {
     int i;
-    for (i = i_oprtr + 1; (isdigit(s[i]) || s[i] == '/') && s[i] != '\0'; i++) {
+    for (i = i_oprtr + 1; (isdigit(s[i]) || s[i] == '/' || s[i] == 'x') && s[i] != '\0'; i++) {
         ;;
     }
     return i - 1;

@@ -3,6 +3,7 @@
 #include "./workflows/arithmetic/arithmetic.h"
 #include "./workflows/algebraic/algebraic.h"
 
+struct Equation eq;
 struct Flows flows;
 
 int main(void)
