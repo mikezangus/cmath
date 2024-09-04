@@ -17,13 +17,18 @@
                 "${workspaceFolder}/workflows/arithmetic/solve.c",
 
 
-                "${workspaceFolder}/workflows/algebraic/calculate_var_exps.c",
+                "${workspaceFolder}/workflows/algebraic/calculate_vars.c",
+                "${workspaceFolder}/workflows/algebraic/create_var_str.c",
+                "${workspaceFolder}/workflows/algebraic/handle_1x.c",
+                "${workspaceFolder}/workflows/algebraic/init_vars.c",
                 "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
                 "${workspaceFolder}/workflows/algebraic/insert_mult.c",
                 "${workspaceFolder}/workflows/algebraic/parse_var.c",
                 "${workspaceFolder}/workflows/algebraic/process_algebraic.c",
+                "${workspaceFolder}/workflows/algebraic/remove_exp1.c",
                 "${workspaceFolder}/workflows/algebraic/remove_vars.c",
                 "${workspaceFolder}/workflows/algebraic/solve_alg.c",
+                "${workspaceFolder}/workflows/algebraic/var_exists.c",
 
 
                 "${workspaceFolder}/general/calculate_result.c",

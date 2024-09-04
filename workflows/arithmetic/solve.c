@@ -29,7 +29,7 @@ void solve(char *s)
         convert_d_to_str(eq.resultdd, eq.resultds);
     }
     convert_d_to_str(eq.resultnd, eq.resultns);
-    create_result_str(eq.resultns, "", eq.resultds, eq.results);
+    create_result_str(eq.resultns, eq.resultds, eq.results);
     insert_result(s, bounds.l, bounds.r, eq.results);
     printf("%s\n", dashes);
 }

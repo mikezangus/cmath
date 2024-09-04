@@ -12,7 +12,7 @@ static int find_i_sequence(char c, int *sw_paren, int *scale)
     if (*sw_paren) {
         weigh_chars(c, scale, '(', ')');
     }
-    if ((!(*scale) && !isdigit(c) && c != 'x')) {
+    if ((!(*scale) && !isdigit(c) && c != 'x' && c!= 'y')) {
         return 1;
     }
     return 0;
@@ -33,14 +33,25 @@ static int find_i_l(char *s, int i_op)
     return -1;
 }
 
+static int find_i_eqsign(char *s)
+{
+    for (int i = 0; s[i] != '\0'; i++) {
+        if (s[i] == '=') {
+            return i;
+        }
+    }
+    return -1;
+}
+
 static int find_i_r(char *s, int i_op)
 {
-    int len = strlen(s) - 1;
+    int end = find_i_eqsign(s);
+    end = (end > -1) ? end : (strlen(s) - 1);
     int sw_paren = 0;
     int scale = 0;
     int i = -1;
-    for (i = i_op + 1; s[i] != '\0' && i <= len; i++) {
-        if (i == len || find_i_sequence(s[i], &sw_paren, &scale)) {
+    for (i = i_op + 1; s[i] != '\0' && i <= end; i++) {
+        if (i == end || find_i_sequence(s[i], &sw_paren, &scale)) {
             return i;
         }
     }
@@ -50,14 +61,14 @@ static int find_i_r(char *s, int i_op)
 static int in_parens(char *s, int i_op)
 {
     char *p;
-    for (p = s + i_op - 1; p >= s && (isdigit(*p) || *p == 'x'); p--) {
+    for (p = s + i_op - 1; p >= s && (isdigit(*p) || *p == 'x' || *p == 'y'); p--) {
         ;;
     }
     int l = (*p == '(');
     if (!l) {
         return 0;
     }
-    for (p = s + i_op + 1; *p != '\0' && (isdigit(*p) || *p == 'x'); p++) {
+    for (p = s + i_op + 1; *p != '\0' && (isdigit(*p) || *p == 'x' || *p == 'y'); p++) {
         ;;
     }
     int r = (*p == ')');

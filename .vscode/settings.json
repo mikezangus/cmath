@@ -14,6 +14,5 @@
         "__config": "c",
         "algorithm": "c",
         "_stdio.h": "c",
-        "x,c": "c"
     }
 }

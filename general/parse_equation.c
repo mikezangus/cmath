@@ -1,6 +1,6 @@
 #include <ctype.h>
 #include "../utils/utils.h"
-
+#include "../main.h"
 #include <stdio.h>
 
 static int find_i_oprtr(char *s, int l_bound, int r_bound, int (*func)(char))
@@ -18,6 +18,15 @@ static int parse_oprtr(char *in, char *out, int l_bound, int r_bound)
     int i_op;
     if (l_bound == 0 && *in == '-') {
         l_bound++;
+    }
+    if (sw.sw_var_exp) {
+            if ((i_op = find_i_oprtr(in, l_bound, r_bound, is_prec2_oprtr)) > -1 ||
+                (i_op = find_i_oprtr(in, l_bound, r_bound, is_prec3_oprtr)) > -1
+            ) {
+                *out = in[i_op];
+                return i_op;
+            }
+        return -1;
     }
     if ((i_op = find_i_oprtr(in, l_bound, r_bound, is_prec1_oprtr)) > -1 ||
         (i_op = find_i_oprtr(in, l_bound, r_bound, is_prec2_oprtr)) > -1 ||

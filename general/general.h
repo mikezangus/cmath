@@ -1,7 +1,7 @@
 void calculate_result(double op1, char oprtr, double op2, double *result);
 void convert_d_to_str(double d, char *s);
 void convert_str_to_d(char *s, double *d);
-void create_result_str(char *n, char *x_n, char *d, char *r);
+void create_result_str(char *n, char *d, char *r);
 
 void equate_denoms(double *p_n1, double *p_d1, double *p_n2, double *p_d2);
 
