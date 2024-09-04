@@ -5,6 +5,7 @@
 
 struct Equation eq;
 struct Flows flows;
+struct Switches sw;
 
 int main(void)
 {

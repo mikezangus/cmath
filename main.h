@@ -37,4 +37,9 @@ struct Flows {
 };
 extern struct Flows flows;
 
+struct Switches {
+    int sw_var_exp;
+};
+extern struct Switches sw;
+
 #endif // MAIN_H
