@@ -4,7 +4,7 @@ void remove_vars(char *s)
 {
     char *in = s;
     char *out = s;
-    while (*in) {
+    while (*in != '^') {
         if (isdigit(*in)) {
             *out = *in;
             out++;
