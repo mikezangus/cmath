@@ -1,131 +1,65 @@
-
-#include "../utils/utils.h"
 #include <ctype.h>
+#include <stdbool.h>
 #include <string.h>
+#include "../general/general.h"
+#include "../utils/utils.h"
+
 #include <stdio.h>
 
-static int find_i_sequence(char c, int *sw_paren, int *scale)
+static bool find_position(char *c, int *scale)
 {
-    if (!(*sw_paren) && (c == '(' || c == ')')) {
-        *sw_paren = 1;
-    }
-    if (*sw_paren) {
-        weigh_chars(c, scale, '(', ')');
-    }
-    if ((!(*scale) && !isdigit(c) && c != 'x' && c!= 'y')) {
-        return 1;
-    }
-    return 0;
+    weigh_chars(*c, scale, '(', ')');
+    return (*scale == 0 && !isdigit(*c) && *c != 'x');
 }
 
-static int find_i_l(char *s, int i_op)
-{
-    int sw_paren = 0;
-    int scale = 0;
-    int i = -1;
-    for (i = i_op - 1; s[i] > 0; i--) {
-        if (i == 0) {
-            return i;
-        } else if (find_i_sequence(s[i], &sw_paren, &scale)) {
-            return i + 1;
-        }
-    }
-    return -1;
-}
-
-static int find_i_eqsign(char *s)
-{
-    for (int i = 0; s[i] != '\0'; i++) {
-        if (s[i] == '=') {
-            return i;
-        }
-    }
-    return -1;
-}
-
-static int find_i_r(char *s, int i_op)
-{
-    int end = find_i_eqsign(s);
-    end = (end > -1) ? end : (strlen(s) - 1);
-    int sw_paren = 0;
-    int scale = 0;
-    int i = -1;
-    for (i = i_op + 1; s[i] != '\0' && i <= end; i++) {
-        if (i == end || find_i_sequence(s[i], &sw_paren, &scale)) {
-            return i;
-        }
-    }
-    return -1;
-}
-
-static int in_parens(char *s, int i_op)
+static char* find_left(char *s, char *op)
 {
     char *p;
-    for (p = s + i_op - 1; p >= s && (isdigit(*p) || *p == 'x' || *p == 'y'); p--) {
-        ;;
+    int scale = 0;
+    for (p = op - 1; p >= s; p--) {
+        if (find_position(p, &scale)) {
+            break;
+        }
     }
-    int l = (*p == '(');
-    if (!l) {
-        return 0;
-    }
-    for (p = s + i_op + 1; *p != '\0' && (isdigit(*p) || *p == 'x' || *p == 'y'); p++) {
-        ;;
-    }
-    int r = (*p == ')');
-    return l && r;
+    return (p == s) ? p : p + 1;
 }
 
-static void insert_sequence(char *s, int i_op)
+static char* find_right(char *s, char *op)
 {
-    insert_str(s, "(", find_i_l(s, i_op));
-    insert_str(s, ")", find_i_r(s, i_op + 1));
+    char *p;
+    int scale = 0;
+    char *eqsign = strchr(s, '=');
+    char *end = eqsign ? eqsign : s + strlen(s);
+    for (p = op + 1; *p && p < end; p++) {
+        if (find_position(p, &scale)) {
+            break;
+        }
+    }
+    return p;
 }
 
-static int process_vars(char *s, int *i_var, int (*is_oprtr)(char))
+static bool insert(char *s, char *op)
 {
-    if (is_oprtr(s[(*i_var) - 1]) && !in_parens(s, (*i_var) - 1)) {
-        insert_sequence(s, (*i_var) - 1);
-        (*i_var) += 2;
-        return 1;
-    } else if (is_oprtr(s[(*i_var) + 1]) && !in_parens(s, (*i_var) + 1)) {
-        insert_sequence(s, (*i_var) + 1);
-        (*i_var) += 2;
-        return 1;
+    char *l = find_left(s, op);
+    char *r = find_right(s, op);
+    if (!l || !r) {
+        return false;
     }
-    return 0;
-}
-
-static void handle_vars(char *s)
-{
-    for (int i = 0; s[i] != '\0'; i++) {
-        if (s[i] == 'x' && (
-            process_vars(s, &i, is_prec1_oprtr) ||
-            process_vars(s, &i, is_prec2_oprtr)
-        )) { ;; }
-    }
-}
-
-static void process_nums(char *s, int *i_op, int (*is_oprtr)(char))
-{
-    if (is_oprtr(s[*i_op]) && !in_parens(s, *i_op)) {
-        insert_sequence(s, *i_op);
-        (*i_op += 2);
-    }
-}
-
-static void handle_nums(char *s)
-{
-    int i;
-    for (i = 0; s[i] != '\0'; i++) {
-        process_nums(s, &i, is_prec1_oprtr);
-    }
-    for (i = 0; s[i] != '\0'; i++) {
-        process_nums(s, &i, is_prec2_oprtr);
-    }
+    insert_str(s, "(", l);
+    insert_str(s, ")", r + 1);
+    return true;
 }
 
 void insert_parens(char *s)
 {
-    handle_vars(s);
-    handle_nums(s);
+    for (char *p = s; *p && *p != '='; p++) {
+        if (is_prec1_oprtr(*p) && insert(s, p)) {
+            p += 2;
+        }
+    }
+    for (char *p = s; *p && *p != '='; p++) {
+        if (is_prec2_oprtr(*p) && insert(s, p)) {
+            p += 2;
+        }
+    }
 }
