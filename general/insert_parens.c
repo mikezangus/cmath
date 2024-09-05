@@ -14,7 +14,7 @@ static bool find_position(char *c, int *scale)
 
 static char* find_left(char *s, char *op)
 {
-    char *p;
+    char *p = NULL;
     int scale = 0;
     for (p = op - 1; p >= s; p--) {
         if (find_position(p, &scale)) {
@@ -26,7 +26,7 @@ static char* find_left(char *s, char *op)
 
 static char* find_right(char *s, char *op)
 {
-    char *p;
+    char *p = NULL;
     int scale = 0;
     char *eqsign = strchr(s, '=');
     char *end = eqsign ? eqsign : s + strlen(s);
@@ -50,16 +50,17 @@ static bool insert(char *s, char *op)
     return true;
 }
 
-void insert_parens(char *s)
+static void insert_by_op_precedent(char *s, bool (*is_prec_oprtr)(char))
 {
     for (char *p = s; *p && *p != '='; p++) {
-        if (is_prec1_oprtr(*p) && insert(s, p)) {
+        if (is_prec_oprtr(*p) && insert(s, p)) {
             p += 2;
         }
     }
-    for (char *p = s; *p && *p != '='; p++) {
-        if (is_prec2_oprtr(*p) && insert(s, p)) {
-            p += 2;
-        }
-    }
+}
+
+void insert_parens(char *s)
+{
+    insert_by_op_precedent(s, is_prec1_oprtr);
+    insert_by_op_precedent(s, is_prec2_oprtr);
 }
