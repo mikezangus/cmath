@@ -4,13 +4,10 @@ bool is_operable(char *s, char *op, char *l_bound, char *r_bound)
 {
     switch (*op) {
         case '^':
-            if (*(op - 1) == 'x') {
-                return 0;
-            }
-            return 1;
+            return (*(op - 1) != 'x');
         case '/':
             if ((op + 1 == r_bound) && (*(op + 1) == '1')) {
-                return 0;
+                return false;
             }
             bool var_in_numerator = false;
             bool var_in_denominator = false;
