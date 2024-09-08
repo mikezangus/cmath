@@ -5,7 +5,7 @@
 #define STR_MAXLEN 100
 
 void clean_input(char *s);
-void set_workflow(char *s);
+void enter_workflow(char *s);
 
 struct Equation {
     char op1ns[NUM_MAXLEN];
@@ -26,20 +26,9 @@ struct Equation {
 extern struct Equation eq;
 
 struct Bounds {
-    int l;
-    int r;
+    char* l;
+    char* r;
 };
 extern struct Bounds bounds;
-
-struct Flows {
-    int arithmetic;
-    int alg_1var;
-};
-extern struct Flows flows;
-
-struct Switches {
-    int sw_var_exp;
-};
-extern struct Switches sw;
 
 #endif // MAIN_H
