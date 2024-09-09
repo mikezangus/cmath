@@ -4,6 +4,8 @@
 #include "../main.h"
 #include <stdio.h>
 
+int sw_parens;
+
 static int find_i_oprtr(char *s, int prec)
 {
     int i = (*s == '-') ? 1 : 0;
@@ -35,10 +37,18 @@ static int find_i_oprtr(char *s, int prec)
 
 static int conditions(char c)
 {
-    if (sw.sw_var_exp) {
-        return (isdigit(c) || c == '^' || c == '/' || c == 'x');
+    if (sw_parens) {
+        if (sw.sw_var_exp) {
+            return (isdigit(c) || c == '^' || c == '/' || c == 'x');
+        }
+        return (isdigit(c) || c == '/' || c == 'x');
     }
-    return (isdigit(c) || c == '/' || c == 'x');
+    if (sw.sw_var_exp) {
+        return (isdigit(c) || c == '^' || c == 'x');
+    }
+    return (isdigit(c) || c == 'x');
+    
+
 }
 
 static int find_i_l_bound(char *s, int i_oprtr)
@@ -87,13 +97,21 @@ static void find_highest_oprtr(char *s, int *l_bound, int *r_bound)
     *r_bound = find_i_r_bound(s, i_oprtr);
 }
 
-void find_bounds(char *s, int *l_bound, int *r_bound)
+int find_bounds(char *s, int *l_bound, int *r_bound)
 {
+    sw_parens = 0;
+    print_str("Finding bounds:", s);
     if (strchr(s, '(')) {
+        sw_parens = 1;
         find_closest_parens(s, l_bound, r_bound);
     } else {
+        sw_parens = 0;
         find_highest_oprtr(s, l_bound, r_bound);
     }
-    print_str("Finding bounds:", s);
-    printf("Bounds - L: %d | R: %d\n", *l_bound, *r_bound);
+    if (*l_bound > -1 && *r_bound > -1) {
+        printf("Bounds - L: %d | R: %d\n", *l_bound, *r_bound);
+        return 1;
+    }
+    printf("Failed to find bounds\n");
+    return 0;
 }
