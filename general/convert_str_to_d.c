@@ -1,28 +1,30 @@
-void convert_str_to_d(char *s, double *d)
+#include <stdbool.h>
+
+void convert_str_to_d(char* s, double* d)
 {
-    int sw_neg = 0;
-    int sw_frac = 0;
+    bool negative_sign = false;
+    bool fractional = false;
 
     int digit = 0;
     double result = 0.0;
     double divisor = 10.0;
 
     if (*s == '-') {
-        sw_neg = 1;
+        negative_sign = true;
         s++;
     }
-    for (char *p = s; *p != '\0'; p++) {
+    for (char* p = s; *p; p++) {
         if (*p == '.') {
-            sw_frac = 1;
+            fractional = true;
             continue;
         }
         digit = *p - '0';
-        if  (!sw_frac) {
+        if  (!fractional) {
             result = result * 10 + digit;
         } else {
             result += digit / divisor;
             divisor *= 10;
         }
     }
-    *d = sw_neg ? -result : result;
+    *d = negative_sign ? -result : result;
 }

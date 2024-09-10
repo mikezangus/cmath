@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 
-void calculate_result(double op1, char oprtr, double op2, double *result)
+void calculate_result(double op1, char oprtr, double op2, double* result)
 {
     switch (oprtr) {
     case '+':

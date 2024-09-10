@@ -1,19 +1,21 @@
-int is_oprtr(char c)
+#include <stdbool.h>
+
+bool is_oprtr(char c)
 {
     return (c == '+' || c == '-' || c == '*' || c == '/' || c == '^');
 }
 
-int is_prec1_oprtr(char c)
+bool is_prec1_oprtr(char c)
 {
     return (c == '^');
 }
 
-int is_prec2_oprtr(char c)
+bool is_prec2_oprtr(char c)
 {
-    return (c == '*');
+    return (c == '*' || c == '/');
 }
 
-int is_prec3_oprtr(char c)
+bool is_prec3_oprtr(char c)
 {
     return (c == '+' || c == '-');
 }

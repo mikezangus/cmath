@@ -1,4 +1,4 @@
-void equate_denoms(double *p_n1, double *p_d1, double *p_n2, double *p_d2)
+void equate_denoms(double* p_n1, double* p_d1, double* p_n2, double* p_d2)
 {
     double n1 = *p_n1;
     double d1 = *p_d1;

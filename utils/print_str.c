@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void print_str(char *m, char *s)
+void print_str_indexes(char* m, char* s)
 {
     printf("%s\n", m);
     int len = strlen(s);

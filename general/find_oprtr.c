@@ -2,7 +2,7 @@
 #include <string.h>
 #include "../utils/utils.h"
 
-char* find_oprtr(char *start, char *end)
+char* find_oprtr(char* start, char* end)
 {
     end = (end == NULL) ? start + strlen(start) : end;
     for (char *p = start; *p && p <= end; p++) {
