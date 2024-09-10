@@ -5,7 +5,6 @@ bool find_bounds_by_parens(char* s, char** l_bound, char** r_bound)
 {
     char* left = NULL;
     char* right = NULL;
-    *l_bound = *l_bound = NULL;
     for (char* p = s; *p && *p != '='; p++) {
         if (*p == '(') {
             left = p;
