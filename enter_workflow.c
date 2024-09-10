@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include "general/general.h"
+#include "utils/utils.h"
 #include "workflows/arithmetic/arithmetic.h"
 #include "workflows/algebraic/algebraic.h"
 
