@@ -6,7 +6,7 @@
 bool is_arithmetic(char* s)
 {
     for (char* p = s; *p; p++) {
-        if (is_var(*p)) {
+        if (char_is_var(*p)) {
             return false;
         }
     }
@@ -16,7 +16,7 @@ bool is_arithmetic(char* s)
 bool is_algebraic(char* s)
 {
     for (char* p = s; *p; p++) {
-        if (is_var(*p)) {
+        if (char_is_var(*p)) {
             return true;
         }
     }
