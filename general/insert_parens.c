@@ -52,7 +52,8 @@ static bool insert(char* s, char* op)
     char* l = find_left(s, op);
     char* r = find_right(s, op);
     if (
-        !l || !r ||
+        !l ||
+        !r ||
         *l == '(' && *r == ')' ||
         l == s && r == strchr(s, '=')
     ) {
