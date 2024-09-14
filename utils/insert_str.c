@@ -4,7 +4,7 @@
 
 static bool is_pos_inside_dest(char* dest_str, size_t dest_len, const char* insert_pos)
 {
-    return (insert_pos >= dest_str) && (insert_pos < dest_str + dest_len);
+    return (insert_pos >= dest_str) && (insert_pos <= dest_str + dest_len);
 }
 
 static void expand(char* dest_str, size_t dest_len, const char* insert_pos, size_t insert_len)
