@@ -29,7 +29,7 @@ static char* find_left(char* s, char* op)
     return (p == s) ? p : p + 1;
 }
 
-static char* find_right(char *s, char *op)
+static char* find_right(char* s, char* op)
 {
     char* p;
     short scale = 0;
@@ -47,13 +47,14 @@ static char* find_right(char *s, char *op)
     return p;
 }
 
-static bool insert(char *s, char *op)
+static bool insert(char* s, char* op)
 {
     char* l = find_left(s, op);
     char* r = find_right(s, op);
     if (
         (!l || !r) ||
-        (*l == '(' && *r == ')') ||
+        (l == s && *l == '(' && *r == ')') ||
+        (l != s && *(l - 1) == '(' && *r == ')') ||
         (l == s && r == strchr(s, '='))
     ) {
         return false;
