@@ -2,10 +2,10 @@
 
 bool char_is_var(char c);
 
-void collapse_str(char* s, int start, int end);
+void collapse_str(char* start, char* end);
 void copy_bounded_str(char* input_start, char* input_end, char* output);
 
-void insert_str(char* dest_str, const char* insert_str, char* insert_pos);
+void insert_str(char* dst_str, const char* src_str, const char* insert_pos);
 
 bool is_oprtr(char c);
 bool is_prec1_oprtr(char c);

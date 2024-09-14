@@ -4,18 +4,18 @@
 #include "../general/general.h"
 #include "../utils/utils.h"
 
-static bool find_position(char* c, bool scale_needed, short* scale)
+static bool find_position(const char* c, bool scale_needed, short* scale)
 {
     if (scale_needed) {
         weigh_chars(*c, scale, '(', ')');
         return (*scale == 0 && !isdigit(*c) && !char_is_var(*c));
     }
-    return (!isdigit(*c) && !char_is_var(*c));
+    return !isdigit(*c) && !char_is_var(*c);
 }
 
-static char* find_left(char* s, char* op)
+static const char* find_left(const char* s, const char* op)
 {
-    char* p;
+    const char* p;
     short scale = 0;
     bool scale_needed = false;
     for (p = op - 1; p >= s; p--) {
@@ -29,13 +29,13 @@ static char* find_left(char* s, char* op)
     return p;
 }
 
-static char* find_right(char* s, char* op)
+static const char* find_right(const char* s, const char* op)
 {
-    char* p;
+    const char* p;
     short scale = 0;
     bool scale_needed = false;
-    char* eqsign = strchr(s, '=');
-    char* end = eqsign ? eqsign : s + strlen(s);
+    const char* eqsign = strchr(s, '=');
+    const char* end = eqsign ? eqsign : s + strlen(s);
     for (p = op + 1; *p && p < end; p++) {
         if (*p == '(') {
             scale_needed = true;
@@ -47,10 +47,10 @@ static char* find_right(char* s, char* op)
     return p;
 }
 
-static bool insert(char* s, char* op)
+static bool insert(char* s, const char* op)
 {
-    char* l = find_left(s, op);
-    char* r = find_right(s, op);
+    const char* l = find_left(s, op);
+    const char* r = find_right(s, op);
     if (
         !l ||
         !r ||

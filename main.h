@@ -4,8 +4,8 @@
 #define NUM_MAXLEN 26
 #define STR_MAXLEN 100
 
-void clean_input(char *s);
-void enter_workflow(char *s);
+void clean_input(char* s);
+void enter_workflow(char* s);
 
 struct Equation {
     char op1ns[NUM_MAXLEN];
