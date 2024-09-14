@@ -26,7 +26,7 @@ static char* find_left(char* s, char* op)
             break;
         }
     }
-    return (p == s) ? p : p + 1;
+    return p;
 }
 
 static char* find_right(char* s, char* op)
@@ -53,13 +53,12 @@ static bool insert(char* s, char* op)
     char* r = find_right(s, op);
     if (
         (!l || !r) ||
-        (l == s && *l == '(' && *r == ')') ||
-        (l != s && *(l - 1) == '(' && *r == ')') ||
+        (*l == '(' && *r == ')') ||
         (l == s && r == strchr(s, '='))
     ) {
         return false;
-    } 
-    insert_str(s, "(", l);
+    }
+    (l == s) ? insert_str(s, "(", l) : insert_str(s, "(", l + 1);
     insert_str(s, ")", r + 1);
     return true;
 }
