@@ -15,4 +15,5 @@ void insert_denom(char* d1, char* d2);
 void insert_parens(char* s);
 void insert_result(char* destination, int l_bound, int r_bound, char* insertion);
 
+void rearrange(char* s);
 void reduce_fraction(double* n, double* d);
