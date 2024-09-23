@@ -23,10 +23,10 @@
                 "${workspaceFolder}/workflows/algebraic/init_vars.c",
                 "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
                 "${workspaceFolder}/workflows/algebraic/process_algebraic.c",
+                "${workspaceFolder}/workflows/algebraic/rearrange.c",
                 "${workspaceFolder}/workflows/algebraic/remove_exp1.c",
                 "${workspaceFolder}/workflows/algebraic/remove_vars.c",
                 "${workspaceFolder}/workflows/algebraic/solve_alg.c",
-                "${workspaceFolder}/workflows/algebraic/var_exists.c",
 
                 
                 "${workspaceFolder}/general/calculate_result.c",
@@ -55,6 +55,7 @@
                 "${workspaceFolder}/general/verifications/parens_balanced.c",
                 "${workspaceFolder}/general/verifications/verify.c",
                 
+                "${workspaceFolder}/utils/balance_chars.c",
                 "${workspaceFolder}/utils/check_vars.c",
                 "${workspaceFolder}/utils/collapse_str.c",
                 "${workspaceFolder}/utils/copy_bounded_str.c",
@@ -62,7 +63,7 @@
                 "${workspaceFolder}/utils/is_oprtr.c",
                 "${workspaceFolder}/utils/print_bounded_str.c",
                 "${workspaceFolder}/utils/print_str.c",
-                "${workspaceFolder}/utils/weigh_chars.c",
+                
 
                 "-o",
                 "${workspaceFolder}/main"
