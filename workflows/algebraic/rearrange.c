@@ -17,7 +17,7 @@ static char* find_insert_pos(char* s)
     return NULL;
 }
 
-static bool find_bounds(char* s, char** l_bound, char** r_bound)
+static bool find_bounds(char* s, char** extract_start, char** extract_end)
 {
     char* l_paren = NULL;
     char* r_paren = NULL;
@@ -25,8 +25,8 @@ static bool find_bounds(char* s, char** l_bound, char** r_bound)
     for (char* p = s; *p && *p != '='; p++) {
         balance_chars(*p, &scale, '(', ')');
         if (scale < 0 && l_paren && r_paren) {
-            *l_bound = l_paren - 1;
-            *r_bound = r_paren;
+            *extract_start = l_paren - 1;
+            *extract_end = r_paren;
             return true;
         }
         if (*p == '(') {
@@ -38,17 +38,16 @@ static bool find_bounds(char* s, char** l_bound, char** r_bound)
     if (!l_paren || !r_paren) {
         return false;
     }
-    *l_bound = l_paren - 1;
-    *r_bound = r_paren;
+    *extract_start = l_paren - 1;
+    *extract_end = r_paren;
     return true;
 }
 
-void extract_to_buff(char* buff, char* l_bound, char* r_bound)
+void extract_to_buff(char* buff, char* extract_start, char* extract_end)
 {
-    for (char* p = l_bound; *p && p <= r_bound; p++, buff++) {
-        *buff = *p;
-    }
-    *buff = '\0';
+    size_t len = extract_end - extract_start + 1;
+    memcpy(buff, extract_start, len);
+    buff[len] = '\0';
 }
 
 bool rearrange(char* s)
@@ -56,17 +55,17 @@ bool rearrange(char* s)
     char* p = s;
     while (*p && *p != '=') {
         char* insert_pos = NULL;
-        char* l_bound = NULL;
-        char* r_bound = NULL;
+        char* extract_start = NULL;
+        char* extract_end = NULL;
         char buff[STR_MAXLEN] = {0};
         if (!(insert_pos = find_insert_pos(p))) {
             return false;
         }
-        if (!(find_bounds(insert_pos, &l_bound, &r_bound))) {
+        if (!(find_bounds(insert_pos, &extract_start, &extract_end))) {
             return false;
         }
-        extract_to_buff(buff, l_bound, r_bound);
-        collapse_str(l_bound, r_bound);
+        extract_to_buff(buff, extract_start, extract_end);
+        collapse_str(extract_start, extract_end);
         insert_str(s, buff, insert_pos);
         p = insert_pos + strlen(buff);
     }
