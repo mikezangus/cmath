@@ -4,6 +4,6 @@
 void insert_eqzero(char* s)
 {
     if (!strchr(s, '=')) {
-        insert_str(s, "=0", s + strlen(s));
+        insert_str(s, "=0", s + strlen(s) - 1);
     }
 }

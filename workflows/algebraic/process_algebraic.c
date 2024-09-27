@@ -7,24 +7,28 @@
 
 struct Variables vars;
 
-int process_algebraic(char *s)
+void process_algebraic(char* s)
 {
-    sw.sw_var_exp = 0;
     // insert_mult(s);
+
 
     insert_eqzero(s);
     insert_1(s);
-    // insert_parens(s);
-    print_str("\nInserted parens:", s);
+    insert_parens(s);
+    print_str_indexes("\nInserted parens:", s);
+    printf("\nBefore rearrange:\n%s\n", s);
+    rearrange(s);
+    printf("Rearranged:\n%s\n", s);
     for (int i = 0; i < 1; i++) {
-    // while (verify(s)) {
+    // // while (verify(s)) {
+
         init_eq();
         init_vars();
         solve_alg(s);
     }
-    printf("Done with solve loop, formatting\n");
-    remove_1(s);
-    remove_exp1(s);
+    // printf("Done with solve loop, formatting\n");
+    // remove_1(s);
+    // remove_exp1(s);
 
-    return 1;
+    return;
 }

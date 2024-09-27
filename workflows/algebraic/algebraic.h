@@ -1,18 +1,18 @@
 #include "../../main.h"
 
-void calculate_vars(char oprtr, char op1_var, char op2_var, char *out_var, double op1_exp, double op2_exp, double *out_exp);
-void create_var_str(char *in_var, char *in_exp, char *out);
+void calculate_vars(char oprtr, char op1_var, char op2_var, char* out_var, double op1_exp, double op2_exp, double* out_exp);
+void create_var_str(char* in_var, char* in_exp, char* out);
 void init_vars(void);
-void insert_1(char *s);
-void insert_eqzero(char *s);
-void insert_mult(char *s);
-void parse_var(char *in, char *out_var, double *out_exp);
-int process_algebraic(char *s);
-void remove_1(char *s);
-void remove_exp1(char *s);
-void remove_vars(char *s);
-void solve_alg(char *s);
-int var_exists(char *s);
+void insert_1(char* s);
+void insert_eqzero(char* s);
+void parse_var(char* in, char* out_var, double* out_exp);
+void process_algebraic(char* s);
+void rearrange(char* s);
+void remove_1(char* s);
+void remove_exp1(char* s);
+void remove_vars(char* s);
+void solve_alg(char* s);
+int var_exists(char* s);
 
 struct Variables {
     char op1n_var;

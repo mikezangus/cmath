@@ -1,6 +1,9 @@
-void collapse_str(char* s, int start, int end)
+void collapse_str(char* start, char* end)
 {
-    for (int i = start; s[i] != '\0'; i++) {
-        s[i] = s[i + end - start + 1];
+    char* dst = start;
+    char* src = end + 1;
+    while (*src) {
+        *dst++ = *src++;
     }
+    *dst = '\0';
 }
