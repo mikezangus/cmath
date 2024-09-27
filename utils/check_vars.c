@@ -8,7 +8,7 @@ static const char vars[] = {
     'w', 'x', 'y', 'z'
 };
 
-bool char_is_var(char c)
+bool is_var(char c)
 {
     return strchr(vars, c);
 }
@@ -16,7 +16,7 @@ bool char_is_var(char c)
 bool str_contains_var(char* s)
 {
     while (*s){
-        if (char_is_var(*s)) {
+        if (is_var(*s)) {
             return true;
         }
         s++;

@@ -7,10 +7,10 @@
 static bool find_position(const char* c, bool scale_needed, short* scale)
 {
     if (scale_needed) {
-        weigh_chars(*c, scale, '(', ')');
-        return (*scale == 0 && !isdigit(*c) && !char_is_var(*c));
+        balance_chars(*c, scale, '(', ')');
+        return (*scale == 0 && !isdigit(*c) && !is_var(*c));
     }
-    return !isdigit(*c) && !char_is_var(*c);
+    return !isdigit(*c) && !is_var(*c);
 }
 
 static const char* find_left(const char* s, const char* op)
