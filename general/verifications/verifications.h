@@ -1,3 +1,5 @@
-int oprtr_exists(char *s);
-int parens_balanced(char *s);
-int verify(char *s);
+#include <stdbool.h>
+
+bool oprtr_exists(char* s);
+bool parens_balanced(char* s);
+bool verify(char* s);

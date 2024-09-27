@@ -1,7 +1,6 @@
 #include <stdbool.h>
 #include "../utils/utils.h"
 
-
 bool exponent_is_operable(char* op1, char* op2)
 {
     return (!str_contains_var(op1) && !str_contains_var(op2));

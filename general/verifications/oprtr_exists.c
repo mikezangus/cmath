@@ -1,13 +1,12 @@
-#include <string.h>
+#include <stdbool.h>
 #include "../../utils/utils.h"
 
-
-int oprtr_exists(char *s)
+bool oprtr_exists(char* s)
 {
-    for (char *p = s + 1; *p != '\0'; p++) {
+    for (char* p = s + 1; *p; p++) {
         if (is_oprtr(*p) && *p != '/' && *p != '^') {
-            return 1;
+            return true;
         }
     }
-    return 0;
+    return false;
 }

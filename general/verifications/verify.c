@@ -1,6 +1,7 @@
+#include <stdbool.h>
 #include "verifications.h"
 
-int verify(char *s)
+bool verify(char* s)
 {
-    return (!oprtr_exists(s) || !parens_balanced(s)) ? 0 : 1;
+    return (oprtr_exists(s) && parens_balanced(s));
 }
