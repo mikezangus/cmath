@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../../main.h"
 #include "../../utils/utils.h"
+#include "algebraic.h"
 
 static char* find_insert_pos(char* s)
 {
@@ -24,7 +25,7 @@ static bool find_bounds(char* s, char** extract_start, char** extract_end)
     short scale = 0;
     for (char* p = s; *p && *p != '='; p++) {
         balance_chars(*p, &scale, '(', ')');
-        if (scale < 0 && l_paren && r_paren) {
+        if (scale < 0 && l_paren) {
             *extract_start = l_paren - 1;
             *extract_end = r_paren;
             return true;
@@ -50,7 +51,7 @@ void extract_to_buff(char* buff, char* extract_start, char* extract_end)
     buff[len] = '\0';
 }
 
-bool rearrange(char* s)
+void rearrange(char* s)
 {
     char* p = s;
     while (*p && *p != '=') {
@@ -59,15 +60,14 @@ bool rearrange(char* s)
         char* extract_end = NULL;
         char buff[STR_MAXLEN] = {0};
         if (!(insert_pos = find_insert_pos(p))) {
-            return false;
+            return;
         }
         if (!(find_bounds(insert_pos, &extract_start, &extract_end))) {
-            return false;
+            return;
         }
         extract_to_buff(buff, extract_start, extract_end);
         collapse_str(extract_start, extract_end);
         insert_str(s, buff, insert_pos);
         p = insert_pos + strlen(buff);
     }
-    return true;
 }

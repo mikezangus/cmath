@@ -64,33 +64,17 @@ bool parse_equation(char* s, char** left, char** right, char* op1n, char* op1d, 
     }
 
     parse_operation(temp2_left, temp2_right, temp2_op1, temp2_oprtr, temp2_op2);
-    printf("Parsed 2: %s%s%s\n", temp2_op1, temp2_oprtr, temp2_op2);
     if (equation_is_operable(temp2_op1, temp2_oprtr, temp2_op2)) {
         printf("Equation 2 is operable. Exiting\n");
         return true;
     }
-
-    printf("op1n: %s\n", op1n);
-    printf("temp1_op1: %s\n", temp1_op1);
-    printf("temp1_oprtr: %s\n", temp1_oprtr);
-    printf("temp1_op2: %s\n", temp1_op2);
     strcpy(op1n, temp1_op1);
     strcat(op1n, temp1_oprtr);
     strcat(op1n, temp1_op2);
-
-    printf("oprtr: %s\n", oprtr);
-    printf("*ptr_temp_oprtr: %c\n", *ptr_temp_oprtr);
     oprtr[0] = *ptr_temp_oprtr;
     oprtr[1] = '\0';
-
-    printf("op2n: %s\n", op2n);
-    printf("temp2_op1: %s\n", temp2_op1);
-    printf("temp2_oprtr: %s\n", temp2_oprtr);
-    printf("temp2_op2: %s\n", temp2_op2);
     strcpy(op2n, temp2_op1);
     strcat(op2n, temp2_oprtr);
     strcat(op2n, temp2_op2);
-
-    printf("PARSED:\n  %s\n  %s\n  %s\n", op1n, oprtr, op2n);
     return false;
 }

@@ -15,6 +15,7 @@
         "algorithm": "c",
         "_stdio.h": "c",
         "stdio.h": "c",
-        "_string.h": "c"
+        "_string.h": "c",
+        "parsing.h": "c"
     }
 }

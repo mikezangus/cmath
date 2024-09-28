@@ -1,4 +1,4 @@
-void clean_input(char* s)
+void remove_spaces(char* s)
 {
     char* p1 = s;
     char* p2 = s;

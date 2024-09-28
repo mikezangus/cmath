@@ -1,10 +1,11 @@
 #include "../../general/general.h"
+#include "algebraic.h"
 #include <stdio.h>
 
-static void process_prec2(char oprtr, char op1_var, char op2_var, char *out_var, double op1_exp, double op2_exp, double *out_exp)
+static void process_prec2(struct EquationAlg* eq)
 {
     char exp_oprtr = '\0';
-    switch (oprtr) {
+    switch (eq->oprtr) {
         case '*':
             exp_oprtr = '+';
             break;
@@ -12,42 +13,32 @@ static void process_prec2(char oprtr, char op1_var, char op2_var, char *out_var,
             exp_oprtr = '-';
             break;
     }
-    if (op1_var != '\0' && op2_var != '\0') {
-        calculate_result(op1_exp, exp_oprtr, op2_exp, out_exp);
-        *out_var = op1_var;
-    } else if (op1_var != '\0') {
-        *out_var = op1_var;
-    } else if (op2_var != '\0') {
-        *out_var = op2_var;
-    } 
+    calculate_result(eq->op1_num_base_d, eq->oprtr, eq->op2_num_base_d, &eq->res_num_base_d);
+    eq->res_num_var = eq->op1_num_var;
+    calculate_result(eq->op1_num_exp_d, exp_oprtr, eq->op2_num_exp_d, &eq->res_num_exp_d);
 }
 
-static void process_prec3(char op1_var, char op2_var, char *out_var, double op1_exp, double op2_exp, double *out_exp)
+static void process_prec3(struct EquationAlg* eq)
 {
-    if ((op1_var != op2_var) || (op1_exp != op2_exp)) {
-        return;
-    }
-    *out_var = op1_var;
-    *out_exp = op1_exp;
+    calculate_result(eq->op1_num_base_d, eq->oprtr, eq->op2_num_base_d, &eq->res_num_base_d);
+    eq->res_num_var = eq->op1_num_var;
+    eq->res_num_exp_d = eq->op1_num_exp_d;
 }
 
-void calculate_vars(char oprtr, char op1_var, char op2_var, char *out_var, double op1_exp, double op2_exp, double *out_exp)
+void calculate_vars(struct EquationAlg* eq)
 {
-    printf("Calulcating %c^%.1f %c %c^%.1f\n", op1_var, op1_exp, oprtr, op2_var, op2_exp);
-    switch(oprtr) {
+    switch (eq->oprtr) {
         case '*':
-            process_prec2(oprtr, op1_var, op2_var, out_var, op1_exp, op2_exp, out_exp);
+            process_prec2(eq);
             return;
         case '/':
-            process_prec2(oprtr, op1_var, op2_var, out_var, op1_exp, op2_exp, out_exp);
+            process_prec2(eq);
             return;
         case '+':
-            process_prec3(op1_var, op2_var, out_var, op1_exp, op2_exp, out_exp);
+            process_prec3(eq);
             return;
         case '-':
-            process_prec3(op1_var, op2_var, out_var, op1_exp, op2_exp, out_exp);
-            return;
-        default:
+            process_prec3(eq);
             return;
     }
 }

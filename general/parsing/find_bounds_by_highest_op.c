@@ -4,6 +4,7 @@
 #include <string.h>
 #include "../../utils/utils.h"
 #include "../general.h"
+#include "../../workflows/algebraic/algebraic.h"
 
 static bool find_position(char* c, bool scale_needed, short* scale)
 {

@@ -10,16 +10,18 @@
                 "-g",
 
                 "${workspaceFolder}/main.c",
-                "${workspaceFolder}/clean_input.c",
                 "${workspaceFolder}/enter_workflow.c",
+                "${workspaceFolder}/remove_spaces.c",
 
                 "${workspaceFolder}/workflows/arithmetic/process_arithmetic.c",
                 "${workspaceFolder}/workflows/arithmetic/solve.c",
 
 
                 "${workspaceFolder}/workflows/algebraic/calculate_vars.c",
+                
                 "${workspaceFolder}/workflows/algebraic/create_var_str.c",
                 "${workspaceFolder}/workflows/algebraic/handle_1x.c",
+                "${workspaceFolder}/workflows/algebraic/handle_vars.c",
                 "${workspaceFolder}/workflows/algebraic/init_vars.c",
                 "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
                 "${workspaceFolder}/workflows/algebraic/process_algebraic.c",
@@ -56,7 +58,6 @@
                 "${workspaceFolder}/general/verifications/verify.c",
                 
                 "${workspaceFolder}/utils/balance_chars.c",
-                "${workspaceFolder}/utils/check_vars.c",
                 "${workspaceFolder}/utils/collapse_str.c",
                 "${workspaceFolder}/utils/copy_bounded_str.c",
                 "${workspaceFolder}/utils/insert_str.c",

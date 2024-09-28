@@ -1,10 +1,13 @@
 #include "../../main.h"
+#include <stdbool.h>
 
-void calculate_vars(char oprtr, char op1_var, char op2_var, char* out_var, double op1_exp, double op2_exp, double* out_exp);
+
 void create_var_str(char* in_var, char* in_exp, char* out);
+char* find_var(char* s);
 void init_vars(void);
 void insert_1(char* s);
 void insert_eqzero(char* s);
+bool is_var(char c);
 void parse_var(char* in, char* out_var, double* out_exp);
 void process_algebraic(char* s);
 void rearrange(char* s);
@@ -37,3 +40,67 @@ struct Variables {
     char resultds[STR_MAXLEN];
 };
 extern struct Variables vars;
+
+
+
+struct EquationAlg {
+
+    char oprtr;
+
+
+    char op1_num_base_s[STR_MAXLEN];
+    char op1_num_var;
+    char op1_num_exp_s[STR_MAXLEN];
+
+    char op1_den_base_s[STR_MAXLEN];
+    char op1_den_var;
+    char op1_den_exp_s[STR_MAXLEN];
+
+
+    char op2_num_base_s[STR_MAXLEN];
+    char op2_num_var;
+    char op2_num_exp_s[STR_MAXLEN];
+
+    char op2_den_base_s[STR_MAXLEN];
+    char op2_den_var;
+    char op2_den_exp_s[STR_MAXLEN];
+
+
+    double op1_num_base_d;
+    double op1_num_exp_d;
+
+    double op1_den_base_d;
+    double op1_den_exp_d;
+
+
+    double op2_num_base_d;
+    double op2_num_exp_d;
+
+    double op2_den_base_d;
+    double op2_den_exp_d;
+
+
+    double res_num_base_d;
+    double res_num_exp_d;
+
+    char res_num_var;
+
+    char res_num_base_s[STR_MAXLEN];
+    char res_num_exp_s[STR_MAXLEN];
+
+    double res_den_base_d;
+    double res_den_exp_d;
+
+    char res_den_var;
+
+    char res_den_base_s[STR_MAXLEN];
+    char res_den_exp_s[STR_MAXLEN];
+
+
+    char result[STR_MAXLEN];
+    
+};
+extern struct EquationAlg eq_alg;
+
+
+void calculate_vars(struct EquationAlg* eq);

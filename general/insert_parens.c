@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../general/general.h"
 #include "../utils/utils.h"
+#include "../workflows/algebraic/algebraic.h"
 
 static bool find_position(const char* c, bool scale_needed, short* scale)
 {

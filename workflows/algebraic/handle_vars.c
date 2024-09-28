@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 
 static const char vars[] = {
@@ -13,13 +14,13 @@ bool is_var(char c)
     return strchr(vars, c);
 }
 
-bool str_contains_var(char* s)
+char* find_var(char* s)
 {
-    while (*s){
+    while (*s) {
         if (is_var(*s)) {
-            return true;
+            return s;
         }
         s++;
     }
-    return false;
+    return NULL;
 }
