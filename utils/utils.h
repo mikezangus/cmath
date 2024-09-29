@@ -1,6 +1,6 @@
 #include <stdbool.h>
 
-void balance_chars(char c, short* scale, char c_plus, char c_minus);
+void balance_chars(char c, short* scale, char plus, char minus);
 
 void collapse_str(char* start, char* end);
 void copy_bounded_str(char* input_start, char* input_end, char* output);

@@ -1,16 +1,17 @@
 #include <stdbool.h>
 
-void convert_str_to_d(char* s, double* d)
+double convert_str_to_d(char* s)
 {
-    bool negative_sign = false;
-    bool fractional = false;
-
+    if (*s == '\0') {
+        return 1.0;
+    }
     int digit = 0;
     double result = 0.0;
     double divisor = 10.0;
-
+    bool negative = false;
+    bool fractional = false;
     if (*s == '-') {
-        negative_sign = true;
+        negative = true;
         s++;
     }
     for (char* p = s; *p; p++) {
@@ -26,5 +27,5 @@ void convert_str_to_d(char* s, double* d)
             divisor *= 10;
         }
     }
-    *d = negative_sign ? -result : result;
+    return negative ? -result : result;
 }
