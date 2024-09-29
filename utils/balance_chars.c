@@ -1,8 +1,8 @@
-void balance_chars(char c, short* scale, char c_plus, char c_minus)
+void balance_chars(char c, short* scale, char plus, char minus)
 {
-    if (c == c_plus) {
+    if (c == plus) {
         (*scale)++;
-    } else if (c == c_minus) {
+    } else if (c == minus) {
         (*scale)--;
     }
 }
