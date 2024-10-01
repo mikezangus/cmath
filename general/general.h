@@ -16,7 +16,8 @@ void insert_denom(char* d1, char* d2);
 void insert_parens(char* s);
 void insert_result(char* destination, int l_bound, int r_bound, char* insertion);
 
-bool is_divisible(long long op1, long long op2);
+bool is_operable(long long op1, char oprtr, long long op2);
 
 void rearrange(char* s);
 void reduce_fraction(double* n, double* d);
+void remove_unnecessary_parens(char* s);
