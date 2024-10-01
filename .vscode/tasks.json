@@ -16,9 +16,6 @@
                 "${workspaceFolder}/workflows/arithmetic/process_arithmetic.c",
                 "${workspaceFolder}/workflows/arithmetic/solve.c",
 
-                "${workspaceFolder}/workflows/arithmetic/bounding/find_bounds_by_highest_op.c",
-                "${workspaceFolder}/workflows/arithmetic/bounding/find_bounds_by_parens.c",
-                "${workspaceFolder}/workflows/arithmetic/bounding/find_bounds.c",
                 "${workspaceFolder}/workflows/arithmetic/parsing/parse_division.c",
                 "${workspaceFolder}/workflows/arithmetic/parsing/parse_operand.c",
                 "${workspaceFolder}/workflows/arithmetic/parsing/parse.c",
@@ -29,6 +26,7 @@
                 "${workspaceFolder}/workflows/algebraic/create_var_str.c",
                 "${workspaceFolder}/workflows/algebraic/handle_mult1.c",
                 "${workspaceFolder}/workflows/algebraic/handle_vars.c",
+                "${workspaceFolder}/workflows/algebraic/init_eq_alg.c",
                 "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
                 "${workspaceFolder}/workflows/algebraic/insert_exp1.c",
                 "${workspaceFolder}/workflows/algebraic/process_algebraic.c",
@@ -60,9 +58,10 @@
                 "${workspaceFolder}/general/reduce_fraction.c",
                 "${workspaceFolder}/general/remove_unnecessary_parens.c",
 
-                "${workspaceFolder}/general/parsing/find_bounds_by_highest_op.c",
-                "${workspaceFolder}/general/parsing/find_bounds_by_parens.c",
-                "${workspaceFolder}/general/parsing/find_bounds.c",
+                "${workspaceFolder}/general/bounding/find_bounds_by_highest_op.c",
+                "${workspaceFolder}/general/bounding/find_bounds_by_parens.c",
+                "${workspaceFolder}/general/bounding/find_bounds.c",
+
                 "${workspaceFolder}/general/parsing/parse_equation.c",
 
                 "${workspaceFolder}/general/verifications/oprtr_exists.c",

@@ -2,8 +2,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include "../../utils/utils.h"
 #include "../general.h"
+#include "../../utils/utils.h"
 #include "../../workflows/algebraic/algebraic.h"
 
 static bool find_position(char* c, bool scale_needed, short* scale)

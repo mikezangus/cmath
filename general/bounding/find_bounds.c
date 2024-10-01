@@ -1,12 +1,11 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "bounding.h"
-#include "../parsing/parsing.h"
 
-bool find_bounds_ar(char* s, char** l_bound, char** r_bound)
+bool find_bounds(char* s, char** l_bound, char** r_bound)
 {
-    if (!find_bounds_by_parens_ar(s, l_bound, r_bound) &&
-        !find_bounds_by_highest_op_ar(s, l_bound, r_bound)
+    if (!find_bounds_by_parens(s, l_bound, r_bound) &&
+        !find_bounds_by_highest_op(s, l_bound, r_bound)
     ) {
         return false;
     }

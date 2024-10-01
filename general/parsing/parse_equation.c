@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include "parsing.h"
 #include "../general.h"
+#include "../bounding/bounding.h"
 #include "../../main.h"
 #include "../../utils/utils.h"
 
