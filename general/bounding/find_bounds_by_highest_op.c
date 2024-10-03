@@ -51,10 +51,11 @@ static char* find_right(char* s, char *start)
 
 bool find_bounds_by_highest_op(char* s, char** l_bound, char** r_bound)
 {
+    char* start = *s != '-' ? s : s + 1;
     char* op = NULL;
-    if (!(op = strpbrk(s, "^")) &&
-        !(op = strpbrk(s, "*/")) &&
-        !(op = strpbrk(s, "+-"))
+    if (!(op = strpbrk(start, "^")) &&
+        !(op = strpbrk(start, "*/")) &&
+        !(op = strpbrk(start, "+-"))
     ) {
         return false;
     }
