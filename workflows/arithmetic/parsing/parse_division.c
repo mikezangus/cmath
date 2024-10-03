@@ -4,9 +4,9 @@
 #include <string.h>
 #include "parsing.h"
 #include "../arithmetic.h"
-#include "../bounding/bounding.h"
 #include "../../../main.h"
 #include "../../../general/general.h"
+#include "../../../general/bounding/bounding.h"
 #include "../../../utils/utils.h"
 
 static bool is_paren_depth_same(char* p1, char* p2)
@@ -41,7 +41,7 @@ static bool parse_next_operation(char** start, char** end, char* p_op1, char* p_
 {
     char* l_bound = NULL;
     char* r_bound = NULL;
-    if (!find_bounds_ar(*end, &l_bound, &r_bound)) {
+    if (!find_bounds(*end, &l_bound, &r_bound)) {
         return false;
     }
     char op1[STR_MAXLEN] = {0};

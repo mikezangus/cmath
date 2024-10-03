@@ -30,7 +30,7 @@ struct EqAr {
     char result_s[STR_MAXLEN];
 
 };
-extern struct EqAr eq;
+extern struct EqAr eq_ar;
 
 void parse_arithmetic(char* s, struct EqAr* eq, char** l_bound, char** r_bound);
 void process_arithmetic(char* s);

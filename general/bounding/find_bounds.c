@@ -9,6 +9,9 @@ bool find_bounds(char* s, char** l_bound, char** r_bound)
     ) {
         return false;
     }
-    printf("Bounds: %c%c ... %c%c\n", *(*l_bound), *(*l_bound + 1), *(*r_bound - 1), *(*r_bound));
+    printf(
+        "\nBounds: %c%c ... %c%c\n",
+        *(*l_bound), *(*l_bound + 1), *(*r_bound - 1), *(*r_bound)
+    );
     return true;
 }

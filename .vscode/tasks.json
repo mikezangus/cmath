@@ -29,11 +29,11 @@
                 "${workspaceFolder}/workflows/algebraic/init_eq_alg.c",
                 "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
                 "${workspaceFolder}/workflows/algebraic/insert_exp1.c",
+                "${workspaceFolder}/workflows/algebraic/insert_mult.c",
                 "${workspaceFolder}/workflows/algebraic/process_algebraic.c",
                 "${workspaceFolder}/workflows/algebraic/rearrange.c",
-                "${workspaceFolder}/workflows/algebraic/remove_exp1.c",
-                "${workspaceFolder}/workflows/algebraic/remove_vars.c",
                 "${workspaceFolder}/workflows/algebraic/solve_alg.c",
+                "${workspaceFolder}/workflows/algebraic/parsing/parse.c",
 
 
 
@@ -61,8 +61,6 @@
                 "${workspaceFolder}/general/bounding/find_bounds_by_highest_op.c",
                 "${workspaceFolder}/general/bounding/find_bounds_by_parens.c",
                 "${workspaceFolder}/general/bounding/find_bounds.c",
-
-                "${workspaceFolder}/general/parsing/parse_equation.c",
 
                 "${workspaceFolder}/general/verifications/oprtr_exists.c",
                 "${workspaceFolder}/general/verifications/parens_balanced.c",

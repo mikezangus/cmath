@@ -1,12 +1,9 @@
 #include <stdio.h>
 #include "arithmetic.h"
+#include "parsing/parsing.h"
 #include "../../main.h"
 #include "../../general/general.h"
 #include "../../utils/utils.h"
-#include "parsing/parsing.h"
-
-struct Bounds bounds;
-char dashes[] = "-------------------------";
 
 static void convert_strs_to_doubles(struct EqAr* eq)
 {
@@ -37,7 +34,10 @@ static void adjust_bounds(char** l_bound, char** r_bound)
 
 void solve(char* s, struct EqAr* eq)
 {
-    printf("\n%s\nSolving for:\n%s\n", dashes, s);
+    printf(
+        "\n-------------------------\n"
+        "Solving for:\n%s\n", s
+    );
     char* l_bound = NULL;
     char* r_bound = NULL;
     parse_arithmetic(s, eq, &l_bound, &r_bound);
