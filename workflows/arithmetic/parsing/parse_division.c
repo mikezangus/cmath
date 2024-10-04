@@ -18,7 +18,7 @@ static bool is_paren_depth_same(char* p1, char* p2)
     return scale == 0;
 }
 
-static bool parse_next_digit(char* op1, char* oprtr, char* op2, char** end, struct EqAr* eq)
+static bool parse_next_digit(char* op1, char* oprtr, char* op2, char** end, EqAr* eq)
 {
     if (!isdigit(*(oprtr + 1))) {
         return false;
@@ -37,7 +37,7 @@ static bool parse_next_digit(char* op1, char* oprtr, char* op2, char** end, stru
     return true;
 }
 
-static bool parse_next_operation(char** start, char** end, char* p_op1, char* p_oprtr, char* p_op2, struct EqAr* eq)
+static bool parse_next_operation(char** start, char** end, char* p_op1, char* p_oprtr, char* p_op2, EqAr* eq)
 {
     char* l_bound = NULL;
     char* r_bound = NULL;
@@ -71,7 +71,9 @@ static bool parse_next_operation(char** start, char** end, char* p_op1, char* p_
     return false;
 }
 
-bool parse_division(char** start, char* div_op, char** end, struct EqAr* eq)
+// static bool go_right(char* l_bound, char** r_bound, struct Eq)
+
+bool parse_division(char** start, char* div_op, char** end, EqAr* eq)
 {
     char op1[STR_MAXLEN] = {0};
     char op2[STR_MAXLEN] = {0};

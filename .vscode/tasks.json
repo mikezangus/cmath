@@ -13,7 +13,8 @@
                 "${workspaceFolder}/clean_input.c",
                 "${workspaceFolder}/enter_workflow.c",
 
-                "${workspaceFolder}/workflows/arithmetic/process_arithmetic.c",
+                "${workspaceFolder}/workflows/arithmetic/init.c",
+                "${workspaceFolder}/workflows/arithmetic/process.c",
                 "${workspaceFolder}/workflows/arithmetic/solve.c",
 
                 "${workspaceFolder}/workflows/arithmetic/parsing/parse_division.c",

@@ -1,9 +1,12 @@
 #ifndef ARITHMETIC_H
 #define ARITHMETIC_H
 
+
+#include <stdbool.h>
 #include "../../main.h"
 
-struct EqAr {
+
+typedef struct EqAr {
 
     char op1_num_s[STR_MAXLEN];
     char op1_den_s[STR_MAXLEN];
@@ -29,11 +32,13 @@ struct EqAr {
 
     char result_s[STR_MAXLEN];
 
-};
-extern struct EqAr eq_ar;
+} EqAr;
 
-void parse_arithmetic(char* s, struct EqAr* eq, char** l_bound, char** r_bound);
+
+void init(EqAr* eq);
+void parse_arithmetic(char* s, EqAr* eq, char** l_bound, char** r_bound);
 void process_arithmetic(char* s);
-void solve(char* s, struct EqAr* eq);
+bool solve_arithmetic(char* s, EqAr* eq);
+
 
 #endif // ARITHMETIC_H

@@ -9,7 +9,7 @@
 #include "../../../utils/utils.h"
 
 
-static void parse_operation(char** start, char** end, struct EqAr* eq)
+static void parse_operation(char** start, char** end, EqAr* eq)
 {
     char* oprtr = find_oprtr((*start) + 1, *end);
     if (*oprtr == '/') {
@@ -21,7 +21,7 @@ static void parse_operation(char** start, char** end, struct EqAr* eq)
     }
 }
 
-void parse_arithmetic(char* s, struct EqAr* eq, char** l_bound, char** r_bound)
+void parse_arithmetic(char* s, EqAr* eq, char** l_bound, char** r_bound)
 {
     if (!find_bounds(s, l_bound, r_bound)) {
         return;
