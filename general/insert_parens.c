@@ -19,7 +19,7 @@ static const char* find_left(const char* s, const char* op)
     const char* p;
     short scale = 0;
     bool scale_needed = false;
-    for (p = op - 1; p >= s; p--) {
+    for (p = op; p >= s; p--) {
         if (*p == ')') {
             scale_needed = true;
         }
@@ -35,9 +35,7 @@ static const char* find_right(const char* s, const char* op)
     const char* p;
     short scale = 0;
     bool scale_needed = false;
-    const char* eqsign = strchr(s, '=');
-    const char* end = eqsign ? eqsign : s + strlen(s);
-    for (p = op + 1; *p && p < end; p++) {
+    for (p = op; *p && *p != '='; p++) {
         if (*p == '(') {
             scale_needed = true;
         }
@@ -50,13 +48,12 @@ static const char* find_right(const char* s, const char* op)
 
 static bool insert(char* s, const char* op)
 {
-    const char* l = find_left(s, op);
-    const char* r = find_right(s, op);
-    if (
-        !l ||
-        !r ||
-        *l == '(' && *r == ')' ||
-        l == s && r == strchr(s, '=')
+    const char* l = find_left(s, op - 1);
+    const char* r = find_right(s, op + 1);
+    if (!l
+        || !r
+        || (*l == '(' && *r == ')')
+        || (l == s && r == strchr(s, '='))
     ) {
         return false;
     }

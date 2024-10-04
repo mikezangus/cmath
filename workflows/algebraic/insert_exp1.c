@@ -1,7 +1,6 @@
 #include "algebraic.h"
 #include "../../utils/utils.h"
 
-
 void insert_exp1(char* s)
 {
     for (char* p = s; *p; p++) {

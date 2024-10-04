@@ -9,15 +9,15 @@
 #include "../../../utils/utils.h"
 
 
-static void parse_operation(char** start, char** end, EqAr* eq)
+static void parse_operation(char** l_bound, char** r_bound, EqAr* eq)
 {
-    char* oprtr = find_oprtr((*start) + 1, *end);
+    char* oprtr = find_oprtr((*l_bound) + 1, *r_bound);
     if (*oprtr == '/') {
-        parse_division(start, oprtr, end, eq);
+        parse_division(l_bound, oprtr, r_bound, eq);
     } else {
         eq->oprtr = *oprtr;
-        parse_operand(*start, oprtr - 1, eq->op1_num_s);
-        parse_operand(oprtr + 1, *end, eq->op2_num_s);
+        parse_operand(*l_bound, oprtr - 1, eq->op1_num_s);
+        parse_operand(oprtr + 1, *r_bound, eq->op2_num_s);
     }
 }
 

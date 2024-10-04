@@ -26,13 +26,14 @@ double calculate_result(double op1, char oprtr, double op2)
         default:
             fprintf(
                 stderr,
-                "%s | Invalid operator: %c\n",
+                "\n%s | Invalid operator: %c\n",
                 __FILE__, oprtr
             );
             return NAN;
     }
     printf(
-        "\nCalculation:\n%.2f %c %.2f = %.2f\n",
+        "\nCalculation:\n"
+        "%.2f %c %.2f = %.2f\n",
         op1, oprtr, op2, result
     );
     return result;
