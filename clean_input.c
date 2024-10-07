@@ -17,7 +17,9 @@ static void remove_spaces(char* s)
 static void terminate_newline(char* s)
 {
     char* n = strchr(s, '\n');
-    n ? *n = '\0' : (void)0;
+    if (n) {
+        *n = '\0';
+    }
 }
 
 void clean_input(char* s)
