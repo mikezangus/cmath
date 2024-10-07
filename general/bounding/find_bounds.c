@@ -1,17 +1,19 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "bounding.h"
+#include "../../main.h"
 
-bool find_bounds(char* s, char** l_bound, char** r_bound)
+bool find_bounds(char* s, Bounds* b)
 {
-    if (!find_bounds_by_parens(s, l_bound, r_bound) &&
-        !find_bounds_by_highest_op(s, l_bound, r_bound)
+    init_bounds(b);
+    if (!find_bounds_by_parens(s, b) &&
+        !find_bounds_by_highest_op(s, b)
     ) {
         return false;
     }
     printf(
         "\nBounds: %c%c ... %c%c\n",
-        *(*l_bound), *(*l_bound + 1), *(*r_bound - 1), *(*r_bound)
+        *b->l, *(b->l + 1), *(b->r - 1), *(b->r)
     );
     return true;
 }

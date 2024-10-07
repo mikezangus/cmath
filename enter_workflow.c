@@ -1,17 +1,16 @@
 #include <stdbool.h>
+#include "main.h"
 #include "utils/utils.h"
-#include "workflows/arithmetic/arithmetic.h"
 #include "workflows/algebraic/algebraic.h"
+#include "workflows/arithmetic/arithmetic.h"
 
-#include <stdio.h>
+Bounds b;
 
 void enter_workflow(char* s)
 {
     if (!find_var(s)) {
-        printf("Processing arithmetic\n");
-        process_arithmetic(s);
+        process_arithmetic(s, &b);
     } else {
-        printf("Processing algebra\n");
         process_algebraic(s);
     }
 }

@@ -4,6 +4,11 @@
 #define NUM_MAXLEN 26
 #define STR_MAXLEN 100
 
+typedef struct Bounds {
+    char* l;
+    char* r;
+} Bounds;
+
 void clean_input(char* s);
 void enter_workflow(char* s);
 

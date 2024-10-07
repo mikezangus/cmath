@@ -3,55 +3,54 @@
 #include <stdio.h>
 #include <string.h>
 #include "../general.h"
+#include "../../main.h"
 #include "../../utils/utils.h"
 #include "../../workflows/algebraic/algebraic.h"
 
-static bool find_position(char* c, bool scale_needed, short* scale)
+static bool find_position(char* c, bool skip_parens, short* scale)
 {
-    if (scale_needed) {
+    if (skip_parens) {
         balance_chars(*c, scale, '(', ')');
-        return (*scale == 0 && !isdigit(*c) && !is_var(*c));
+        return *scale == 0 && !isdigit(*c) && !is_var(*c);
     }
-    return (!isdigit(*c) && !is_var(*c));
+    return !isdigit(*c) && !is_var(*c);
 }
 
-static char* find_left(char* start, char* end)
+static char* find_l_bound(char* start, char* end)
 {
     char* p;
     short scale = 0;
-    bool scale_needed = false;
+    bool skip_parens = false;
     for (p = start; p >= end; p--) {
         if (*p == ')') {
-            scale_needed = true;
+            skip_parens = true;
         }
-        if (find_position(p, scale_needed, &scale)) {
+        if (find_position(p, skip_parens, &scale)) {
             break;
         }
     }
-    return (p == end) ? p : p + 1;
+    return p == end ? p : p + 1;
 }
 
-static char* find_right(char* s, char *start)
+static char* find_r_bound(char *start)
 {
     char* p;
     short scale = 0;
-    bool scale_needed = false;
-    char* eqsign = strchr(s, '=');
-    char* end = eqsign ? eqsign : s + strlen(s);
-    for (p = start; *p && p < end; p++) {
+    bool skip_parens = false;
+    for (p = start; *p && *p != '='; p++) {
         if (*p == '(') {
-            scale_needed = true;
+            skip_parens = true;
         }
-        if (find_position(p, scale_needed, &scale)) {
+        if (find_position(p, skip_parens, &scale)) {
             break;
         }
     }
     return p - 1;
 }
 
-bool find_bounds_by_highest_op(char* s, char** l_bound, char** r_bound)
+bool find_bounds_by_highest_op(char* s, Bounds* b)
 {
-    char* start = *s != '-' ? s : s + 1;
+    char* start = *s == '-' ? s + 1 : s;
     char* op = NULL;
     if (!(op = strpbrk(start, "^")) &&
         !(op = strpbrk(start, "*/")) &&
@@ -59,7 +58,7 @@ bool find_bounds_by_highest_op(char* s, char** l_bound, char** r_bound)
     ) {
         return false;
     }
-    *l_bound = find_left(op - 1, s);
-    *r_bound = find_right(s, op + 1);
+    b->l = find_l_bound(op - 1, s);
+    b->r = find_r_bound(op + 1);
     return true;
 }
