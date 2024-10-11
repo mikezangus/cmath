@@ -7,7 +7,7 @@
 #include "../../utils/utils.h"
 #include "../../workflows/algebraic/algebraic.h"
 
-static bool find_position(char* c, bool skip_parens, short* scale)
+static bool find_position(char* c, bool skip_parens, int* scale)
 {
     if (skip_parens) {
         balance_chars(*c, scale, '(', ')');
@@ -19,7 +19,7 @@ static bool find_position(char* c, bool skip_parens, short* scale)
 static char* find_l_bound(char* start, char* end)
 {
     char* p;
-    short scale = 0;
+    int scale = 0;
     bool skip_parens = false;
     for (p = start; p >= end; p--) {
         if (*p == ')') {
@@ -35,7 +35,7 @@ static char* find_l_bound(char* start, char* end)
 static char* find_r_bound(char *start)
 {
     char* p;
-    short scale = 0;
+    int scale = 0;
     bool skip_parens = false;
     for (p = start; *p && *p != '='; p++) {
         if (*p == '(') {
@@ -48,17 +48,16 @@ static char* find_r_bound(char *start)
     return p - 1;
 }
 
-bool find_bounds_by_highest_op(char* s, Bounds* b)
+bool find_bounds_by_highest_op(char* s, char** l_bound, char** r_bound)
 {
     char* start = *s == '-' ? s + 1 : s;
     char* op = NULL;
     if (!(op = strpbrk(start, "^")) &&
         !(op = strpbrk(start, "*/")) &&
-        !(op = strpbrk(start, "+-"))
-    ) {
+        !(op = strpbrk(start, "+-"))) {
         return false;
     }
-    b->l = find_l_bound(op - 1, s);
-    b->r = find_r_bound(op + 1);
+    *l_bound = find_l_bound(op - 1, s);
+    *r_bound = find_r_bound(op + 1);
     return true;
 }

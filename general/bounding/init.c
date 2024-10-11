@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "../../main.h"
 
-void init_bounds(Bounds* b)
+void init_bounds(char** l_bound, char** r_bound)
 {
-    b->l = NULL;
-    b->r = NULL;
+    *l_bound = NULL;
+    *r_bound = NULL;
 }
