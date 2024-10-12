@@ -2,12 +2,15 @@
 #include "../arithmetic.h"
 
 typedef enum  {
-    FAILED_TO_PARSE = 0,
-    PARSED_TO_CURRENT = 1,
+    FAIL = 0,
+    PARSED_TO_PREV = 1,
     PARSED_TO_NEW = 2,
-    FIND_NEW_OPERATION = 3,
-} Status;
+} DivStatus;
 
-void parse_arithmetic(char* s, EqAr* eq, Bounds* b);
-bool parse_division(char* s, char* div_oprtr, EqAr* eq, Bounds* b);
-void parse_operand(char* dst, const char* start, const char* end);
+char* extract_num_bwd(char* dst, char* start, char* min);
+char* extract_num_fwd(char* dst, char* start);
+bool parse_arithmetic(char* s, char* start, EqAr* eq, Bounds* b);
+bool parse_inoperable_division(char* s, char* op1, char* op2,
+                               EqAr* eq, Bounds* b);
+void parse_oprtn(char *dst_op1, char* dst_oprtr, char* dst_op2,
+                 char *src_op1, char src_oprtr, char* src_op2);
