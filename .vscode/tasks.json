@@ -13,17 +13,17 @@
                 "${workspaceFolder}/clean_input.c",
                 "${workspaceFolder}/enter_workflow.c",
 
-                "${workspaceFolder}/workflows/arithmetic/init.c",
+                "${workspaceFolder}/workflows/arithmetic/init_eq.c",
                 "${workspaceFolder}/workflows/arithmetic/process.c",
                 "${workspaceFolder}/workflows/arithmetic/solve.c",
 
-                "${workspaceFolder}/workflows/arithmetic/parsing/parse_division.c",
-                "${workspaceFolder}/workflows/arithmetic/parsing/parse_operand.c",
+                "${workspaceFolder}/workflows/arithmetic/parsing/extract_num.c",
+                "${workspaceFolder}/workflows/arithmetic/parsing/parse_inoperable_division.c",
+                "${workspaceFolder}/workflows/arithmetic/parsing/parse_oprtn.c",
                 "${workspaceFolder}/workflows/arithmetic/parsing/parse.c",
 
 
                 "${workspaceFolder}/workflows/algebraic/calculate_vars.c",
-                
                 "${workspaceFolder}/workflows/algebraic/create_var_str.c",
                 "${workspaceFolder}/workflows/algebraic/handle_mult1.c",
                 "${workspaceFolder}/workflows/algebraic/handle_vars.c",
@@ -37,31 +37,25 @@
                 "${workspaceFolder}/workflows/algebraic/parsing/parse.c",
 
 
-
-                
                 "${workspaceFolder}/general/calculate_result.c",
                 "${workspaceFolder}/general/convert_d_to_str.c",
                 "${workspaceFolder}/general/convert_str_to_d.c",
                 "${workspaceFolder}/general/convert_str_to_int.c",
                 "${workspaceFolder}/general/create_result_str.c",
-
                 "${workspaceFolder}/general/equate_denoms.c",
                 "${workspaceFolder}/general/equation_is_operable.c",
-
                 "${workspaceFolder}/general/find_oprtr.c",
-
                 "${workspaceFolder}/general/insert_denom.c",
                 "${workspaceFolder}/general/insert_parens.c",
                 "${workspaceFolder}/general/insert_result.c",
-
                 "${workspaceFolder}/general/is_operable.c",
-
                 "${workspaceFolder}/general/reduce_fraction.c",
                 "${workspaceFolder}/general/remove_unnecessary_parens.c",
 
                 "${workspaceFolder}/general/bounding/find_bounds_by_highest_op.c",
                 "${workspaceFolder}/general/bounding/find_bounds_by_parens.c",
                 "${workspaceFolder}/general/bounding/find_bounds.c",
+                "${workspaceFolder}/general/bounding/init.c",
 
                 "${workspaceFolder}/general/verifications/oprtr_exists.c",
                 "${workspaceFolder}/general/verifications/parens_balanced.c",
@@ -70,8 +64,10 @@
                 "${workspaceFolder}/utils/balance_chars.c",
                 "${workspaceFolder}/utils/collapse_str.c",
                 "${workspaceFolder}/utils/copy_bounded_str.c",
+                "${workspaceFolder}/utils/find_nearest_oprtr.c",
                 "${workspaceFolder}/utils/insert_str.c",
                 "${workspaceFolder}/utils/is_oprtr.c",
+                "${workspaceFolder}/utils/is_paren_depth_same.c",
                 "${workspaceFolder}/utils/print_bounded_str.c",
                 "${workspaceFolder}/utils/print_str.c",
                 
