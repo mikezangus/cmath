@@ -5,56 +5,55 @@
 #include "../utils/utils.h"
 #include "../workflows/algebraic/algebraic.h"
 
-static bool find_position(const char* c, bool scale_needed, short* scale)
+static bool find_position(const char* p, bool skip_parens, int* scale)
 {
-    if (scale_needed) {
-        balance_chars(*c, scale, '(', ')');
-        return (*scale == 0 && !isdigit(*c) && !is_var(*c));
+    if (!skip_parens) {
+        return !isdigit(*p) && !is_var(*p);
     }
-    return !isdigit(*c) && !is_var(*c);
+    balance_chars(*p, scale, '(', ')');
+    return (*scale == 0 && !isdigit(*p) && !is_var(*p));
 }
 
-static const char* find_left(const char* s, const char* op)
+static const char* find_l(const char* s, const char* oprtr)
 {
     const char* p;
-    short scale = 0;
-    bool scale_needed = false;
-    for (p = op; p >= s; p--) {
+    int scale = 0;
+    bool skip_parens = false;
+    for (p = oprtr; p >= s; p--) {
         if (*p == ')') {
-            scale_needed = true;
+            skip_parens = true;
         }
-        if (find_position(p, scale_needed, &scale)) {
+        if (find_position(p, skip_parens, &scale)) {
             break;
         }
     }
     return p;
 }
 
-static const char* find_right(const char* s, const char* op)
+static const char* find_r(const char* s, const char* oprtr)
 {
     const char* p;
-    short scale = 0;
-    bool scale_needed = false;
-    for (p = op; *p && *p != '='; p++) {
+    int scale = 0;
+    bool skip_parens = false;
+    for (p = oprtr; *p && *p != '='; p++) {
         if (*p == '(') {
-            scale_needed = true;
+            skip_parens = true;
         }
-        if (find_position(p, scale_needed, &scale)) {
+        if (find_position(p, skip_parens, &scale)) {
             break;
         }
     }
     return p;
 }
 
-static bool insert(char* s, const char* op)
+static bool insert(char* s, const char* oprtr)
 {
-    const char* l = find_left(s, op - 1);
-    const char* r = find_right(s, op + 1);
-    if (!l
-        || !r
+    const char* l = find_l(s, oprtr - 1);
+    const char* r = find_r(s, oprtr + 1);
+    if (!l || !r
         || (*l == '(' && *r == ')')
-        || (l == s && r == strchr(s, '='))
-    ) {
+        || (l == s && r == strchr(s, '=')))
+    {
         return false;
     }
     l == s ? insert_str(s, "(", l) : insert_str(s, "(", l + 1);
@@ -62,9 +61,9 @@ static bool insert(char* s, const char* op)
     return true;
 }
 
-static void insert_by_op_precedent(char* s, bool (*is_prec_oprtr)(char))
+static void insert_by_oprtr_prec(char* s, bool (*is_prec_oprtr)(char))
 {
-    for (char* p = s; *p && *p != '='; p++) {
+    for (char* p = s; *p; p++) {
         if (is_prec_oprtr(*p) && insert(s, p)) {
             p += 2;
         }
@@ -73,6 +72,6 @@ static void insert_by_op_precedent(char* s, bool (*is_prec_oprtr)(char))
 
 void insert_parens(char* s)
 {
-    insert_by_op_precedent(s, is_prec1_oprtr);
-    insert_by_op_precedent(s, is_prec2_oprtr);
+    insert_by_oprtr_prec(s, is_prec1_oprtr);
+    insert_by_oprtr_prec(s, is_prec2_oprtr);
 }
