@@ -31,6 +31,6 @@ void remove_unnecessary_parens(char* s)
         }
         collapse_str(l_paren, l_paren);
         collapse_str(r_paren - 1, r_paren - 1);
-        p = r_paren - 2;
+        p = s;
     }
 }
