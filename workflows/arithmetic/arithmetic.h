@@ -31,14 +31,13 @@ typedef struct EqAr {
     char result_den_s[STR_MAXLEN];
 
     char result_s[STR_MAXLEN];
-
+    
 } EqAr;
 
 
-void init(EqAr* eq);
-void parse_arithmetic(char* s, EqAr* eq, char** l_bound, char** r_bound);
-void process_arithmetic(char* s);
-bool solve_arithmetic(char* s, EqAr* eq);
+void init_eq(EqAr* eq);
+void process_arithmetic(char* s, Bounds* b);
+bool solve_arithmetic(char* s, EqAr* eq, Bounds* b);
 
 
 #endif // ARITHMETIC_H

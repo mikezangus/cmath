@@ -2,11 +2,13 @@
 #include <stdio.h>
 #include "../../main.h"
 
-bool find_bounds_by_parens(char* s, char** l_bound, char** r_bound)
+bool find_bounds_by_parens(char* start,
+                           char** l_bound,
+                           char** r_bound)
 {
     char* l_paren = NULL;
     char* r_paren = NULL;
-    for (char* p = s; *p && *p != '='; p++) {
+    for (char* p = start; *p && *p != '='; p++) {
         if (*p == '(') {
             l_paren = p;
         } else if (l_paren && *p == ')') {

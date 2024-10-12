@@ -2,7 +2,7 @@
 #include "arithmetic.h"
 #include "../../main.h"
 
-void init(EqAr* eq)
+void init_eq(EqAr* eq)
 {
     memset(eq->op1_num_s, '\0', STR_MAXLEN);
     memset(eq->op1_den_s, '\0', STR_MAXLEN);

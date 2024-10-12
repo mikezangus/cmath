@@ -11,7 +11,6 @@ bool equation_is_operable(char* op1, char* oprtr, char* op2);
 
 char* find_oprtr(char* start, char* end);
 
-void init_eq(void);
 void insert_denom(char* d1, char* d2);
 void insert_parens(char* s);
 void insert_result(char* destination, int l_bound, int r_bound, char* insertion);

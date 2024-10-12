@@ -1,7 +1,12 @@
-void copy_bounded_str(char* input_start, char* input_end, char* output)
+void copy_bounded_str(char* dst,
+                      char* src_start,
+                      char* src_end)
 {
-    for (char* p = input_start; *p && p <= input_end; p++, output++) {
-        *output = *p;
+    for (char* p = src_start;
+         *p && p <= src_end;
+         p++, dst++)
+    {
+        *dst = *p;
     }
-    *output =  '\0';
+    *dst =  '\0';
 }
