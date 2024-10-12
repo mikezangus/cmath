@@ -4,6 +4,8 @@
 #define NUM_MAXLEN 26
 #define STR_MAXLEN 100
 
+#define DASHES "-------------------------"
+
 typedef struct Bounds {
     char* l;
     char* r;
