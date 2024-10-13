@@ -18,4 +18,3 @@ bool is_operable(long long op1, char oprtr, long long op2);
 
 void rearrange(char* s);
 void reduce_fraction(double* n, double* d);
-void remove_unnecessary_parens(char* s);

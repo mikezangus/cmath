@@ -42,6 +42,10 @@ static void adjust_bounds(Bounds* b)
         b->l--;
     } else if (*(b->l - 1) != '(' && *(b->r + 1) == ')') {
         b->r++;
+    } else if (*(b->l - 1) == '(' && *(b->r + 1) == ')'
+               && *(b->l - 2) == '(' && *(b->r + 2) == ')') {
+        b->l--;
+        b->r++;
     }
 }
 
@@ -75,7 +79,6 @@ bool solve_arithmetic(char* s, Bounds* b)
     adjust_bounds(b);
     collapse_str(b->l, b->r);
     insert_str(s, eq.result_s, b->l);
-    remove_unnecessary_parens(s);
     printf("\n%s\n", DASHES);
     return true;
 }

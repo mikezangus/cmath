@@ -47,7 +47,6 @@
                 "${workspaceFolder}/general/insert_denom.c",
                 "${workspaceFolder}/general/is_operable.c",
                 "${workspaceFolder}/general/reduce_fraction.c",
-                "${workspaceFolder}/general/remove_unnecessary_parens.c",
 
                 "${workspaceFolder}/bounding/find_bounds_by_highest_op.c",
                 "${workspaceFolder}/bounding/find_bounds_by_parens.c",
