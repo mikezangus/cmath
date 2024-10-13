@@ -12,6 +12,7 @@
                 "${workspaceFolder}/main.c",
                 "${workspaceFolder}/clean_input.c",
                 "${workspaceFolder}/enter_workflow.c",
+                "${workspaceFolder}/insert_parens.c",
 
 
                 "${workspaceFolder}/workflows/arithmetic/solve.c",
@@ -44,7 +45,6 @@
                 "${workspaceFolder}/general/equation_is_operable.c",
                 "${workspaceFolder}/general/find_oprtr.c",
                 "${workspaceFolder}/general/insert_denom.c",
-                "${workspaceFolder}/general/insert_parens.c",
                 "${workspaceFolder}/general/is_operable.c",
                 "${workspaceFolder}/general/reduce_fraction.c",
                 "${workspaceFolder}/general/remove_unnecessary_parens.c",

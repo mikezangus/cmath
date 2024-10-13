@@ -1,9 +1,9 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <string.h>
-#include "../general/general.h"
-#include "../utils/utils.h"
-#include "../workflows/algebraic/algebraic.h"
+#include "general/general.h"
+#include "utils/utils.h"
+#include "workflows/algebraic/algebraic.h"
 
 static bool find_position(const char* p, bool skip_parens, int* scale)
 {
