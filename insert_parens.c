@@ -46,12 +46,30 @@ static const char* find_r(const char* s, const char* oprtr)
     return p;
 }
 
+static bool parens_already_exist(const char* l,
+                                 const char* oprtr,
+                                 const char* r)
+{
+    if (!(*l == '(') && !(*r == ')')) {
+        return false;
+    }
+    int scale_l = 0;
+    for (const char *p = l + 1; p < oprtr; p++) {
+        balance_chars(*p, &scale_l, '(', ')');
+    }
+    int scale_r = 0;
+    for (const char* p = oprtr + 1; p < r; p++) {
+        balance_chars(*p, &scale_r, '(', ')');
+    }
+    return scale_l == 0 && scale_r == 0;
+}
+
 static bool insert(char* s, const char* oprtr)
 {
     const char* l = find_l(s, oprtr - 1);
     const char* r = find_r(s, oprtr + 1);
     if (!l || !r
-        || (*l == '(' && *r == ')')
+        || parens_already_exist(l, oprtr, r)
         || (l == s && r == strchr(s, '=')))
     {
         return false;
