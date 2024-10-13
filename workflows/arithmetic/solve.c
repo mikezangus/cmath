@@ -51,7 +51,6 @@ static void adjust_bounds(Bounds* b)
 
 bool solve_arithmetic(char* s, Bounds* b)
 {
-    printf("\n%s\nSolving for:\n%s\n", DASHES, s);
     init_eq();
     parse_arithmetic(s, s, &eq, b);
     convert_strs_to_doubles();
@@ -79,6 +78,6 @@ bool solve_arithmetic(char* s, Bounds* b)
     adjust_bounds(b);
     collapse_str(b->l, b->r);
     insert_str(s, eq.result_s, b->l);
-    printf("\n%s\n", DASHES);
+    printf("%s\n", DASHES);
     return true;
 }

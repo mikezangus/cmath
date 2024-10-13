@@ -13,7 +13,8 @@ void enter_workflow(char* s)
 {
     printf("Entering workflow\n");
     while (verify(s)) {
-        printf("Verified\n");
+    // for (int i = 0; i < 5; i++) {
+        printf("\n\n%s\nSolving for:\n%s\n", DASHES, s);
         if (!find_bounds(s, &b.l, &b.r)) {
             return;
         }
