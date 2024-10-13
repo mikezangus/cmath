@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "bounding.h"
-#include "../../main.h"
+#include "../main.h"
 
 bool find_bounds(char* start, char** l_bound, char** r_bound)
 {

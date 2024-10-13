@@ -1,5 +1,4 @@
-void balance_chars(char c, int* scale,
-                   char plus, char minus)
+void balance_chars(char c, int* scale, char plus, char minus)
 {
     if (c == plus) {
         (*scale)++;

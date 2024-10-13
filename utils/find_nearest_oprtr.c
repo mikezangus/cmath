@@ -3,10 +3,7 @@
 
 static char* find_l(char* s, char* l_bound)
 {
-    for (char* p = l_bound;
-         p > s && *p != '(' && *p != ')';
-         p--)
-    {
+    for (char* p = l_bound; p > s && *p != '(' && *p != ')'; p--) {
         if (is_oprtr(*p)) {
             return p;
         }
@@ -16,10 +13,7 @@ static char* find_l(char* s, char* l_bound)
 
 static char* find_r(char* r_start)
 {
-    for (char* p = r_start;
-         *p && *p != '(' && *p != ')';
-         p++)
-    {
+    for (char* p = r_start; *p && *p != '(' && *p != ')'; p++) {
         if (is_oprtr(*p)) {
             return p;
         }

@@ -2,14 +2,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include "../general.h"
-#include "../../main.h"
-#include "../../utils/utils.h"
-#include "../../workflows/algebraic/algebraic.h"
+#include "../general/general.h"
+#include "../main.h"
+#include "../utils/utils.h"
+#include "../workflows/algebraic/algebraic.h"
 
-static bool find_position(const char* p,
-                          bool skip_parens,
-                          int* scale)
+static bool find_position(const char* p, bool skip_parens, int* scale)
 {
     if (!skip_parens) {
         return !isdigit(*p) && !is_var(*p);
@@ -50,9 +48,7 @@ static char* find_r_bound(char *start)
     return p - 1;
 }
 
-bool find_bounds_by_highest_oprtr(char* start,
-                                  char** l_bound,
-                                  char** r_bound)
+bool find_bounds_by_highest_oprtr(char* start, char** l_bound, char** r_bound)
 {
     start = *start == '-' ? start + 1 : start;
     char* op = NULL;

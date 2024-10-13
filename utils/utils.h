@@ -1,12 +1,9 @@
 #include <stdbool.h>
 
-void balance_chars(char c, int* scale,
-                   char plus, char minus);
+void balance_chars(char c, int* scale, char plus, char minus);
 
 void collapse_str(char* start, char* end);
-void copy_bounded_str(char* dst,
-                      char* src_start,
-                      char* src_end);
+void copy_bounded_str(char* dst, char* src_start, char* src_end);
 
 void insert_str(char* dst_str, const char* src_str, const char* insert_pos);
 

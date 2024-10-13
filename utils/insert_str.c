@@ -6,8 +6,7 @@ static bool is_pos_inside_dst(char* dst_str,
                               size_t dst_len,
                               const char* insert_pos)
 {
-    return insert_pos >= dst_str
-           && insert_pos <= dst_str + dst_len;
+    return insert_pos >= dst_str && insert_pos <= dst_str + dst_len;
 }
 
 void insert_str(char* dst_str, const char* src_str, const char* insert_pos)

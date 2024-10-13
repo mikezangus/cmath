@@ -4,7 +4,7 @@
 #include "../arithmetic.h"
 #include "../../../main.h"
 #include "../../../general/general.h"
-#include "../../../general/bounding/bounding.h"
+#include "../../../bounding/bounding.h"
 
 bool parse_arithmetic(char* s, char* start, EqAr* eq, Bounds* b)
 {
@@ -19,12 +19,8 @@ bool parse_arithmetic(char* s, char* start, EqAr* eq, Bounds* b)
     char op2[STR_MAXLEN] = {0};
     extract_num_bwd(op1, oprtr - 1, s);
     extract_num_fwd(op2, oprtr + 1);
-    if (is_operable(convert_str_to_int(op1),
-                    *oprtr,
-                    convert_str_to_int(op2)))
-    {
-        parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s,
-                    op1, *oprtr, op2);
+    if (is_operable(convert_str_to_int(op1), *oprtr, convert_str_to_int(op2))) {
+        parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s, op1, *oprtr, op2);
         return true;
     }
     if (*oprtr != '/') {

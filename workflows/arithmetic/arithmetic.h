@@ -35,9 +35,7 @@ typedef struct EqAr {
 } EqAr;
 
 
-void init_eq(EqAr* eq);
-void process_arithmetic(char* s, Bounds* b);
-bool solve_arithmetic(char* s, EqAr* eq, Bounds* b);
+bool solve_arithmetic(char* s, Bounds* b);
 
 
 #endif // ARITHMETIC_H
