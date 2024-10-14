@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -54,6 +55,23 @@ static bool hanging_paren(char* l_bound, char* r_bound)
     return false;
 }
 
+static bool solo_negative(char* s, char* oprtr, char* l_bound, char* r_bound)
+{
+    if (!oprtr || *oprtr != '-'
+        || isdigit(*(oprtr - 1))
+        || !isdigit(*(oprtr + 1))) {
+        return false;
+    }
+    char* l = find_l(s, l_bound - 1, false);
+    char* r = find_r(r_bound + 1, false);
+    if (!l || !r) {
+        return false;
+    }
+    collapse_str(l, l);
+    collapse_str(r - 1, r - 1);
+    return true;
+}
+
 static bool no_oprtr(char* s, char* oprtr, char* l_bound, char* r_bound)
 {
     if (oprtr) {
@@ -89,11 +107,12 @@ void remove_unneeded_parens(char* s)
     char* l_bound = NULL;
     char* r_bound = NULL;
     while (*s) {
-        if (!find_bounds(s, &l_bound, &r_bound)) {
+        if (!find_bounds_by_parens(s, &l_bound, &r_bound)) {
             return;
         }
         char* oprtr = find_oprtr(l_bound, r_bound);
         if (no_oprtr(s, oprtr, l_bound, r_bound)
+            || solo_negative(s, oprtr, l_bound, r_bound)
             || div_oprtr(s, oprtr, l_bound, r_bound)
             || hanging_paren(l_bound, r_bound)) {
             s = s;
