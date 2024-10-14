@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "utils.h"
 
-static char* find_l(char* s, char* l_bound)
+static char* find_l(char* s, char* l_start)
 {
-    for (char* p = l_bound; p > s && *p != '(' && *p != ')'; p--) {
+    for (char* p = l_start; p > s && *p != '(' && *p != ')'; p--) {
         if (is_oprtr(*p)) {
             return p;
         }
@@ -21,10 +21,20 @@ static char* find_r(char* r_start)
     return NULL;
 }
 
-char* find_nearest_oprtr(char* s, char* l_bound, char* r_start)
+char* find_nearest_oprtr(char* s, char* l_start, char* r_start)
 {
-    char* l = l_bound ? find_l(s, l_bound) : NULL;
-    char* r = r_start ? find_r(r_start) : NULL;
+    l_start && is_paren(*l_start) && l_start != s
+        ? l_start--
+        : l_start;
+    r_start && is_paren(*r_start)
+        ? r_start++
+        : r_start;
+    char* l = l_start
+        ? find_l(s, l_start)
+        : NULL;
+    char* r = r_start
+        ? find_r(r_start)
+        : NULL;
     if (!l && !r) {
         return NULL;
     }
@@ -34,5 +44,5 @@ char* find_nearest_oprtr(char* s, char* l_bound, char* r_start)
     if (!r) {
         return l;
     }
-    return (l_bound - l) <= (r - r_start) ? l : r;
+    return (l_start - l) <= (r - r_start) ? l : r;
 }
