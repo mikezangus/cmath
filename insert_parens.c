@@ -5,13 +5,21 @@
 #include "utils/utils.h"
 #include "workflows/algebraic/algebraic.h"
 
-static bool find_position(const char* p, bool skip_parens, int* scale)
+static bool condition(char p)
 {
-    if (!skip_parens) {
-        return !isdigit(*p) && !is_var(*p);
+    return !isdigit(p) && !is_var(p) && p != '.';
+}
+
+static bool find_position(const char* p, bool* skip_parens, int* scale)
+{
+    if (*skip_parens) {
+        balance_chars(*p, scale, '(', ')');
+        if (*scale == 0) {
+            *skip_parens = false;
+        }
+        return false;
     }
-    balance_chars(*p, scale, '(', ')');
-    return (*scale == 0 && !isdigit(*p) && !is_var(*p));
+    return condition(*p);
 }
 
 static const char* find_l(const char* s, const char* oprtr)
@@ -23,7 +31,7 @@ static const char* find_l(const char* s, const char* oprtr)
         if (*p == ')') {
             skip_parens = true;
         }
-        if (find_position(p, skip_parens, &scale)) {
+        if (find_position(p, &skip_parens, &scale)) {
             break;
         }
     }
@@ -39,7 +47,7 @@ static const char* find_r(const char* s, const char* oprtr)
         if (*p == '(') {
             skip_parens = true;
         }
-        if (find_position(p, skip_parens, &scale)) {
+        if (find_position(p, &skip_parens, &scale)) {
             break;
         }
     }
@@ -53,15 +61,11 @@ static bool parens_already_exist(const char* l,
     if (!(*l == '(') && !(*r == ')')) {
         return false;
     }
-    int scale_l = 0;
-    for (const char *p = l + 1; p < oprtr; p++) {
-        balance_chars(*p, &scale_l, '(', ')');
+    int scale = 0;
+    for (const char* p = l; p <= r; p++) {
+        balance_chars(*p, &scale, '(', ')');
     }
-    int scale_r = 0;
-    for (const char* p = oprtr + 1; p < r; p++) {
-        balance_chars(*p, &scale_r, '(', ')');
-    }
-    return scale_l == 0 && scale_r == 0;
+    return scale == 0;
 }
 
 static bool insert(char* s, const char* oprtr)
@@ -70,8 +74,7 @@ static bool insert(char* s, const char* oprtr)
     const char* r = find_r(s, oprtr + 1);
     if (!l || !r
         || parens_already_exist(l, oprtr, r)
-        || (l == s && r == strchr(s, '=')))
-    {
+        || (l == s && r == strchr(s, '='))) {
         return false;
     }
     l == s ? insert_str(s, "(", l) : insert_str(s, "(", l + 1);
