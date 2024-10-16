@@ -12,7 +12,10 @@ static DivStatus extract_oprtn(char* min, char* oprtr, char* prev_oprtr,
     char op2[STR_MAXLEN] = {0};
     char* l_bound = extract_num_bwd(op1, oprtr - 1, min);
     char* r_bound = extract_num_fwd(op2, oprtr + 1);
-    if (is_operable(convert_str_to_int(op1), *oprtr, convert_str_to_int(op2))) {
+    if (!*op1 || !*op2) {
+        return FAIL;
+    }
+    if (is_operable(convert_str_to_d(op1), *oprtr, convert_str_to_d(op2))) {
         parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s, op1, *oprtr, op2);
         b->l = l_bound;
         b->r = r_bound;
@@ -25,10 +28,10 @@ static DivStatus extract_oprtn(char* min, char* oprtr, char* prev_oprtr,
     eq->oprtr = *prev_oprtr;
     b->l = l_bound < b->l ? l_bound : b->l;
     b->r = b->r < r_bound ? r_bound : b->r;
-    return PARSED_TO_PREV;  
+    return oprtr < prev_oprtr ? PARSED_L_TO_PREV : PARSED_R_TO_PREV;  
 }
 
-static DivStatus extract_oprtn_l(char* s, char* start, char* prev_oprtr,
+static DivStatus extract_oprtn_l(char* start, char* s, char* prev_oprtr,
                                  EqAr* eq, Bounds* b)
 {
     char* oprtr = find_nearest_oprtr(s, b->l, NULL);
@@ -41,7 +44,7 @@ static DivStatus extract_oprtn_l(char* s, char* start, char* prev_oprtr,
 static DivStatus extract_oprtn_r(char* start, char* prev_oprtr,
                                  EqAr* eq, Bounds* b)
 {
-    char* oprtr = find_nearest_oprtr(NULL, NULL, start);
+    char* oprtr = find_nearest_oprtr(NULL, NULL, start + 1);
     if (!oprtr || !is_paren_depth_same(start, oprtr)) {
         return FAIL;
     }
@@ -50,35 +53,43 @@ static DivStatus extract_oprtn_r(char* start, char* prev_oprtr,
 
 static DivStatus extract_l(char* s, char* oprtr, EqAr* eq, Bounds* b)
 {
-    if (isdigit(*(oprtr - 1))) {
-        b->l = extract_num_bwd(eq->op2_num_s, oprtr - 1, s);
+    if (isdigit(*(oprtr - 1))
+        || (*(oprtr - 1) == '-') && (oprtr - 2) && isdigit(*oprtr - 2)) {
+        b->l = extract_num_bwd(eq->op1_num_s, oprtr - 1, s);
         b->r++;
         eq->oprtr = *oprtr;
-        return PARSED_TO_PREV;
+        return PARSED_L_TO_PREV;
     }
-    return extract_oprtn_l(s, oprtr - 2, oprtr, eq, b);
+    return extract_oprtn_l(is_paren(*(oprtr - 1)) && oprtr - 2 > s
+                               ? oprtr - 2
+                               : oprtr - 1,
+                           s, oprtr, eq, b);
 }
 
-static DivStatus extract_r(char* oprtr, EqAr* eq, Bounds* b)
+static DivStatus extract_r(char* s, char* oprtr, EqAr* eq, Bounds* b)
 {
-    if (isdigit(*(oprtr + 1))) {
+    if (isdigit(*(oprtr + 1))
+        || (*(oprtr + 1) == '-' && isdigit(*(oprtr + 2)))) {
         b->r = extract_num_fwd(eq->op2_num_s, oprtr + 1);
-        b->l--;
+        b->l > s ? b->l-- : b->l;
         eq->oprtr = *oprtr;
-        return PARSED_TO_PREV;
+        return PARSED_R_TO_PREV;
     }
-    return extract_oprtn_r(oprtr + 2, oprtr, eq, b);
+    return extract_oprtn_r(is_paren(*(oprtr + 1))
+                               ? oprtr + 2
+                               : oprtr + 1,
+                           oprtr, eq, b);
 }
 
 static DivStatus extract(char* s, EqAr* eq, Bounds* b)
 {
-    char* oprtr = find_nearest_oprtr(s, b->l - 2, b->r + 2);
+    char* oprtr = find_nearest_oprtr(s, b->l - 1, b->r + 1);
     if (!oprtr) {
         return FAIL;
     } else if (oprtr < b->l) {
         return extract_l(s, oprtr, eq, b);
     } else if (b->r < oprtr) {
-        return extract_r(oprtr, eq, b);
+        return extract_r(s, oprtr, eq, b);
     } else {
         return FAIL;
     }
@@ -89,9 +100,12 @@ bool parse_inoperable_division(char* s, char* op1, char* op2,
 {
     switch (extract(s, eq, b)) {
         case FAIL:
-            parse_arithmetic(s, b->r, eq, b);
+            parse_arithmetic(s, b->r + 1, false, eq, b);
             return true;
-        case PARSED_TO_PREV:
+        case PARSED_L_TO_PREV:
+            parse_oprtn(eq->op2_num_s, NULL, eq->op2_den_s, op1, '\0', op2);
+            return true;
+        case PARSED_R_TO_PREV:
             parse_oprtn(eq->op1_num_s, NULL, eq->op1_den_s, op1, '\0', op2);
             return true;
         case PARSED_TO_NEW:
