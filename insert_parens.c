@@ -5,11 +5,6 @@
 #include "utils/utils.h"
 #include "workflows/algebraic/algebraic.h"
 
-static bool condition(char p)
-{
-    return !isdigit(p) && !is_var(p) && p != '.';
-}
-
 static bool find_position(const char* p, bool* skip_parens, int* scale)
 {
     if (*skip_parens) {
@@ -19,7 +14,7 @@ static bool find_position(const char* p, bool* skip_parens, int* scale)
         }
         return false;
     }
-    return condition(*p);
+    return !is_var(*p) && !isdigit(*p) && *p != '.';
 }
 
 static const char* find_l(const char* s, const char* oprtr)
@@ -27,7 +22,7 @@ static const char* find_l(const char* s, const char* oprtr)
     const char* p;
     int scale = 0;
     bool skip_parens = false;
-    for (p = oprtr; p >= s; p--) {
+    for (p = oprtr - 1; p >= s; p--) {
         if (*p == ')') {
             skip_parens = true;
         }
@@ -38,12 +33,14 @@ static const char* find_l(const char* s, const char* oprtr)
     return p;
 }
 
-static const char* find_r(const char* s, const char* oprtr)
+static const char* find_r(const char* oprtr)
 {
-    const char* p;
+    const char* p = *(oprtr + 1) == '-'
+        ? oprtr + 2
+        : oprtr + 1;
     int scale = 0;
     bool skip_parens = false;
-    for (p = oprtr; *p && *p != '='; p++) {
+    for (; *p && *p != '='; p++) {
         if (*p == '(') {
             skip_parens = true;
         }
@@ -68,16 +65,18 @@ static bool parens_already_exist(const char* l,
     return scale == 0;
 }
 
-static bool insert(char* s, const char* oprtr)
+static bool insert_by_oprtr(char* s, const char* oprtr)
 {
-    const char* l = find_l(s, oprtr - 1);
-    const char* r = find_r(s, oprtr + 1);
+    const char* l = find_l(s, oprtr);
+    const char* r = find_r(oprtr);
     if (!l || !r
         || parens_already_exist(l, oprtr, r)
         || (l == s && r == strchr(s, '='))) {
         return false;
     }
-    l == s ? insert_str(s, "(", l) : insert_str(s, "(", l + 1);
+    l == s
+        ? insert_str(s, "(", l)
+        : insert_str(s, "(", l + 1);
     insert_str(s, ")", r + 1);
     return true;
 }
@@ -85,7 +84,7 @@ static bool insert(char* s, const char* oprtr)
 static void insert_by_oprtr_prec(char* s, bool (*is_prec_oprtr)(char))
 {
     for (char* p = s; *p; p++) {
-        if (is_prec_oprtr(*p) && insert(s, p)) {
+        if (is_prec_oprtr(*p) && insert_by_oprtr(s, p)) {
             p += 2;
         }
     }
