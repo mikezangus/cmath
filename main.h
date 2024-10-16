@@ -13,5 +13,6 @@ typedef struct Bounds {
 
 void clean_input(char* s);
 void enter_workflow(char* s);
+void insert_parens(char* s);
 
 #endif // MAIN_H

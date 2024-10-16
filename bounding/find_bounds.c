@@ -12,8 +12,8 @@ bool find_bounds(char* start, char** l_bound, char** r_bound)
         return false;
     }
     printf(
-        "\nBounds: %c%c ... %c%c\n",
-        *(*l_bound), *(*l_bound + 1), *(*r_bound - 1), *(*r_bound)
+        "\nBounds: %.2s ... %.2s\n",
+        *l_bound, *r_bound - 1
     );
     return true;
 }

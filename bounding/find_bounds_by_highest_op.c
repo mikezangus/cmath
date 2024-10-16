@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include "../general/general.h"
 #include "../main.h"
 #include "../utils/utils.h"
 #include "../workflows/algebraic/algebraic.h"
@@ -10,18 +9,18 @@
 static bool find_position(const char* p, bool skip_parens, int* scale)
 {
     if (!skip_parens) {
-        return !isdigit(*p) && !is_var(*p);
+        return !isdigit(*p) && !is_var(*p) && *p != '.';
     }
     balance_chars(*p, scale, '(', ')');
-    return *scale == 0 && !isdigit(*p) && !is_var(*p);
+    return *scale == 0 && !isdigit(*p) && !is_var(*p) && *p != '.';
 }
 
-static char* find_l_bound(char* start, char* end)
+static char* find_l_bound(char* start, char* min)
 {
     char* p;
     int scale = 0;
     bool skip_parens = false;
-    for (p = start; p >= end; p--) {
+    for (p = start; p >= min; p--) {
         if (*p == ')') {
             skip_parens = true;
         }
@@ -29,7 +28,7 @@ static char* find_l_bound(char* start, char* end)
             break;
         }
     }
-    return p == end ? p : p + 1;
+    return p == min ? p : p + 1;
 }
 
 static char* find_r_bound(char *start)
@@ -50,11 +49,11 @@ static char* find_r_bound(char *start)
 
 bool find_bounds_by_highest_oprtr(char* start, char** l_bound, char** r_bound)
 {
-    start = *start == '-' ? start + 1 : start;
+    char* op_start = *start == '-' ? start + 1 : start;
     char* op = NULL;
-    if (!(op = strpbrk(start, "^")) &&
-        !(op = strpbrk(start, "*/")) &&
-        !(op = strpbrk(start, "+-"))) {
+    if (!(op = strpbrk(op_start, "^")) &&
+        !(op = strpbrk(op_start, "*/")) &&
+        !(op = strpbrk(op_start, "+-"))) {
         return false;
     }
     *l_bound = find_l_bound(op - 1, start);

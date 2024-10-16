@@ -1,11 +1,11 @@
-void create_result_str(char* numerator, char* denominator, char* result)
+void create_result_str(char* num, char* den, char* result)
 {
-    for (char* p = numerator; *p; p++) {
+    for (char* p = num; *p; p++) {
         *result++ = *p;
     }
-    if (*denominator != '\0') {
+    if (*den != '\0') {
         *result++ = '/';
-        for (char* p = denominator; *p; p++) {
+        for (char* p = den; *p; p++) {
             *result++ = *p;
         }
     }
