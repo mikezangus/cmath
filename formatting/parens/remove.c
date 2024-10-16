@@ -28,7 +28,8 @@ static bool solo_neg_sign(char* oprtr, char* l_paren, char* r_paren)
 
 static bool enclosed_neg_sign(char** l_paren, char** r_paren)
 {
-    if (*(*l_paren - 1) == '-' && *(*r_paren + 1) == ')') {
+    if (*(*l_paren - 1) == '-' && *(*l_paren - 2) == '('
+        && *(*r_paren + 1) == ')') {
         (*l_paren)-=2;
         (*r_paren)++;
         return true;
