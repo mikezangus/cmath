@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "utils.h"
+#include "../utils.h"
 
 static char* find_l(char* s, char* l_start)
 {

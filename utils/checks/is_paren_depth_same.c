@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include "utils.h"
+#include "../utils.h"
 
 bool is_paren_depth_same(char* p1, char* p2)
 {

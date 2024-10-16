@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include "../../utils/utils.h"
+#include "../utils/utils.h"
 
 bool oprtr_exists(char* s)
 {
