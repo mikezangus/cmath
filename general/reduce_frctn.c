@@ -18,7 +18,7 @@ long long get_gcd(long long a, long long b)
     return a;
 }
 
-void reduce_fraction(double *n, double *d)
+void reduce_frctn(double *n, double *d)
 {
     if (*d == 0) {
         return;

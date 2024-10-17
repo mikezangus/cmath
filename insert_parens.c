@@ -14,7 +14,10 @@ static bool find_position(const char* p, bool* skip_parens, int* scale)
         }
         return false;
     }
-    return !is_var(*p) && !isdigit(*p) && *p != '.';
+    return !isdigit(*p)
+           && !is_var(*p)
+           && *p != '.'
+           && !(*p == '-' && !isdigit(*(p - 1)));
 }
 
 static const char* find_l(const char* s, const char* oprtr)

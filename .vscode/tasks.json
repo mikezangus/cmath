@@ -21,26 +21,31 @@
         "${workspaceFolder}/bounding/find_bounds.c",
         "${workspaceFolder}/bounding/init.c",
 
+        "${workspaceFolder}/formatting/fractions/flip_frctn_divisor.c",
+        "${workspaceFolder}/formatting/fractions/format_frctns.c",
+        "${workspaceFolder}/formatting/fractions/format_neg_frctn.c",
 
         "${workspaceFolder}/formatting/parens/add.c",
         "${workspaceFolder}/formatting/parens/format_parens.c",
         "${workspaceFolder}/formatting/parens/remove.c",
 
         "${workspaceFolder}/formatting/convert_neg_signs.c",
-        "${workspaceFolder}/formatting/move_fract_neg_sign.c",
 
 
         "${workspaceFolder}/general/calculate_result.c",
         "${workspaceFolder}/general/create_result_str.c",
         "${workspaceFolder}/general/equate_denoms.c",
-        "${workspaceFolder}/general/reduce_fraction.c",
+        "${workspaceFolder}/general/is_str_operable.c",
+        "${workspaceFolder}/general/reduce_frctn.c",
 
 
+        "${workspaceFolder}/utils/checks/is_divisible.c",
         "${workspaceFolder}/utils/checks/is_num.c",
-        "${workspaceFolder}/utils/checks/is_operable.c",
+        "${workspaceFolder}/utils/checks/is_oprtr_in_str.c",
         "${workspaceFolder}/utils/checks/is_oprtr.c",
         "${workspaceFolder}/utils/checks/is_paren_depth_same.c",
         "${workspaceFolder}/utils/checks/is_paren.c",
+        "${workspaceFolder}/utils/checks/oprtn_is_operable.c",
 
         "${workspaceFolder}/utils/conversions/d_to_str.c",
         "${workspaceFolder}/utils/conversions/str_to_d.c",
@@ -55,11 +60,6 @@
         "${workspaceFolder}/utils/collapse_str.c",
         "${workspaceFolder}/utils/insert_str.c",
         "${workspaceFolder}/utils/print_bounded_str.c",
-        
-
-        "${workspaceFolder}/verifications/oprtr_exists.c",
-        "${workspaceFolder}/verifications/parens_balanced.c",
-        "${workspaceFolder}/verifications/verify.c",
 
 
         "${workspaceFolder}/workflows/algebraic/calculate_vars.c",

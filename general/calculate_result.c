@@ -24,11 +24,9 @@ double calculate_result(double op1, char oprtr, double op2)
             result = pow(op1, op2);
             break;
         default:
-            fprintf(
-                stderr,
-                "\n%s | Invalid operator: %c\n",
-                __FILE__, oprtr
-            );
+            fprintf(stderr,
+                    "\n%s | Invalid operator: %c\n",
+                    __FILE__, oprtr);
             return NAN;
     }
     printf(

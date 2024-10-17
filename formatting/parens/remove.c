@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "../formatting.h"
-#include "../../utils/utils.h"
 
 static bool no_oprtr(char* oprtr, char* l_paren, char* r_paren)
 {
@@ -55,12 +54,12 @@ static bool equal_depth_outer_parens(char* s, char** l_paren, char** r_paren)
     for (char* p = s; *p && p <= end; p++) {
         balance_chars(*p, &scale, '(', ')');
         if (scale == 0) {
-            if (p == end) {
-                *l_paren = s;
-                *r_paren = end;
-                return true;
+            if (p != end) {
+                return false;
             }
-            return false;
+            *l_paren = s;
+            *r_paren = end;
+            return true;
         }
     }
     return false;

@@ -11,7 +11,6 @@ int main(void)
     fgets(input, sizeof(input), stdin);
     strcpy(s, input);
     clean_input(s);
-    insert_parens(s);
     enter_workflow(s);
     printf("\n\nStarting equation:\n  %s\n", input);
     printf("Solved equation:\n  %s\n", s);
