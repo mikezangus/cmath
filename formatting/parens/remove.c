@@ -4,14 +4,6 @@
 #include <string.h>
 #include "../formatting.h"
 
-static bool no_oprtr(char* oprtr, char* l_paren, char* r_paren)
-{
-    if (!oprtr) {
-        return true;
-    }
-    return false;
-}
-
 static bool solo_neg_sign(char* oprtr, char* l_paren, char* r_paren)
 {
     if (*oprtr != '-') {
@@ -75,7 +67,7 @@ void remove_parens(char* s)
             return;
         }
         char* oprtr = find_oprtr(l_paren + 1, r_paren - 1);
-        if (no_oprtr(oprtr, l_paren, r_paren)
+        if (!oprtr
             || solo_neg_sign(oprtr, l_paren, r_paren)
             || enclosed_neg_sign(&l_paren, &r_paren)
             || double_parens(l_paren, r_paren)
