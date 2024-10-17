@@ -15,8 +15,11 @@ static DivStatus extract_oprtn(char* min, char* oprtr, char* prev_oprtr,
     if (!*op1 || !*op2) {
         return FAIL;
     }
-    if (is_operable(convert_str_to_d(op1), *oprtr, convert_str_to_d(op2))) {
-        parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s, op1, *oprtr, op2);
+    if (oprtn_is_operable(convert_str_to_d(op1),
+                          *oprtr,
+                          convert_str_to_d(op2))) {
+        parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s,
+                    op1, *oprtr, op2);
         b->l = l_bound;
         b->r = r_bound;
         return PARSED_TO_NEW;
