@@ -1,14 +1,14 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-bool find_paren_set(char* start, char** l_paren, char** r_paren)
+bool find_paren_set(const char* start, char** l_paren, char** r_paren)
 {
     *l_paren = *r_paren = NULL;
-    for (char* p = start; *p && *p != '='; p++) {
+    for (const char* p = start; *p && *p != '='; p++) {
         if (*p == '(') {
-            *l_paren = p;
+            *l_paren = (char*)p;
         } else if (*l_paren && *p == ')') {
-            *r_paren = p;
+            *r_paren = (char*)p;
             break;
         }
     }

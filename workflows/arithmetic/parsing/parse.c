@@ -28,8 +28,9 @@ bool parse_arithmetic(char* s, char* start, bool bounds_found,
                 __FILE__);
         return false;
     }
-    if (is_operable(convert_str_to_d(op1), *oprtr, convert_str_to_d(op2))) {
-        parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s, op1, *oprtr, op2);
+    if (oprtn_is_operable(str_to_double(op1), *oprtr, str_to_double(op2))) {
+        parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s,
+                    op1, *oprtr, op2);
         return true;
     }
     if (*oprtr != '/') {

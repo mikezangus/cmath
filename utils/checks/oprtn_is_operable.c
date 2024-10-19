@@ -5,7 +5,7 @@
 bool oprtn_is_operable(double num, char oprtr, double den)
 {
     switch (oprtr) {
-        case '/': return is_divisible(num, den);
+        case '/': return oprtn_is_divisible(num, den);
         default: return true;
     }
 }

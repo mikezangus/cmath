@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-long long convert_str_to_int(char* s)
+long long str_to_int(char* s)
 {
     long long result = 0;
     bool negative = false;

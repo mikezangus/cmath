@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdbool.h>
 
-bool is_divisible(double num, double den)
+bool oprtn_is_divisible(double num, double den)
 {
     if (den == 0) {
         return false;

@@ -15,9 +15,9 @@ static DivStatus extract_oprtn(char* min, char* oprtr, char* prev_oprtr,
     if (!*op1 || !*op2) {
         return FAIL;
     }
-    if (oprtn_is_operable(convert_str_to_d(op1),
+    if (oprtn_is_operable(str_to_double(op1),
                           *oprtr,
-                          convert_str_to_d(op2))) {
+                          str_to_double(op2))) {
         parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s,
                     op1, *oprtr, op2);
         b->l = l_bound;
@@ -103,8 +103,7 @@ bool parse_inoperable_division(char* s, char* op1, char* op2,
 {
     switch (extract(s, eq, b)) {
         case FAIL:
-            parse_arithmetic(s, b->r + 1, false, eq, b);
-            return true;
+            return parse_arithmetic(s, b->r + 1, false, eq, b);
         case PARSED_L_TO_PREV:
             parse_oprtn(eq->op2_num_s, NULL, eq->op2_den_s, op1, '\0', op2);
             return true;

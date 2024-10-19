@@ -4,7 +4,8 @@
 #include <string.h>
 #include "../formatting.h"
 
-static bool solo_neg_sign(char* oprtr, char* l_paren, char* r_paren)
+static bool solo_neg_sign(const char* oprtr,
+                          const char* l_paren, const char* r_paren)
 {
     if (*oprtr != '-') {
         return false;
@@ -28,7 +29,7 @@ static bool enclosed_neg_sign(char** l_paren, char** r_paren)
     return false;
 }
 
-static bool double_parens(char* l_paren, char* r_paren)
+static bool double_parens(const char* l_paren, const char* r_paren)
 {
     if (*(l_paren - 1) == '(' && *(r_paren + 1) == ')') {
         return true;
@@ -36,21 +37,22 @@ static bool double_parens(char* l_paren, char* r_paren)
     return false;
 }
 
-static bool equal_depth_outer_parens(char* s, char** l_paren, char** r_paren)
+static bool equal_depth_outer_parens(const char* s,
+                                     char** l_paren, char** r_paren)
 {
-    char* end = s + strlen(s) - 1;
+    const char* end = s + strlen(s) - 1;
     if (*s != '(' && *end != ')') {
         return false;
     }
     int scale = 0;
-    for (char* p = s; *p && p <= end; p++) {
+    for (const char* p = s; *p && p <= end; p++) {
         balance_chars(*p, &scale, '(', ')');
         if (scale == 0) {
             if (p != end) {
                 return false;
             }
-            *l_paren = s;
-            *r_paren = end;
+            *l_paren = (char*)s;
+            *r_paren = (char*)end;
             return true;
         }
     }
