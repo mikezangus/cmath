@@ -9,15 +9,20 @@
 static bool find_position(const char* p, bool skip_parens, int* scale)
 {
     if (!skip_parens) {
-        return !isdigit(*p) && !is_var(*p) && *p != '.';
+        return !isdigit(*p)
+               && !is_var(*p)
+               && *p != '.';
     }
     balance_chars(*p, scale, '(', ')');
-    return *scale == 0 && !isdigit(*p) && !is_var(*p) && *p != '.';
+    return *scale == 0
+           && !isdigit(*p)
+           && !is_var(*p)
+           && *p != '.';
 }
 
-static char* find_l_bound(char* start, char* min)
+static char* find_l_bound(const char* start, const char* min)
 {
-    char* p;
+    const char* p;
     int scale = 0;
     bool skip_parens = false;
     for (p = start; p >= min; p--) {
@@ -28,12 +33,12 @@ static char* find_l_bound(char* start, char* min)
             break;
         }
     }
-    return p == min ? p : p + 1;
+    return (char*)(p == min ? p : p + 1);
 }
 
-static char* find_r_bound(char *start)
+static char* find_r_bound(const char *start)
 {
-    char* p;
+    const char* p;
     int scale = 0;
     bool skip_parens = false;
     for (p = start; *p && *p != '='; p++) {
@@ -44,16 +49,16 @@ static char* find_r_bound(char *start)
             break;
         }
     }
-    return p - 1;
+    return (char*)(p - 1);
 }
 
-bool find_bounds_by_highest_oprtr(char* start, char** l_bound, char** r_bound)
+bool find_bounds_by_oprtr(const char* start, char** l_bound, char** r_bound)
 {
-    char* op_start = *start == '-' ? start + 1 : start;
+    const char* op_start = *start == '-' ? start + 1 : start;
     char* op = NULL;
-    if (!(op = strpbrk(op_start, "^")) &&
-        !(op = strpbrk(op_start, "*/")) &&
-        !(op = strpbrk(op_start, "+-"))) {
+    if (!(op = strpbrk(op_start, "^"))
+        && !(op = strpbrk(op_start, "*/"))
+        && !(op = strpbrk(op_start, "+-"))) {
         return false;
     }
     *l_bound = find_l_bound(op - 1, start);
