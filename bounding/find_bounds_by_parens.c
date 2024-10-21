@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "../utils/utils.h"
 
-bool find_bounds_by_parens(char* start, char** l_bound, char** r_bound)
+bool find_bounds_by_parens(const char* start, char** l_bound, char** r_bound)
 {
     char* l_paren = NULL;
     char* r_paren = NULL;
