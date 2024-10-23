@@ -2,6 +2,20 @@
 #include <string.h>
 #include "../formatting.h"
 
+static bool min_oprtrs(const char* s)
+{
+    int cnt = 0;
+    for (const char* p = s; *p; p++) {
+        if (is_oprtr(*p)) {
+            cnt++;
+        }
+        if (cnt > 1) {
+            return true;
+        }
+    }
+    return false;
+}
+
 static const char* find_l(const char* start, const char* min)
 {
     if (!is_num(start, NULL)) {
@@ -26,8 +40,11 @@ static const char* find_r(const char* start)
     return p;
 }
 
-void add_div_parens(char* s)
+void insert_div_parens(char* s)
 {
+    if (!min_oprtrs(s)) {
+        return;
+    }
     const char* p = s;
     while (*p) {
         const char* oprtr = strchr(p, '/');
