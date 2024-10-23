@@ -16,7 +16,7 @@ static bool div_and_exp_oprtrs(char p, int* div_cnt, int* exp_cnt)
     return false;
 }
 
-static bool sub_oprtr(char* p, char* s)
+static bool sub_oprtr(const char* p, const char* s)
 {
     if (*p != '-') {
         return false;
@@ -35,11 +35,11 @@ static bool sub_oprtr(char* p, char* s)
     return true;
 }
 
-bool is_oprtr_in_str(char* s)
+bool is_oprtr_in_str(const char* s)
 {
     int div_cnt = 0;
     int exp_cnt = 0;
-    for (char* p = s; *p; p++) {
+    for (const char* p = s; *p; p++) {
         if (*p == '+' || *p == '*'
             || div_and_exp_oprtrs(*p, &div_cnt, &exp_cnt)
             || sub_oprtr(p, s)) {

@@ -5,7 +5,8 @@
 #include "../../../general/general.h"
 #include "../../../utils/utils.h"
 
-static DivStatus extract_oprtn(char* min, char* oprtr, char* prev_oprtr,
+static DivStatus extract_oprtn(const char* min,
+                               const char* oprtr, const char* prev_oprtr,
                                EqAr* eq, Bounds* b)
 {
     char op1[STR_MAXLEN] = {0};
@@ -29,12 +30,19 @@ static DivStatus extract_oprtn(char* min, char* oprtr, char* prev_oprtr,
     }
     parse_oprtn(eq->op2_num_s, NULL, eq->op2_den_s, op1, '\0', op2);
     eq->oprtr = *prev_oprtr;
-    b->l = l_bound < b->l ? l_bound : b->l;
-    b->r = b->r < r_bound ? r_bound : b->r;
-    return oprtr < prev_oprtr ? PARSED_L_TO_PREV : PARSED_R_TO_PREV;  
+    b->l = (l_bound < b->l)
+        ? l_bound
+        : b->l;
+    b->r = (b->r < r_bound)
+        ? r_bound
+        : b->r;
+    return (oprtr < prev_oprtr)
+        ? PARSED_L_TO_PREV
+        : PARSED_R_TO_PREV;  
 }
 
-static DivStatus extract_oprtn_l(char* start, char* s, char* prev_oprtr,
+static DivStatus extract_oprtn_l(const char* start, const char* s,
+                                 const char* prev_oprtr,
                                  EqAr* eq, Bounds* b)
 {
     char* oprtr = find_nearest_oprtr(s, b->l, NULL);
@@ -44,7 +52,8 @@ static DivStatus extract_oprtn_l(char* start, char* s, char* prev_oprtr,
     return extract_oprtn(s, oprtr, prev_oprtr, eq, b);
 }
 
-static DivStatus extract_oprtn_r(char* start, char* prev_oprtr,
+static DivStatus extract_oprtn_r(const char* start,
+                                 const char* prev_oprtr,
                                  EqAr* eq, Bounds* b)
 {
     char* oprtr = find_nearest_oprtr(NULL, NULL, start + 1);
@@ -54,7 +63,8 @@ static DivStatus extract_oprtn_r(char* start, char* prev_oprtr,
     return extract_oprtn(start, oprtr, prev_oprtr, eq, b);
 }
 
-static DivStatus extract_l(char* s, char* oprtr, EqAr* eq, Bounds* b)
+static DivStatus extract_l(const char* s, const char* oprtr,
+                           EqAr* eq, Bounds* b)
 {
     if (isdigit(*(oprtr - 1))
         || (*(oprtr - 1) == '-') && (oprtr - 2) && isdigit(*oprtr - 2)) {
@@ -69,12 +79,15 @@ static DivStatus extract_l(char* s, char* oprtr, EqAr* eq, Bounds* b)
                            s, oprtr, eq, b);
 }
 
-static DivStatus extract_r(char* s, char* oprtr, EqAr* eq, Bounds* b)
+static DivStatus extract_r(const char* s, const char* oprtr,
+                           EqAr* eq, Bounds* b)
 {
     if (isdigit(*(oprtr + 1))
         || (*(oprtr + 1) == '-' && isdigit(*(oprtr + 2)))) {
         b->r = extract_num_fwd(eq->op2_num_s, oprtr + 1);
-        b->l > s ? b->l-- : b->l;
+        b->l > s
+            ? b->l--
+            : b->l;
         eq->oprtr = *oprtr;
         return PARSED_R_TO_PREV;
     }
@@ -84,7 +97,7 @@ static DivStatus extract_r(char* s, char* oprtr, EqAr* eq, Bounds* b)
                            oprtr, eq, b);
 }
 
-static DivStatus extract(char* s, EqAr* eq, Bounds* b)
+static DivStatus extract(const char* s, EqAr* eq, Bounds* b)
 {
     char* oprtr = find_nearest_oprtr(s, b->l - 1, b->r + 1);
     if (!oprtr) {
@@ -98,7 +111,7 @@ static DivStatus extract(char* s, EqAr* eq, Bounds* b)
     }
 }
 
-bool parse_inoperable_division(char* s, char* op1, char* op2,
+bool parse_inoperable_division(const char* s, const char* op1, const char* op2,
                                EqAr* eq, Bounds* b)
 {
     switch (extract(s, eq, b)) {

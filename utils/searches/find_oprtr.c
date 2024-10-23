@@ -2,13 +2,13 @@
 #include <string.h>
 #include "../utils.h"
 
-char* find_oprtr(char* start, char* end)
+char* find_oprtr(const char* start, const char* end)
 {
-    start = *start == '-' ? start + 1 : start;
-    end = end ? end : start + strlen(start);
-    for (char* p = start; *p && p <= end; p++) {
+    const char* s = (*start == '-') ? start + 1 : start;
+    const char* e = end ? end : s + strlen(s);
+    for (const char* p = s; *p && p <= e; p++) {
         if (is_oprtr(*p)) {
-            return p;
+            return (char*)p;
         }
     }
     return NULL;

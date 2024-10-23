@@ -8,11 +8,11 @@ typedef enum  {
     PARSED_TO_NEW = 3,
 } DivStatus;
 
-char* extract_num_bwd(char* dst, char* start, char* min);
-char* extract_num_fwd(char* dst, char* start);
-bool parse_arithmetic(char* s, char* start, bool bounds_found,
+char* extract_num_bwd(char* dst, const char* start, const char* min);
+char* extract_num_fwd(char* dst, const char* start);
+bool parse_arithmetic(const char* s, const char* start, bool bounds_found,
                       EqAr* eq, Bounds* b);
-bool parse_inoperable_division(char* s, char* op1, char* op2,
+bool parse_inoperable_division(const char* s, const char* op1, const char* op2,
                                EqAr* eq, Bounds* b);
-void parse_oprtn(char *dst_op1, char* dst_oprtr, char* dst_op2,
-                 char *src_op1, char src_oprtr, char* src_op2);
+void parse_oprtn(char* dst_op1, char* dst_oprtr, char* dst_op2,
+                 const char* src_op1, char src_oprtr, const char* src_op2);

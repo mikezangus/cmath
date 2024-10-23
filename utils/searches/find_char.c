@@ -1,13 +1,13 @@
 #include <stdio.h>
 
-char* find_char(char c, char* start, char* end)
+char* find_char(char c, const char* start, const char* end)
 {
     if (start > end) {
         return NULL;
     }
-    for (char* p = start; *p && p <= end; p++) {
+    for (const char* p = start; *p && p <= end; p++) {
         if (*p == c) {
-            return p;
+            return (char*)p;
         }
     }
     return NULL;

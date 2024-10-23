@@ -8,7 +8,7 @@
 #include "../../../general/general.h"
 #include "../../../utils/utils.h"
 
-bool parse_arithmetic(char* s, char* start, bool bounds_found,
+bool parse_arithmetic(const char* s, const char* start, bool bounds_found,
                       EqAr* eq, Bounds* b)
 {
     if (!bounds_found && !find_bounds(start, &b->l, &b->r)) {

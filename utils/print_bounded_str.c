@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-void print_bounded_str(char* start, char* end)
+void print_bounded_str(const char* start, const char* end)
 {
-    for (char* p = start; *p && p <= end; p++) {
+    for (const char* p = start; *p && p <= end; p++) {
         printf("%p - %c\n", p, *p);
     }
 }

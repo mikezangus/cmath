@@ -1,6 +1,6 @@
 #include <stdbool.h>
 
-double str_to_double(char* s)
+double str_to_double(const char* s)
 {
     if (*s == '\0') {
         return 1.0;
@@ -14,7 +14,7 @@ double str_to_double(char* s)
         negative = true;
         s++;
     }
-    for (char* p = s; *p; p++) {
+    for (const char* p = s; *p; p++) {
         if (*p == '.') {
             fractional = true;
             continue;

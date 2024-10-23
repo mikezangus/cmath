@@ -3,26 +3,25 @@
 #include <stdio.h>
 #include "../../../utils/utils.h"
 
-char* extract_num_fwd(char* dst, char* start)
+char* extract_num_fwd(char* dst, const char* start)
 {
-    char* p = start;
-
+    const char* p = start;
     for (; *p && is_num(p, start); p++) {
         *dst++ = *p;
     }
     *dst = '\0';
-    return p - 1;
+    return (char*)(p - 1);
 }
 
-char* extract_num_bwd(char* dst, char* start, char* min)
+char* extract_num_bwd(char* dst, const char* start, const char* min)
 {
-    char* p = start;
+    const char* p = start;
     for (; p > min && is_num(p, NULL); p--) {
     }
     p = (p == min && (isdigit(*p) || *min == '-')) ? p : p + 1;
-    for (char* q = p; q <= start; q++) {
+    for (const char* q = p; q <= start; q++) {
         *dst++ = *q;
     }
     *dst = '\0';
-    return p;
+    return (char*)(p);
 }

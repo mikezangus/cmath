@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-long long str_to_int(char* s)
+long long str_to_int(const char* s)
 {
     long long result = 0;
     bool negative = false;
@@ -10,7 +10,7 @@ long long str_to_int(char* s)
         negative = true;
         s++;
     }
-    for (char* p = s; *p; p++) {
+    for (const char* p = s; *p; p++) {
         if (!isdigit(*p)) {
             if (*p == '.') {
                 return 0;
