@@ -14,10 +14,7 @@ static bool find_position(const char* p, bool* skip_parens, int* scale)
         }
         return false;
     }
-    return !isdigit(*p)
-           && !is_var(*p)
-           && *p != '.'
-           && !(*p == '-' && !isdigit(*(p - 1)));
+    return !isdigit(*p) && !is_var(*p) && *p != '.';
 }
 
 static const char* find_l(const char* s, const char* oprtr)
@@ -97,4 +94,5 @@ void insert_parens(char* s)
 {
     insert_by_oprtr_prec(s, is_prec1_oprtr);
     insert_by_oprtr_prec(s, is_prec2_oprtr);
+    insert_by_oprtr_prec(s, is_sub_oprtr);
 }
