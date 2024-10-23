@@ -19,3 +19,8 @@ bool is_prec3_oprtr(char c)
 {
     return c == '+' || c == '-';
 }
+
+bool is_sub_oprtr(char c)
+{
+    return c == '-';
+}
