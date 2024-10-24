@@ -9,15 +9,10 @@
 static bool find_position(const char* p, bool skip_parens, int* scale)
 {
     if (!skip_parens) {
-        return !isdigit(*p)
-               && !is_var(*p)
-               && *p != '.';
+        return !isdigit(*p) && !is_var(*p) && *p != '.';
     }
     balance_chars(*p, scale, '(', ')');
-    return *scale == 0
-           && !isdigit(*p)
-           && !is_var(*p)
-           && *p != '.';
+    return *scale == 0 && !isdigit(*p) && !is_var(*p) && *p != '.';
 }
 
 static char* find_l_bound(const char* start, const char* min)
@@ -54,7 +49,7 @@ static char* find_r_bound(const char *start)
 
 bool find_bounds_by_oprtr(const char* start, char** l_bound, char** r_bound)
 {
-    const char* op_start = *start == '-' ? start + 1 : start;
+    const char* op_start = (*start == '-') ? start + 1 : start;
     char* op = NULL;
     if (!(op = strpbrk(op_start, "^"))
         && !(op = strpbrk(op_start, "*/"))
