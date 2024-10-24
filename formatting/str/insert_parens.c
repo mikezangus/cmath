@@ -1,9 +1,9 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <string.h>
-#include "general/general.h"
-#include "utils/utils.h"
-#include "workflows/algebraic/algebraic.h"
+#include "../formatting.h"
+#include "../../general/general.h"
+#include "../../workflows/algebraic/algebraic.h"
 
 static bool find_position(const char* p, bool* skip_parens, int* scale)
 {
@@ -35,7 +35,7 @@ static const char* find_l(const char* s, const char* oprtr)
 
 static const char* find_r(const char* oprtr)
 {
-    const char* p = *(oprtr + 1) == '-'
+    const char* p = (*(oprtr + 1) == '-')
         ? oprtr + 2
         : oprtr + 1;
     int scale = 0;
@@ -69,9 +69,13 @@ static bool insert_by_oprtr(char* s, const char* oprtr)
 {
     const char* l = find_l(s, oprtr);
     const char* r = find_r(oprtr);
+    const char* eq_sign = strchr(s, '=');
+    const char* end = eq_sign
+        ? eq_sign
+        : s + strlen(s);
     if (!l || !r
         || parens_already_exist(l, oprtr, r)
-        || (l == s && r == strchr(s, '='))) {
+        || (l == s && r == end)) {
         return false;
     }
     l == s

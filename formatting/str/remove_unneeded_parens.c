@@ -59,7 +59,7 @@ static bool equal_depth_outer_parens(const char* s,
     return false;
 }
 
-void remove_parens(char* s)
+void remove_unneeded_parens(char* s)
 {
     char* p = s;
     while (*p) {

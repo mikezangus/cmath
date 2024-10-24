@@ -1,8 +1,8 @@
 #include <ctype.h>
+#include "../formatting.h"
 #include "../../main.h"
-#include "../../utils/utils.h"
 
-void move_external_neg_sign(char* s, Bounds* b)
+void move_frctn_neg_sign(char* s, Bounds* b)
 {
     if (b->l - 2 < s) {
         return;

@@ -1,5 +1,5 @@
 #include <string.h>
-#include "formatting.h"
+#include "../formatting.h"
 
 void convert_neg_signs(char* s)
 {

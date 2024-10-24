@@ -3,7 +3,7 @@
 
 void flip_frctn_divisor(char* oprtr, char* num, char* den)
 {
-    if (*oprtr != '/' || !*num || !*den) {
+    if (!*num || !*den) {
         return;
     }
     char buff[STR_MAXLEN] = {0};
