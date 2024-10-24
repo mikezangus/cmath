@@ -1,12 +1,20 @@
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
 #include "../formatting.h"
 
-void format_parsed_frctn(char* num1, char* den1,
-                         char* oprtr,
-                         char* num2, char* den2)
+bool format_parsed_frctn(char* n1, char* d1, char* oprtr, char* n2, char* d2)
 {
-    if (num2 && den2) {
-        flip_frctn_divisor(oprtr, num2, den2);
-        format_neg_frctn(num2, den2);
+    if (strcmp(d1, "0") == 0 || strcmp(d2, "0") == 0) {
+        fprintf(stderr,
+                "\n%s\nError: Zero in denominator. Exiting\n",
+                __FILE__);
+        return false;
     }
-    format_neg_frctn(num1, den1);
+    if (n2 && d2) {
+        flip_frctn_divisor(oprtr, n2, d2);
+        format_neg_frctn(n2, d2);
+    }
+    format_neg_frctn(n1, d1);
+    return true;
 }
