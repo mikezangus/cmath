@@ -17,7 +17,7 @@ bool is_sub_oprtr(char c);
 bool oprtn_is_divisible(double num, double den);
 bool oprtn_is_operable(double num, char oprtr, double den);
 
-void double_to_str(double d, char* s);
+void double_to_str(char* s, double d);
 double str_to_double(const char* s);
 long long str_to_int(const char* s);
 

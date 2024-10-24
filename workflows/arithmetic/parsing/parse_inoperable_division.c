@@ -7,7 +7,7 @@
 
 static DivStatus extract_oprtn(const char* min,
                                const char* oprtr, const char* prev_oprtr,
-                               EqAr* eq, Bounds* b)
+                               OprtnAr* o, Bounds* b)
 {
     char op1[STR_MAXLEN] = {0};
     char op2[STR_MAXLEN] = {0};
@@ -19,8 +19,7 @@ static DivStatus extract_oprtn(const char* min,
     if (oprtn_is_operable(str_to_double(op1),
                           *oprtr,
                           str_to_double(op2))) {
-        parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s,
-                    op1, *oprtr, op2);
+        parse_oprtn(o->n1s, &o->oprtr, o->n2s, op1, *oprtr, op2);
         b->l = l_bound;
         b->r = r_bound;
         return PARSED_TO_NEW;
@@ -28,8 +27,8 @@ static DivStatus extract_oprtn(const char* min,
     if (*oprtr != '/') {
         return FAIL;
     }
-    parse_oprtn(eq->op2_num_s, NULL, eq->op2_den_s, op1, '\0', op2);
-    eq->oprtr = *prev_oprtr;
+    parse_oprtn(o->n2s, NULL, o->d2s, op1, '\0', op2);
+    o->oprtr = *prev_oprtr;
     b->l = (l_bound < b->l)
         ? l_bound
         : b->l;
@@ -43,85 +42,85 @@ static DivStatus extract_oprtn(const char* min,
 
 static DivStatus extract_oprtn_l(const char* start, const char* s,
                                  const char* prev_oprtr,
-                                 EqAr* eq, Bounds* b)
+                                 OprtnAr* o, Bounds* b)
 {
     char* oprtr = find_nearest_oprtr(s, b->l, NULL);
     if (!oprtr || !is_paren_depth_same(oprtr, start)) {
         return FAIL;
     }
-    return extract_oprtn(s, oprtr, prev_oprtr, eq, b);
+    return extract_oprtn(s, oprtr, prev_oprtr, o, b);
 }
 
 static DivStatus extract_oprtn_r(const char* start,
                                  const char* prev_oprtr,
-                                 EqAr* eq, Bounds* b)
+                                 OprtnAr* o, Bounds* b)
 {
     char* oprtr = find_nearest_oprtr(NULL, NULL, start + 1);
     if (!oprtr || !is_paren_depth_same(start, oprtr)) {
         return FAIL;
     }
-    return extract_oprtn(start, oprtr, prev_oprtr, eq, b);
+    return extract_oprtn(start, oprtr, prev_oprtr, o, b);
 }
 
 static DivStatus extract_l(const char* s, const char* oprtr,
-                           EqAr* eq, Bounds* b)
+                           OprtnAr* o, Bounds* b)
 {
     if (isdigit(*(oprtr - 1))
         || (*(oprtr - 1) == '-') && (oprtr - 2) && isdigit(*oprtr - 2)) {
-        b->l = extract_num_bwd(eq->op1_num_s, oprtr - 1, s);
+        b->l = extract_num_bwd(o->n1s, oprtr - 1, s);
         b->r++;
-        eq->oprtr = *oprtr;
+        o->oprtr = *oprtr;
         return PARSED_L_TO_PREV;
     }
     return extract_oprtn_l(is_paren(*(oprtr - 1)) && oprtr - 2 > s
                                ? oprtr - 2
                                : oprtr - 1,
-                           s, oprtr, eq, b);
+                           s, oprtr, o, b);
 }
 
 static DivStatus extract_r(const char* s, const char* oprtr,
-                           EqAr* eq, Bounds* b)
+                           OprtnAr* o, Bounds* b)
 {
     if (isdigit(*(oprtr + 1))
         || (*(oprtr + 1) == '-' && isdigit(*(oprtr + 2)))) {
-        b->r = extract_num_fwd(eq->op2_num_s, oprtr + 1);
+        b->r = extract_num_fwd(o->n2s, oprtr + 1);
         b->l > s
             ? b->l--
             : b->l;
-        eq->oprtr = *oprtr;
+        o->oprtr = *oprtr;
         return PARSED_R_TO_PREV;
     }
     return extract_oprtn_r(is_paren(*(oprtr + 1))
                                ? oprtr + 2
                                : oprtr + 1,
-                           oprtr, eq, b);
+                           oprtr, o, b);
 }
 
-static DivStatus extract(const char* s, EqAr* eq, Bounds* b)
+static DivStatus extract(const char* s, OprtnAr* o, Bounds* b)
 {
     char* oprtr = find_nearest_oprtr(s, b->l - 1, b->r + 1);
     if (!oprtr) {
         return FAIL;
     } else if (oprtr < b->l) {
-        return extract_l(s, oprtr, eq, b);
+        return extract_l(s, oprtr, o, b);
     } else if (b->r < oprtr) {
-        return extract_r(s, oprtr, eq, b);
+        return extract_r(s, oprtr, o, b);
     } else {
         return FAIL;
     }
 }
 
 bool parse_inoperable_division(const char* s, const char* op1, const char* op2,
-                               EqAr* eq, Bounds* b)
+                               OprtnAr* o, Bounds* b)
 {
-    switch (extract(s, eq, b)) {
+    switch (extract(s, o, b)) {
         case FAIL:
-            return parse_arithmetic(s, b->r + 1, false, eq, b);
+            return parse_arithmetic(s, b->r + 1, false, o, b);
         case PARSED_L_TO_PREV:
-            parse_oprtn(eq->op2_num_s, NULL, eq->op2_den_s, op1, '\0', op2);
+            parse_oprtn(o->n2s, NULL, o->d2s, op1, '\0', op2);
             return true;
         case PARSED_R_TO_PREV:
-            parse_oprtn(eq->op1_num_s, NULL, eq->op1_den_s, op1, '\0', op2);
+            parse_oprtn(o->n1s, NULL, o->d1s, op1, '\0', op2);
             return true;
         case PARSED_TO_NEW:
             return true;

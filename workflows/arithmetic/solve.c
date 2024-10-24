@@ -8,71 +8,64 @@
 #include "../../general/general.h"
 #include "../../utils/utils.h"
 
-EqAr eq;
+OprtnAr o;
 
-void init_eq(void)
+static void init_oprtn(void)
 {
-    memset(eq.op1_num_s, '\0', STR_MAXLEN);
-    memset(eq.op1_den_s, '\0', STR_MAXLEN);
-    eq.oprtr = '\0';
-    memset(eq.op2_num_s, '\0', STR_MAXLEN);
-    memset(eq.op2_den_s, '\0', STR_MAXLEN);
+    memset(o.n1s, '\0', STR_MAXLEN);
+    memset(o.d1s, '\0', STR_MAXLEN);
+    o.oprtr = '\0';
+    memset(o.n2s, '\0', STR_MAXLEN);
+    memset(o.d2s, '\0', STR_MAXLEN);
+    o.n1d = o.d1d = o.n2d = o.d2d = o.rnd = o.rdd = 0.0;
+    memset(o.rns, '\0', STR_MAXLEN);
+    memset(o.rds, '\0', STR_MAXLEN); 
+    memset(o.r, '\0', STR_MAXLEN); 
 }
 
-static void convert_strs_to_doubles(void)
+static void oprtn_str_to_double(double* n1d, double* d1d,
+                                double* n2d, double* d2d,
+                                char* n1s, char* d1s, char* n2s, char* d2s)
 {
-    eq.op1_num_d = convert_str_to_d(eq.op1_num_s);
-    eq.op1_den_d = convert_str_to_d(eq.op1_den_s);
-    eq.op2_num_d = convert_str_to_d(eq.op2_num_s);
-    eq.op2_den_d = convert_str_to_d(eq.op2_den_s);
+    *n1d = str_to_double(n1s);
+    *d1d = str_to_double(d1s);
+    *n2d = str_to_double(n2s);
+    *d2d = str_to_double(d2s);
 }
 
-static void convert_doubles_to_strs(void)
+static void result_double_to_str(char* ns, char* ds, double nd, double dd)
 {
-    convert_d_to_str(eq.result_num_d, eq.result_num_s);
-    if (eq.result_den_d == 1.0) {
-        *eq.result_den_s = '\0';
+    double_to_str(ns, nd);
+    if (dd == 1.0) {
+        *ds = '\0';
         return;
     }
-    convert_d_to_str(eq.result_den_d, eq.result_den_s);
+    double_to_str(ds, dd);
 }
 
 bool solve_arithmetic(char* s, Bounds* b)
 {
-    init_eq();
-    if (!parse_arithmetic(s, s, true, &eq, b)) {
-        fprintf(stderr,
-                "\n%s | Failed to parse. Exiting\n",
-                __FILE__);
+    init_oprtn();
+    move_frctn_neg_sign(s, b);
+    if (!parse_arithmetic(s, s, true, &o, b)) {
         return false;
     }
-    convert_strs_to_doubles();
-    if (is_prec3_oprtr(eq.oprtr)) {
-        equate_denoms(&eq.op1_num_d, &eq.op1_den_d,
-                      &eq.op2_num_d, &eq.op2_den_d);
-        eq.result_den_d = eq.op1_den_d;
-    } else {
-        eq.result_den_d = calculate_result(eq.op1_den_d,
-                                           eq.oprtr,
-                                           eq.op2_den_d);
-    }
-    eq.result_num_d = calculate_result(eq.op1_num_d,
-                                       eq.oprtr,
-                                       eq.op2_num_d);
-    if (isnan(eq.result_num_d) || isnan(eq.result_den_d)) {
-        fprintf(stderr,
-                "\n%s | Failed to calculate. Exiting\n",
-                __FILE__);
+    if (!format_frctn_oprtn(o.n1s, o.d1s, &o.oprtr, o.n2s, o.d2s)) {
         return false;
     }
-    reduce_fraction(&eq.result_num_d, &eq.result_den_d);
-    convert_doubles_to_strs();
-    create_result_str(eq.result_num_s, eq.result_den_s, eq.result_s);
-    printf("Before moving: %s\n", eq.result_s);
-    move_fract_neg_sign(eq.result_s);
-    printf("After moving:  %s\n", eq.result_s);
+    oprtn_str_to_double(&o.n1d, &o.d1d, &o.n2d, &o.d2d,
+                        o.n1s, o.d1s, o.n2s, o.d2s);
+    if (isnan(o.rdd = calculate_den(&o.n1d, &o.d1d, o.oprtr, &o.n2d, &o.d2d))) {
+        return false;
+    }
+    if (isnan(o.rnd = calculate_oprtn(o.n1d, o.oprtr, o.n2d))) {
+        return false;
+    }
+    reduce_frctn(&o.rnd, &o.rdd);
+    result_double_to_str(o.rns, o.rds, o.rnd, o.rdd);
+    create_result_str(o.r, o.rns, o.rds);
     collapse_str(b->l, b->r);
-    insert_str(s, eq.result_s, b->l);
-    printf("\nEnding: %s\n%s\n", s, DASHES);
+    insert_str(s, o.r, b->l);
+    printf("\nEnding: %s\n\n%s", s, DASHES);
     return true;
 }

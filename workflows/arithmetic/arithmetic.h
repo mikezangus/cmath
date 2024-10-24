@@ -6,33 +6,29 @@
 #include "../../main.h"
 
 
-typedef struct EqAr {
-
-    char op1_num_s[STR_MAXLEN];
-    char op1_den_s[STR_MAXLEN];
+typedef struct OprtnAr {
+    char n1s[STR_MAXLEN];
+    char d1s[STR_MAXLEN];
 
     char oprtr;
 
-    char op2_num_s[STR_MAXLEN];
-    char op2_den_s[STR_MAXLEN];
+    char n2s[STR_MAXLEN];
+    char d2s[STR_MAXLEN];
 
+    double n1d;
+    double d1d;
 
-    double op1_num_d;
-    double op1_den_d;
+    double n2d;
+    double d2d;
 
-    double op2_num_d;
-    double op2_den_d;
+    double rnd;
+    double rdd;
 
+    char rns[STR_MAXLEN];
+    char rds[STR_MAXLEN];
 
-    double result_num_d;
-    double result_den_d;
-
-    char result_num_s[STR_MAXLEN];
-    char result_den_s[STR_MAXLEN];
-
-    char result_s[STR_MAXLEN];
-    
-} EqAr;
+    char r[STR_MAXLEN]; 
+} OprtnAr;
 
 
 bool solve_arithmetic(char* s, Bounds* b);

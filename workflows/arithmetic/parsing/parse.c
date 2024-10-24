@@ -9,7 +9,7 @@
 #include "../../../utils/utils.h"
 
 bool parse_arithmetic(const char* s, const char* start, bool bounds_found,
-                      EqAr* eq, Bounds* b)
+                      OprtnAr* o, Bounds* b)
 {
     if (!bounds_found && !find_bounds(start, &b->l, &b->r)) {
         return false;
@@ -24,38 +24,27 @@ bool parse_arithmetic(const char* s, const char* start, bool bounds_found,
     extract_num_fwd(op2, oprtr + 1);
     if (!*op1 || !*op2) {
         fprintf(stderr,
-                "%s | Error: Failed to extract operands. Exiting\n",
+                "\n%s\nError: Failed to extract operands. Exiting\n",
                 __FILE__);
         return false;
     }
     if (oprtn_is_operable(str_to_double(op1), *oprtr, str_to_double(op2))) {
-        parse_oprtn(eq->op1_num_s, &eq->oprtr, eq->op2_num_s,
-                    op1, *oprtr, op2);
+        parse_oprtn(o->n1s, &o->oprtr, o->n2s, op1, *oprtr, op2);
         return true;
     }
-    if (*oprtr != '/') {
+    if (*oprtr != '/'
+        || !parse_inoperable_division(s, op1, op2, o, b)
+        || !*o->n1s
+        || !o->oprtr
+        || !*o->n2s) {
         return false;
     }
-    if (!parse_inoperable_division(s, op1, op2, eq, b)) {
-        return false;
-    }
-    if (!*eq->op1_num_s || !eq->oprtr || !*eq->op2_num_s) {
-        return false;
-    }
-    if (strcmp(eq->op1_den_s, "0") == 0 || strcmp(eq->op2_den_s, "0") == 0) {
-        fprintf(stderr,
-                "%s | Error: Zero in denominator. Exiting\n",
-                __FILE__);
-        return false;
-    }
-    printf(
-        "\nParsed:\n"
-        "  Op1 num: %s\n"
-        "  Op1 den: %s\n"
-        "  Oprtr:   %c\n"
-        "  Op2 num: %s\n"
-        "  Op2 den: %s\n\n",
-        eq->op1_num_s, eq->op1_den_s, eq->oprtr, eq->op2_num_s, eq->op2_den_s
-    );
+    printf("\nParsed:\n"
+           "  Op1 num: %s\n"
+           "  Op1 den: %s\n"
+           "  Oprtr:   %c\n"
+           "  Op2 num: %s\n"
+           "  Op2 den: %s\n\n",
+           o->n1s, o->d1s, o->oprtr, o->n2s, o->d2s);
     return true;
 }

@@ -1,11 +1,11 @@
-void create_result_str(char* dst, char* num, char* den)
+void create_result_str(char* dst, char* n, char* d)
 {
-    for (char* p = num; *p; p++) {
+    for (char* p = n; *p; p++) {
         *dst++ = *p;
     }
-    if (*den != '\0') {
+    if (*d != '\0') {
         *dst++ = '/';
-        for (char* p = den; *p; p++) {
+        for (char* p = d; *p; p++) {
             *dst++ = *p;
         }
     }
