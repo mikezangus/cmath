@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 
-double calculate_result(double op1, char oprtr, double op2)
+double calculate_oprtn(double op1, char oprtr, double op2)
 {
     double result = 0.0;
     switch (oprtr) {
