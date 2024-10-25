@@ -14,6 +14,7 @@ bool is_prec3_oprtr(char c);
 bool is_paren_depth_same(const char* p1, const char* p2);
 bool is_paren(char c);
 bool is_sub_oprtr(char c);
+bool is_var(char c);
 bool oprtn_is_divisible(double num, double den);
 bool oprtn_is_operable(double num, char oprtr, double den);
 
@@ -26,3 +27,4 @@ char* find_nearest_oprtr(const char* s,
                          const char* l_start, const char* r_start);
 char* find_oprtr(const char* start, const char* end);
 bool find_paren_set(const char* start, char** l_paren, char** r_paren);
+char* find_var(const char* start, const char* end);
