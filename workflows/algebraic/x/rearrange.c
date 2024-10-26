@@ -18,12 +18,12 @@ static char* find_insert_pos(char* s)
     return NULL;
 }
 
-static bool find_bounds(char* s, char** extract_start, char** extract_end)
+static bool find_bounds(const char* s, char** extract_start, char** extract_end)
 {
     char* l_paren = NULL;
     char* r_paren = NULL;
-    short scale = 0;
-    for (char* p = s; *p && *p != '='; p++) {
+    int scale = 0;
+    for (const char* p = s; *p && *p != '='; p++) {
         balance_chars(*p, &scale, '(', ')');
         if (scale < 0 && l_paren) {
             *extract_start = l_paren - 1;
@@ -31,9 +31,9 @@ static bool find_bounds(char* s, char** extract_start, char** extract_end)
             return true;
         }
         if (*p == '(') {
-            l_paren = p;
+            l_paren = (char*)p;
         } else if (*p == ')') {
-            r_paren = p;
+            r_paren = (char*)p;
         }
     }
     if (!l_paren || !r_paren) {

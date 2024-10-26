@@ -16,7 +16,10 @@ void insert_mult1(char* s)
 void remove_mult1(char* s)
 {
     for (char* p = s; *p; p++) {
-        if (is_var(*p) && *(p - 1) == '1') {
+        if (is_var(*p)
+            && *(p - 1) == '1'
+            && !isdigit(*(p - 2))
+        ) {
             collapse_str(p - 1, p);
         }
     }
