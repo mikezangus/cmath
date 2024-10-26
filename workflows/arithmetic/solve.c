@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "arithmetic.h"
-#include "parsing/parsing.h"
 #include "../../main.h"
 #include "../../formatting/formatting.h"
 #include "../../general/general.h"
@@ -46,13 +45,15 @@ static void result_double_to_str(char* ns, char* ds, double nd, double dd)
 bool solve_arithmetic(char* s, Bounds* b)
 {
     init_oprtn();
-    move_frctn_neg_sign(s, b);
+    format_frctn_neg_signs(s, b);
     if (!parse_arithmetic(s, s, true, &o, b)) {
         return false;
     }
-    if (!format_frctn_oprtn(o.n1s, o.d1s, &o.oprtr, o.n2s, o.d2s)) {
+    if (*o.d1s == '0' || *o.d2s == '0') {
+        fprintf(stderr, "\n%s\nError: 0 in denominator. Exiting\n", __FILE__);
         return false;
     }
+    flip_frctn_divisor(&o.oprtr, o.n2s, o.d2s);
     oprtn_str_to_double(&o.n1d, &o.d1d, &o.n2d, &o.d2d,
                         o.n1s, o.d1s, o.n2s, o.d2s);
     if (isnan(o.rdd = calculate_den(&o.n1d, &o.d1d, o.oprtr, &o.n2d, &o.d2d))) {
@@ -66,6 +67,6 @@ bool solve_arithmetic(char* s, Bounds* b)
     create_result_str(o.r, o.rns, o.rds);
     collapse_str(b->l, b->r);
     insert_str(s, o.r, b->l);
-    printf("\nEnding: %s\n\n%s", s, DASHES);
+    printf("\nEnding: %s\n\n%s\n", s, DASHES);
     return true;
 }
