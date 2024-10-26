@@ -1,11 +1,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include "parsing.h"
 #include "../arithmetic.h"
 #include "../../../main.h"
 #include "../../../bounding/bounding.h"
-#include "../../../general/general.h"
 #include "../../../utils/utils.h"
 
 bool parse_arithmetic(const char* s, const char* start, bool bounds_found,
@@ -39,7 +37,7 @@ bool parse_arithmetic(const char* s, const char* start, bool bounds_found,
         || !*o->n2s) {
         return false;
     }
-    printf("\nParsed:\n"
+    printf("\nParsed fraction operation:\n"
            "  Op1 num: %s\n"
            "  Op1 den: %s\n"
            "  Oprtr:   %c\n"

@@ -2,6 +2,8 @@
 main.dSYM/
 main
 
+tests/
+
 .DS_Store
 .vscode/*
 !.vscode/settings.json

@@ -1,6 +1,5 @@
 #include <ctype.h>
 #include <stdio.h>
-#include "parsing.h"
 #include "../arithmetic.h"
 #include "../../../general/general.h"
 #include "../../../utils/utils.h"
@@ -29,15 +28,9 @@ static DivStatus extract_oprtn(const char* min,
     }
     parse_oprtn(o->n2s, NULL, o->d2s, op1, '\0', op2);
     o->oprtr = *prev_oprtr;
-    b->l = (l_bound < b->l)
-        ? l_bound
-        : b->l;
-    b->r = (b->r < r_bound)
-        ? r_bound
-        : b->r;
-    return (oprtr < prev_oprtr)
-        ? PARSED_L_TO_PREV
-        : PARSED_R_TO_PREV;  
+    b->l = (l_bound < b->l) ? l_bound : b->l;
+    b->r = (b->r < r_bound) ? r_bound : b->r;
+    return (oprtr < prev_oprtr) ? PARSED_L_TO_PREV : PARSED_R_TO_PREV;  
 }
 
 static DivStatus extract_oprtn_l(const char* start, const char* s,
@@ -66,7 +59,8 @@ static DivStatus extract_l(const char* s, const char* oprtr,
                            OprtnAr* o, Bounds* b)
 {
     if (isdigit(*(oprtr - 1))
-        || (*(oprtr - 1) == '-') && (oprtr - 2) && isdigit(*oprtr - 2)) {
+        || (*(oprtr - 1) == '-')
+            && (oprtr - 2) && isdigit(*oprtr - 2)) {
         b->l = extract_num_bwd(o->n1s, oprtr - 1, s);
         b->r++;
         o->oprtr = *oprtr;
@@ -84,9 +78,7 @@ static DivStatus extract_r(const char* s, const char* oprtr,
     if (isdigit(*(oprtr + 1))
         || (*(oprtr + 1) == '-' && isdigit(*(oprtr + 2)))) {
         b->r = extract_num_fwd(o->n2s, oprtr + 1);
-        b->l > s
-            ? b->l--
-            : b->l;
+        (b->l > s) ? b->l-- : b->l;
         o->oprtr = *oprtr;
         return PARSED_R_TO_PREV;
     }

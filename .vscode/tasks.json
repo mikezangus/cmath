@@ -13,48 +13,46 @@
         "${workspaceFolder}/main.c",
         "${workspaceFolder}/clean_input.c",
         "${workspaceFolder}/enter_workflow.c",
-        "${workspaceFolder}/insert_parens.c",
 
-
-        "${workspaceFolder}/bounding/find_bounds_by_highest_op.c",
+        "${workspaceFolder}/bounding/find_bounds_by_oprtr.c",
         "${workspaceFolder}/bounding/find_bounds_by_parens.c",
         "${workspaceFolder}/bounding/find_bounds.c",
-        "${workspaceFolder}/bounding/init.c",
 
-        "${workspaceFolder}/formatting/fractions/flip_frctn_divisor.c",
-        "${workspaceFolder}/formatting/fractions/format_frctns.c",
-        "${workspaceFolder}/formatting/fractions/format_neg_frctn.c",
+        "${workspaceFolder}/formatting/flip_frctn_divisor.c",
+        "${workspaceFolder}/formatting/format_frctn_neg_signs.c",
 
-        "${workspaceFolder}/formatting/parens/add.c",
-        "${workspaceFolder}/formatting/parens/format_parens.c",
-        "${workspaceFolder}/formatting/parens/remove.c",
-
-        "${workspaceFolder}/formatting/convert_neg_signs.c",
+        "${workspaceFolder}/formatting/str/convert_neg_signs.c",
+        "${workspaceFolder}/formatting/str/format_str.c",
+        "${workspaceFolder}/formatting/str/insert_parens.c",
+        "${workspaceFolder}/formatting/str/remove_unneeded_parens.c",
 
 
-        "${workspaceFolder}/general/calculate_result.c",
+        "${workspaceFolder}/general/calculate_den.c",
+        "${workspaceFolder}/general/calculate_oprtn.c",
         "${workspaceFolder}/general/create_result_str.c",
         "${workspaceFolder}/general/equate_denoms.c",
         "${workspaceFolder}/general/is_str_operable.c",
         "${workspaceFolder}/general/reduce_frctn.c",
 
 
-        "${workspaceFolder}/utils/checks/is_divisible.c",
         "${workspaceFolder}/utils/checks/is_num.c",
         "${workspaceFolder}/utils/checks/is_oprtr_in_str.c",
         "${workspaceFolder}/utils/checks/is_oprtr.c",
         "${workspaceFolder}/utils/checks/is_paren_depth_same.c",
         "${workspaceFolder}/utils/checks/is_paren.c",
+        "${workspaceFolder}/utils/checks/is_var.c",
+        "${workspaceFolder}/utils/checks/oprtn_is_divisible.c",
         "${workspaceFolder}/utils/checks/oprtn_is_operable.c",
 
-        "${workspaceFolder}/utils/conversions/d_to_str.c",
-        "${workspaceFolder}/utils/conversions/str_to_d.c",
+        "${workspaceFolder}/utils/conversions/double_to_str.c",
+        "${workspaceFolder}/utils/conversions/str_to_double.c",
         "${workspaceFolder}/utils/conversions/str_to_int.c",
 
         "${workspaceFolder}/utils/searches/find_char.c",
         "${workspaceFolder}/utils/searches/find_nearest_oprtr.c",
         "${workspaceFolder}/utils/searches/find_oprtr.c",
         "${workspaceFolder}/utils/searches/find_paren_set.c",
+        "${workspaceFolder}/utils/searches/find_var.c",
 
         "${workspaceFolder}/utils/balance_chars.c",
         "${workspaceFolder}/utils/collapse_str.c",
@@ -65,7 +63,6 @@
         "${workspaceFolder}/workflows/algebraic/calculate_vars.c",
         "${workspaceFolder}/workflows/algebraic/create_var_str.c",
         "${workspaceFolder}/workflows/algebraic/handle_mult1.c",
-        "${workspaceFolder}/workflows/algebraic/handle_vars.c",
         "${workspaceFolder}/workflows/algebraic/init_eq_alg.c",
         "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
         "${workspaceFolder}/workflows/algebraic/insert_exp1.c",
