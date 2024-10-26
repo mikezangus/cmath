@@ -44,7 +44,7 @@ static bool find_bounds(const char* s, char** extract_start, char** extract_end)
     return true;
 }
 
-void extract_to_buff(char* buff, char* extract_start, char* extract_end)
+static void extract_to_buff(char* buff, char* extract_start, char* extract_end)
 {
     size_t len = extract_end - extract_start + 1;
     memcpy(buff, extract_start, len);

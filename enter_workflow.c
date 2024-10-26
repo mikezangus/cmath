@@ -17,6 +17,7 @@ void enter_workflow(char* s)
         if (!is_paren_depth_same(s, s + strlen(s))) {
             return;
         }
+        format_vars(s);
         format_str(s);
         printf("\nStarting: %s\n", s);
         if (!find_bounds(s, &b.l, &b.r)) {
@@ -26,7 +27,9 @@ void enter_workflow(char* s)
         if (!var && !solve_arithmetic(s, &b)) {
             return;
         } else {
-            // process_algebraic(s);
+            if (!solve_algebraic(s, &b)) {
+                return;
+            }
         }
     }
 }
