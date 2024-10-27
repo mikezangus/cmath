@@ -18,13 +18,13 @@ bool is_var(char c);
 bool oprtn_is_divisible(double num, double den);
 bool oprtn_is_operable(double num, char oprtr, double den);
 
-void double_to_str(char* s, double d);
-double str_to_double(const char* s);
+void d_to_str(char* s, double d);
+double str_to_d(const char* s);
 long long str_to_int(const char* s);
 
 char* find_char(char c, const char* start, const char* end);
-char* find_nearest_oprtr(const char* s,
-                         const char* l_start, const char* r_start);
+char* find_adj_oprtr(const char* s,
+                           const char* l_start, const char* r_start);
 char* find_oprtr(const char* start, const char* end);
 bool find_paren_set(const char* start, char** l_paren, char** r_paren);
 char* find_var(const char* start, const char* end);
