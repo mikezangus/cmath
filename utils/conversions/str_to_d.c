@@ -1,6 +1,6 @@
 #include <stdbool.h>
 
-double str_to_double(const char* s)
+double str_to_d(const char* s)
 {
     if (*s == '\0') {
         return 1.0;
