@@ -2,6 +2,18 @@
 #include <stdio.h>
 #include "../../utils/utils.h"
 
+static void remove_mult_sign(char* s, char** var)
+{
+    if (*var - 2 < s) {
+        return;
+    }
+    if (*(*var - 1) != '*' && !isdigit(*(*var - 2))) {
+        return;
+    }
+    collapse_str(*var - 1, *var - 1);
+    (*var)--;
+}
+
 static void insert_mult1(char* s, char** var)
 {
     if (*var == s) {
@@ -23,12 +35,13 @@ static void insert_exp1(char* s, char* var)
 
 void format_vars(char* s)
 {
-    char* p = s;
+    const char* p = s;
     while (*p) {
         char* var = find_var(p, NULL);
         if (!var) {
             return;
         }
+        remove_mult_sign(s, &var);
         insert_mult1(s, &var);
         insert_exp1(s, var);
         p = var + 1;
