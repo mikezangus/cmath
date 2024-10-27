@@ -4,15 +4,13 @@
 #include <string.h>
 #include "../../utils/utils.h"
 
-static bool solo_neg_sign(const char* oprtr,
-                          const char* l_paren, const char* r_paren)
+static bool solo_neg_num(const char* oprtr,
+                         const char* l_paren, const char* r_paren)
 {
     if (*oprtr != '-') {
         return false;
     }
-    if (!isdigit(*(oprtr - 1))
-        && (oprtr - 1 == l_paren)
-        && isdigit(*(oprtr + 1))) {
+    if ((oprtr - 1 == l_paren) && isdigit(*(oprtr + 1))) {
         return true;
     }
     return false;
@@ -66,15 +64,16 @@ static bool equal_depth_outer_parens(const char* s,
 void remove_unneeded_parens(char* s)
 {
     char* p = s;
+    char* l_paren;
+    char* r_paren;
     while (*p) {
-        char* l_paren = NULL;
-        char* r_paren = NULL;
+        l_paren = r_paren = NULL;
         if (!find_paren_set(p, &l_paren, &r_paren)) {
             return;
         }
-        char* oprtr = find_oprtr(l_paren + 1, r_paren - 1);
+        const char* oprtr = find_oprtr(l_paren + 1, r_paren - 1);
         if (!oprtr
-            || solo_neg_sign(oprtr, l_paren, r_paren)
+            || solo_neg_num(oprtr, l_paren, r_paren)
             || enclosed_neg_sign(s, &l_paren, &r_paren)
             || double_parens(l_paren, r_paren)) {
             collapse_str(l_paren, l_paren);
