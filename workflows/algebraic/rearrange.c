@@ -3,12 +3,11 @@
 #include <string.h>
 #include "../../main.h"
 #include "../../utils/utils.h"
-#include "algebraic.h"
 
-static char* find_insert_pos(char* s)
+static const char* find_insert_pos(const char* s)
 {
     bool var_found = false;
-    for (char* p = s; *p; p++) {
+    for (const char* p = s; *p; p++) {
         if (!var_found && is_var(*p)) {
             var_found = true;
         } else if (var_found && *p == ')') {
@@ -44,7 +43,8 @@ static bool find_bounds(const char* s, char** extract_start, char** extract_end)
     return true;
 }
 
-static void extract_to_buff(char* buff, char* extract_start, char* extract_end)
+static void extract_to_buff(char* buff,
+                            const char* extract_start, const char* extract_end)
 {
     size_t len = extract_end - extract_start + 1;
     memcpy(buff, extract_start, len);
@@ -55,7 +55,7 @@ void rearrange(char* s)
 {
     char* p = s;
     while (*p && *p != '=') {
-        char* insert_pos = NULL;
+        const char* insert_pos = NULL;
         char* extract_start = NULL;
         char* extract_end = NULL;
         char buff[STR_MAXLEN] = {0};
@@ -68,6 +68,6 @@ void rearrange(char* s)
         extract_to_buff(buff, extract_start, extract_end);
         collapse_str(extract_start, extract_end);
         insert_str(s, buff, insert_pos);
-        p = insert_pos + strlen(buff);
+        p = (char*)(insert_pos + strlen(buff));
     }
 }
