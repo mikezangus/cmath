@@ -1,7 +1,6 @@
 #include <ctype.h>
-#include <stdbool.h>
 #include <stdio.h>
-#include "../../../utils/utils.h"
+#include "utils.h"
 
 char* extract_num_fwd(char* dst, const char* start)
 {

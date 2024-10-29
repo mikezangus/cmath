@@ -38,9 +38,6 @@ typedef enum  {
     PARSED_TO_NEW = 3,
 } DivStatus;
 
-
-char* extract_num_bwd(char* dst, const char* start, const char* min);
-char* extract_num_fwd(char* dst, const char* start);
 bool parse_arithmetic(const char* s, const char* start, bool bounds_found,
                       OprtnAr* o, Bounds* b);
 bool parse_inoperable_division(const char* s, const char* op1, const char* op2,
