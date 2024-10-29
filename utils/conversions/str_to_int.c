@@ -3,15 +3,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-long long str_to_int(const char* s)
+long long str_to_int(const char* src)
 {
     long long result = 0;
     bool neg = false;
-    if (*s == '-') {
+    if (*src == '-') {
         neg = true;
-        s++;
+        src++;
     }
-    for (const char* p = s; *p; p++) {
+    for (const char* p = src; *p; p++) {
         if (!isdigit(*p)) {
             if (*p == '.') {
                 return LLONG_MIN;
@@ -20,7 +20,7 @@ long long str_to_int(const char* s)
                     "\n%s\nError: non-digit in input string:\n" 
                     "  Char: %c\n"
                     "  Str:  %s\n",
-                    __FILE__, *p, s);
+                    __FILE__, *p, src);
             return LLONG_MIN;
         }
         result = result * 10 + (*p - '0');

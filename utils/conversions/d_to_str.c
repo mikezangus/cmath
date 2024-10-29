@@ -2,8 +2,8 @@
 #include <string.h>
 #include "../../main.h"
 
-void d_to_str(char* s, double d)
+void d_to_str(char* dst, double src)
 {
-    memset(s, '\0', NUM_MAXLEN);
-    snprintf(s, NUM_MAXLEN, "%.17g", d);
+    memset(dst, '\0', NUM_MAXLEN);
+    snprintf(dst, NUM_MAXLEN, "%.17g", src);
 }

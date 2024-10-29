@@ -1,8 +1,8 @@
 #include <stdbool.h>
 
-double str_to_d(const char* s)
+double str_to_d(const char* src)
 {
-    if (*s == '\0') {
+    if (*src == '\0') {
         return 1.0;
     }
     int digit = 0;
@@ -10,11 +10,11 @@ double str_to_d(const char* s)
     double divisor = 10.0;
     bool negative = false;
     bool fractional = false;
-    if (*s == '-') {
+    if (*src == '-') {
         negative = true;
-        s++;
+        src++;
     }
-    for (const char* p = s; *p; p++) {
+    for (const char* p = src; *p; p++) {
         if (*p == '.') {
             fractional = true;
             continue;
