@@ -7,14 +7,14 @@ static void remove_mult_sign(char* s, char** var)
     if (*var - 2 < s) {
         return;
     }
-    if (*(*var - 1) != '*' && !isdigit(*(*var - 2))) {
+    if (*(*var - 1) != '*' || !isdigit(*(*var - 2))) {
         return;
     }
     collapse_str(*var - 1, *var - 1);
     (*var)--;
 }
 
-static void insert_mult1(char* s, char** var)
+static void insert_base1(char* s, char** var)
 {
     if (*var == s) {
         ;;
@@ -25,7 +25,7 @@ static void insert_mult1(char* s, char** var)
     (*var)++;
 }
 
-static void insert_exp1(char* s, char* var)
+static void insert_exp1(char* s, const char* var)
 {
     if (*(var + 1) == '^' && isdigit(*(var + 2))) {
         return;
@@ -42,7 +42,7 @@ void format_vars(char* s)
             return;
         }
         remove_mult_sign(s, &var);
-        insert_mult1(s, &var);
+        insert_base1(s, &var);
         insert_exp1(s, var);
         p = var + 1;
     }
