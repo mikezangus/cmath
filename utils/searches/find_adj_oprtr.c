@@ -9,7 +9,7 @@ static char* find_l(const char* s, const char* l_start)
             break;
         }
     }
-    return is_paren_depth_same(p, l_start) ? (char*)p : NULL;
+    return (get_paren_depth(p, l_start) == 0) ? (char*)p : NULL;
 }
 
 static char* find_r(const char* r_start)
@@ -20,7 +20,7 @@ static char* find_r(const char* r_start)
             break;
         }
     }
-    return is_paren_depth_same(r_start, p) ? (char*)p : NULL;
+    return (get_paren_depth(r_start, p) == 0) ? (char*)p : NULL;
 }
 
 char* find_adj_oprtr(const char* s,
