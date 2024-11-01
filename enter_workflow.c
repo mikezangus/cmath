@@ -11,10 +11,23 @@
 
 Bounds b;
 
+void format_str_alg(char* s)
+{
+    char* var = find_var(s, NULL);
+    if (!var) {
+        return;
+    }
+    format_vars(s);
+    insert_eqzero(s);
+    insert_parens(s);
+    rearrange(s);
+}
+
 void enter_workflow(char* s)
 {
+    format_str_alg(s);
     while (true) {
-        if (!is_paren_depth_same(s, s + strlen(s))) {
+        if ((get_paren_depth(s, s + strlen(s))) != 0) {
             return;
         }
         format_vars(s);
@@ -23,13 +36,16 @@ void enter_workflow(char* s)
         if (!find_bounds(s, &b.l, &b.r)) {
             return;
         }
-        char* var = find_var(b.l, b.r);
-        if (!var && !solve_arithmetic(s, &b)) {
-            return;
-        } else {
-            if (!solve_algebraic(s, &b)) {
+        char* var = find_var(s, NULL);
+        if (!var) {
+            if (!solve_arithmetic(s, &b)) {
                 return;
             }
+        } else {
+            if (!solve_algebraic(s)) {
+                return;
+            }
+            return;
         }
     }
 }
