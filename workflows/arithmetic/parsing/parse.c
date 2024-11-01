@@ -12,7 +12,7 @@ bool parse_arithmetic(const char* s, const char* start, bool bounds_found,
     if (!bounds_found && !find_bounds(start, &b->l, &b->r)) {
         return false;
     }
-    char* oprtr = find_oprtr(b->l, b->r);
+    const char* oprtr = find_oprtr(b->l, b->r);
     if (!oprtr) {
         return false;
     }
@@ -26,7 +26,7 @@ bool parse_arithmetic(const char* s, const char* start, bool bounds_found,
                 __FILE__);
         return false;
     }
-    if (oprtn_is_operable(str_to_double(op1), *oprtr, str_to_double(op2))) {
+    if (oprtn_is_operable(str_to_d(op1), *oprtr, str_to_d(op2))) {
         parse_oprtn(o->n1s, &o->oprtr, o->n2s, op1, *oprtr, op2);
         return true;
     }

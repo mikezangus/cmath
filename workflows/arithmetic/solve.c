@@ -26,20 +26,20 @@ static void oprtn_str_to_double(double* n1d, double* d1d,
                                 double* n2d, double* d2d,
                                 char* n1s, char* d1s, char* n2s, char* d2s)
 {
-    *n1d = str_to_double(n1s);
-    *d1d = str_to_double(d1s);
-    *n2d = str_to_double(n2s);
-    *d2d = str_to_double(d2s);
+    *n1d = str_to_d(n1s);
+    *d1d = str_to_d(d1s);
+    *n2d = str_to_d(n2s);
+    *d2d = str_to_d(d2s);
 }
 
 static void result_double_to_str(char* ns, char* ds, double nd, double dd)
 {
-    double_to_str(ns, nd);
+    d_to_str(ns, nd);
     if (dd == 1.0) {
         *ds = '\0';
         return;
     }
-    double_to_str(ds, dd);
+    d_to_str(ds, dd);
 }
 
 bool solve_arithmetic(char* s, Bounds* b)
