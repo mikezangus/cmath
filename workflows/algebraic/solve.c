@@ -42,7 +42,9 @@ bool solve_algebraic(char* s)
 {
     printf("\nEntering solve_algebraic(). Shedding everything except input:"
            "\n  %s\n", s);
-    if (!isolate_num_oprtn(s)) {
+    if (!isolate_num_oprtn(s)
+        && !isolate_var_base(s)
+    ) {
         return false;
     }
     strip_equation(s);
