@@ -3,36 +3,21 @@
 
 double calculate_oprtn(double op1, char oprtr, double op2)
 {
-    double result = 0.0;
+    if (isnan(op1) || isnan(op2)) {
+        return NAN;
+    }
     switch (oprtr) {
-        case '+':
-            result = op1 + op2;
-            break;
-        case '-':
-            result = op1 - op2;
-            break;
-        case '*':
-            result = op1 * op2;
-            break;
-        case '/':
-            if (op2 == 0.0) {
-                break;
-            }
-            result = op1 / op2;
-            break;
-        case '^':
-            result = pow(op1, op2);
-            break;
+        case '+': return op1 + op2;
+        case '-': return op1 - op2;
+        case '*': return op1 * op2;
+        case '/': return (op2 == 0.0) ? NAN : op1 / op2;
+        case '^': return pow(op1, op2);
+        case '√': 
+            return (op2 == 0 || (op1 < 0 && ((int)op2 % 2 == 0)))
+                ? NAN
+                : pow(op1, 1.0 / op2);
         default:
-            fprintf(stderr,
-                    "\n%s | Invalid operator: %c\n",
-                    __FILE__, oprtr);
+            fprintf(stderr, "\n%s | Invalid operator: %c\n", __FILE__, oprtr);
             return NAN;
     }
-    printf(
-        "\nCalculation:\n"
-        "%.2f %c %.2f = %.2f\n",
-        op1, oprtr, op2, result
-    );
-    return result;
 }
