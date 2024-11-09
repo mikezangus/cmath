@@ -36,17 +36,22 @@ static bool extract_num_oprtn(char* dst,
     return false;
 }
 
-bool isolate_num_oprtn(char* s)
+void isolate_num_oprtn(char* s)
 {
-    char oprtn[STR_MAXLEN] = {0};
-    char* start = NULL, * end = NULL;
-    if (!extract_num_oprtn(oprtn, &start, &end, s)
-        || *oprtn == '\0'
-        || !start
-        || !end) {
-        return false;
+    char oprtn[STR_MAXLEN];
+    char* start;
+    char* end;
+    while (true) {
+        memset(oprtn, '\0', STR_MAXLEN);
+        start = end = NULL;
+        if (!extract_num_oprtn(oprtn, &start, &end, s)
+            || *oprtn == '\0'
+            || !start
+            || !end) {
+            break;
+        }
+        collapse_str(start, end);
+        insert_str(s, oprtn, s + strlen(s));
+        enter_workflow(strchr(s, '=') + 1);
     }
-    collapse_str(start, end);
-    insert_str(s, oprtn, s + strlen(s));
-    return true;
 }

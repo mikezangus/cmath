@@ -42,20 +42,8 @@ bool solve_algebraic(char* s)
 {
     printf("\nEntering solve_algebraic(). Shedding everything except input:"
            "\n  %s\n", s);
-    while (true) {
-        printf("Isolating number operation: %s\n", s);
-        if (!isolate_num_oprtn(s)) {
-            break;
-        }
-        enter_workflow(strchr(s, '=') + 1);
-    }
-    while (true) {
-        printf("Isolating variable base: %s\n", s);
-        if (!isolate_var_base(s)) {
-            break;
-        }
-        enter_workflow(strchr(s, '=') + 1);
-    }
+    isolate_num_oprtn(s);
+    isolate_var_base(s);
     strip_equation(s);
     return false;
 }

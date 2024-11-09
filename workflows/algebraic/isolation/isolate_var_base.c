@@ -31,14 +31,19 @@ static bool extract_base_oprtn(char* dst,
     return false;
 }
 
-bool isolate_var_base(char* s)
+void isolate_var_base(char* s)
 {
-    char oprtn[STR_MAXLEN] = {0};
-    char* start = NULL, * end = NULL;
-    if (!extract_base_oprtn(oprtn, &start, &end, s) || *oprtn == '\0') {
-        return false;
+    char oprtn[STR_MAXLEN];
+    char* start;
+    char* end;
+    while (true) {
+        memset(oprtn, '\0', STR_MAXLEN);
+        start = end = NULL;
+        if (!extract_base_oprtn(oprtn, &start, &end, s) || *oprtn == '\0') {
+            break;
+        }
+        collapse_str(start, end);
+        insert_str(s, oprtn, s + strlen(s));
+        enter_workflow(strchr(s, '=') + 1);
     }
-    collapse_str(start, end);
-    insert_str(s, oprtn, s + strlen(s));
-    return true;
 }
