@@ -16,7 +16,7 @@ static bool extract_base_oprtn(char* dst,
     *start = *end = NULL;
     char* p_dst = dst;
     for (const char* p_src = src, * var; p_src < eq_sign; p_src = var + 1) {
-        var = find_var(p_src + 1, strchr(src, '=') - 1);
+        var = find_var(p_src, strchr(src, '=') - 1);
         if (!var) {
             return false;
         }
