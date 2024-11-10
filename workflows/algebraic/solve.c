@@ -44,6 +44,7 @@ bool solve_algebraic(char* s)
            "\n  %s\n", s);
     isolate_num_oprtn(s);
     isolate_var_base(s);
+    isolate_var_exp(s);
     strip_equation(s);
     return false;
 }

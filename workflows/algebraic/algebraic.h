@@ -1,80 +1,47 @@
-#include "../../main.h"
+#ifndef ALGEBRAIC_H
+#define ALGEBRAIC_H
+
 #include <stdbool.h>
+#include "../../main.h"
 
 
-struct EqAlg {
+typedef struct OprtnAlg {
+    char n1bs[STR_MAXLEN];
+    char n1v;
+    char n1es[STR_MAXLEN];
+
+    char d1bs[STR_MAXLEN];
+    char d1v;
+    char d1es[STR_MAXLEN];
 
     char oprtr;
 
+    char n2bs[STR_MAXLEN];
+    char n2v;
+    char n2es[STR_MAXLEN];
 
-    char op1_num_base_s[STR_MAXLEN];
-    char op1_num_var;
-    char op1_num_exp_s[STR_MAXLEN];
+    char d2bs[STR_MAXLEN];
+    char d2v;
+    char d2es[STR_MAXLEN];
 
-    char op1_den_base_s[STR_MAXLEN];
-    char op1_den_var;
-    char op1_den_exp_s[STR_MAXLEN];
-
-
-    char op2_num_base_s[STR_MAXLEN];
-    char op2_num_var;
-    char op2_num_exp_s[STR_MAXLEN];
-
-    char op2_den_base_s[STR_MAXLEN];
-    char op2_den_var;
-    char op2_den_exp_s[STR_MAXLEN];
+} OprtnAlg;
 
 
-    double op1_num_base_d;
-    double op1_num_exp_d;
 
-    double op1_den_base_d;
-    double op1_den_exp_d;
+bool parse_algebraic( char* s,
+                     const char* v1, char* oprtr, const char* v2, Bounds* b);
 
+bool is_alg_oprtn_operable(char v1, const char* e1,
+                           char oprtr,
+                           char v2, const char* e2);
 
-    double op2_num_base_d;
-    double op2_num_exp_d;
-
-    double op2_den_base_d;
-    double op2_den_exp_d;
-
-
-    double res_num_base_d;
-    double res_num_exp_d;
-
-    char res_num_var;
-
-    char res_num_base_s[STR_MAXLEN];
-    char res_num_exp_s[STR_MAXLEN];
-
-    double res_den_base_d;
-    double res_den_exp_d;
-
-    char res_den_var;
-
-    char res_den_base_s[STR_MAXLEN];
-    char res_den_exp_s[STR_MAXLEN];
-
-
-    char result[STR_MAXLEN];
-    
-};
-extern struct EqAlg eq_alg;
-
-
-void calculate_vars(struct EqAlg* eq_alg);
-void create_var_str(char* in_var, char* in_exp, char* out);
-char* find_var(char* s);
-void init_vars(void);
+void format_vars(char* s);
 void insert_eqzero(char* s);
-void insert_exp1(char* s);
-void insert_mult1(char* s);
-bool is_var(char c);
-void parse_var(char* in, char* out_var, double* out_exp);
-void process_algebraic(char* s);
 void rearrange(char* s);
-void remove_mult1(char* s);
-void remove_exp1(char* s);
-void remove_vars(char* s);
-void solve_alg(char* s);
-int var_exists(char* s);
+bool solve_algebraic(char* s);
+
+void isolate_num_oprtn(char* s);
+void isolate_var_base(char* s);
+void isolate_var_exp(char* s);
+
+#endif // ALGEBRAIC_H
