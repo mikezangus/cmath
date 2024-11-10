@@ -27,8 +27,7 @@ double str_to_d(const char* src);
 long long str_to_int(const char* src);
 
 char* find_char(char c, const char* start, const char* end);
-char* find_adj_oprtr(const char* s,
-                           const char* l_start, const char* r_start);
+char* find_adj_oprtr(const char* s, const char* l_start, const char* r_start);
 char* find_oprtr(const char* start, const char* end);
 bool find_paren_set(const char* start, char** l_paren, char** r_paren);
 char* find_var(const char* start, const char* end);
