@@ -10,12 +10,13 @@ void print_bounded_str(const char* start, const char* end);
 
 bool is_num(const char* p, const char* start);
 bool is_oprtr_in_str(const char* s);
+
 bool is_oprtr(char c);
 bool is_prec1_oprtr(char c);
 bool is_prec2_oprtr(char c);
 bool is_prec3_oprtr(char c);
+
 bool is_paren(char c);
-bool is_sub_oprtr(char c);
 bool is_var(char c);
 bool oprtn_is_divisible(double num, double den);
 bool oprtn_is_operable(double num, char oprtr, double den);
