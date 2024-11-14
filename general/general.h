@@ -1,5 +1,6 @@
 #include <stdbool.h>
 
+void appy_exp_rule_to_frctns(char* s);
 double calculate_den(double* n1, double* d1, char oprtr, double* n2, double* d2);
 double calculate_oprtn(double op1, char oprtr, double op2);
 void create_result_str(char* dst, char* n, char* d);
