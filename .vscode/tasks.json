@@ -27,6 +27,7 @@
         "${workspaceFolder}/formatting/str/remove_unneeded_parens.c",
 
 
+        "${workspaceFolder}/general/apply_exp_rule_to_frctns.c",
         "${workspaceFolder}/general/calculate_den.c",
         "${workspaceFolder}/general/calculate_oprtn.c",
         "${workspaceFolder}/general/create_result_str.c",
@@ -38,35 +39,43 @@
         "${workspaceFolder}/utils/checks/is_num.c",
         "${workspaceFolder}/utils/checks/is_oprtr_in_str.c",
         "${workspaceFolder}/utils/checks/is_oprtr.c",
-        "${workspaceFolder}/utils/checks/is_paren_depth_same.c",
         "${workspaceFolder}/utils/checks/is_paren.c",
         "${workspaceFolder}/utils/checks/is_var.c",
         "${workspaceFolder}/utils/checks/oprtn_is_divisible.c",
         "${workspaceFolder}/utils/checks/oprtn_is_operable.c",
 
-        "${workspaceFolder}/utils/conversions/double_to_str.c",
-        "${workspaceFolder}/utils/conversions/str_to_double.c",
+        "${workspaceFolder}/utils/conversions/d_to_str.c",
+        "${workspaceFolder}/utils/conversions/invert_oprtr.c",
+        "${workspaceFolder}/utils/conversions/str_to_d.c",
         "${workspaceFolder}/utils/conversions/str_to_int.c",
 
+        "${workspaceFolder}/utils/searches/find_adj_oprtr.c",
         "${workspaceFolder}/utils/searches/find_char.c",
-        "${workspaceFolder}/utils/searches/find_nearest_oprtr.c",
         "${workspaceFolder}/utils/searches/find_oprtr.c",
         "${workspaceFolder}/utils/searches/find_paren_set.c",
         "${workspaceFolder}/utils/searches/find_var.c",
 
         "${workspaceFolder}/utils/balance_chars.c",
         "${workspaceFolder}/utils/collapse_str.c",
+        "${workspaceFolder}/utils/extract_num.c",
+        "${workspaceFolder}/utils/get_paren_depth.c",
         "${workspaceFolder}/utils/insert_str.c",
         "${workspaceFolder}/utils/print_bounded_str.c",
 
 
         "${workspaceFolder}/workflows/algebraic/format_vars.c",
+        "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
+        "${workspaceFolder}/workflows/algebraic/is_alg_oprtn_operable.c",
+        "${workspaceFolder}/workflows/algebraic/rearrange.c",
         "${workspaceFolder}/workflows/algebraic/solve.c",
         "${workspaceFolder}/workflows/algebraic/parsing/parse.c",
 
+        "${workspaceFolder}/workflows/algebraic/isolation/isolate_num_oprtn.c",
+        "${workspaceFolder}/workflows/algebraic/isolation/isolate_var_base.c",
+        "${workspaceFolder}/workflows/algebraic/isolation/isolate_var_exp.c",
+
 
         "${workspaceFolder}/workflows/arithmetic/solve.c",
-        "${workspaceFolder}/workflows/arithmetic/parsing/extract_num.c",
         "${workspaceFolder}/workflows/arithmetic/parsing/parse_inoperable_division.c",
         "${workspaceFolder}/workflows/arithmetic/parsing/parse_oprtn.c",
         "${workspaceFolder}/workflows/arithmetic/parsing/parse.c",
