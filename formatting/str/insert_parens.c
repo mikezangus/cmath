@@ -17,9 +17,11 @@ static bool find_insert_pos(const char* p, bool* skip_parens, int* scale)
 static const char* find_l(const char* s, const char* oprtr)
 {
     const char* p = (*(oprtr - 1) != '-') ? oprtr - 1 : oprtr - 2;
+    const char* eq_sign = strchr(s, '=');
+    const char* min = (eq_sign && oprtr > eq_sign) ? eq_sign : s;
     int scale = 0;
     bool skip_parens = false;
-    for (; p > s; p--) {
+    for (; p > min; p--) {
         if (*p == ')') {
             skip_parens = true;
         }
