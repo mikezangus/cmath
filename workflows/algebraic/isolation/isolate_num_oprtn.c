@@ -4,24 +4,29 @@
 #include <string.h>
 #include "../../../main.h"
 #include "../../../utils/utils.h"
+#include "../../../workflows/arithmetic/arithmetic.h"
 
-static bool extract_num_oprtn(char* dst,
-                              char** start, char** end,
-                              const char* src)
+static bool extract_leading_sum_oprtn(char* dst, char** start, char** end,
+                                      const char* src)
 {
-    char* eq_sign = strchr(src, '=');
-    if (!eq_sign) {
-        return false;
-    }
-    *start = *end = NULL;
-    char* p_dst = dst;
     if (isdigit(*src)) {
-        *p_dst++ = '-';
+        *dst++ = '-';
         *start = (char*)src;
-        *end = extract_num_fwd(p_dst, src);
+        *end = extract_num_fwd(dst, src);
         return true;
     }
-    for (const char* p_src = src, * oprtr; p_src < eq_sign; p_src = oprtr + 1) {
+    return false;
+}
+
+static bool extract_num_oprtn(char* dst, char** start, char** end,
+                              const char* src, const char* eq_sign)
+{
+    if (extract_leading_sum_oprtn(dst, start, end, src)) {
+        return true;
+    }
+    char* p_dst = dst;
+    const char* oprtr;
+    for (const char* p_src = src; p_src < eq_sign; p_src = oprtr + 1) {
         if (!(oprtr = find_oprtr(p_src, eq_sign - 1))) {
             return false;
         }
@@ -36,22 +41,25 @@ static bool extract_num_oprtn(char* dst,
     return false;
 }
 
-void isolate_num_oprtn(char* s)
+void isolate_num_oprtn(char* s, Bounds* b)
 {
+    const char* eq_sign;
     char oprtn[STR_MAXLEN];
-    char* start;
-    char* end;
+    char* start, * end;
     while (true) {
+        if (!(eq_sign = strchr(s, '='))) {
+            return;
+        }
+        b->l = b->r = NULL;
         memset(oprtn, '\0', STR_MAXLEN);
-        start = end = NULL;
-        if (!extract_num_oprtn(oprtn, &start, &end, s)
-            || *oprtn == '\0'
-            || !start
-            || !end) {
-            break;
+        if (!extract_num_oprtn(oprtn, &start, &end, s, eq_sign)
+            || *oprtn == '\0') {
+            return;
         }
         collapse_str(start, end);
         insert_str(s, oprtn, s + strlen(s));
-        enter_workflow(strchr(s, '=') + 1);
+        if (!solve_arithmetic(strchr(s, '=') + 1, b)) {
+            return;
+        }
     }
 }

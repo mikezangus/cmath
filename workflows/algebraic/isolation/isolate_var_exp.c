@@ -4,20 +4,16 @@
 #include <string.h>
 #include "../../../main.h"
 #include "../../../utils/utils.h"
+#include "../../../workflows/arithmetic/arithmetic.h"
 
 static bool extract_var_exp_oprtn(char* dst,
                                   char** start, char** end,
-                                  const char* src)
+                                  const char* src, const char* eq_sign)
 {
-    char* eq_sign = strchr(src, '=');
-    if (!eq_sign) {
-        return false;
-    }
-    *start = *end = NULL;
     char* p_dst = dst;
-    for (const char* p_src = src, * var; p_src < eq_sign; p_src = var + 1) {
-        var = find_var(p_src, strchr(src, '=') - 1);
-        if (!var) {
+    char* var;
+    for (const char* p_src = src; p_src < eq_sign; p_src = var + 1) {
+        if (!(var = find_var(p_src, eq_sign - 1))) {
             return false;
         }
         if (*(var + 1) != '^'
@@ -26,31 +22,37 @@ static bool extract_var_exp_oprtn(char* dst,
             || get_paren_depth(var + 2, eq_sign) != -1) {
             continue;
         }
-        *p_dst++ = '^';
-        *p_dst++ = '1';
-        *p_dst++ = '/';
+        strcpy(dst, "^(1/");
+        p_dst = dst + 4;
         *start = (char*)(var + 1);
         *end = extract_num_fwd(p_dst, var + 2);
+        *(p_dst + strlen(p_dst)) = ')';
         return true;
     }
     return false;
 }
 
-void isolate_var_exp(char* s)
+void isolate_var_exp(char* s, Bounds* b)
 {
+    const char* eq_sign;
     char oprtn[STR_MAXLEN];
-    char* start;
-    char* end;
+    char* start, * end;
     while (true) {
-        memset(oprtn, '\0', STR_MAXLEN);
-        start = end = NULL;
-        if (!extract_var_exp_oprtn(oprtn, &start, &end, s) || *oprtn == '\0') {
-            break;
+        if (!(eq_sign = strchr(s, '='))) {
+            return;
         }
-        printf("Extracted exp string: %s\n", oprtn);
+        b->l = b->r = NULL;
+        memset(oprtn, '\0', STR_MAXLEN);
+        if (!extract_var_exp_oprtn(oprtn, &start, &end, s, eq_sign)
+            || *oprtn == '\0') {
+            return;
+        }
+        printf("Extract: %s\n", oprtn);
         collapse_str(start, end);
         insert_str(s, oprtn, s + strlen(s));
-
-        enter_workflow(strchr(s, '=') + 1);
+        printf("New string: %s\n", s);
+        if (!solve_arithmetic(strchr(s, '=') + 1, b)) {
+            return;
+        }
     }
 }
