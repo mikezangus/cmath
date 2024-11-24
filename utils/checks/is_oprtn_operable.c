@@ -3,9 +3,13 @@
 #include <stdio.h>
 #include "../utils.h"
 
-static bool is_exp_operable(double base, double expnd, double expdd)
+static bool is_exp_operable(double basen, double based,
+                            double expnd, double expdd)
 {
-    if (base == 1.0 || expdd == 1.0 || isnan(expdd)) {
+    if (!isnan(based)) {
+        return false;
+    }
+    if (basen == 1.0 || expdd == 1.0 || isnan(expdd)) {
         return true;
     }
     int expn = (int)expnd;
@@ -28,20 +32,20 @@ static bool is_exp_operable(double base, double expnd, double expdd)
                 "  Base:                 %f\n"
                 "  Exponent numerator:   %d\n"
                 "  Exponent denominator: %d\n",
-                __FILE__, base, expn, expd);
+                __FILE__, basen, expn, expd);
         return false;
     }
-    if (base < 0 && expd % 2 == 0) {
+    if (basen < 0 && expd % 2 == 0) {
         fprintf(stderr,
                 "\n%s\n"
                 "Error | Negative base with even root\n"
                 "  Base:                 %f\n"
                 "  Exponent numerator:   %d\n"
                 "  Exponent denominator: %d\n",
-                __FILE__, base, expn, expd);
+                __FILE__, basen, expn, expd);
         return false;
     }
-    double root = pow(base, 1.0 / expd);
+    double root = pow(basen, 1.0 / expd);
     double result = pow(root, expn);
     return modf(result, &(double){0}) == 0.0;
 }
@@ -58,11 +62,13 @@ static bool is_div_operable(double num, double den)
     return fmod(num, den) == 0.0;
 }
 
-bool is_oprtn_operable(double op1, char oprtr, double op2n, double op2d)
+bool is_oprtn_operable(double op1n, double op1d,
+                       char oprtr,
+                       double op2n, double op2d)
 {
     switch (oprtr) {
-        case '^': return is_exp_operable(op1, op2n, op2d);
-        case '/': return is_div_operable(op1, op2n);
+        case '^': return is_exp_operable(op1n, op1d, op2n, op2d);
+        case '/': return is_div_operable(op1n, op2n);
         default: return true;
     }
 }

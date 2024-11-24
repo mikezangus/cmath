@@ -18,8 +18,9 @@ bool is_prec3_oprtr(char c);
 
 bool is_paren(char c);
 bool is_var(char c);
-bool oprtn_is_divisible(double num, double den);
-bool oprtn_is_operable(double num, char oprtr, double den);
+bool is_oprtn_operable(double op1n, double op1d,
+                       char oprtr,
+                       double op2n, double op2d);
 
 void d_to_str(char* dst, double src);
 char invert_oprtr(char oprtr);
