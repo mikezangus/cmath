@@ -3,7 +3,7 @@
 
 static char* find_l(const char* s, const char* l_start)
 {
-    const char* p = (is_paren(*l_start) && l_start > s) ? l_start - 1 : l_start;
+    const char* p = (is_paren(*l_start) && l_start > s) ? --l_start : l_start;
     for (; p > s && !is_paren(*p); p--) {
         if (is_oprtr(*p)) {
             break;
@@ -14,7 +14,7 @@ static char* find_l(const char* s, const char* l_start)
 
 static char* find_r(const char* r_start)
 {
-    const char* p = (is_paren(*r_start)) ? r_start + 1 : r_start;
+    const char* p = (is_paren(*r_start)) ? ++r_start : r_start;
     for (; *p && !is_paren(*p); p++) {
         if (is_oprtr(*p)) {
             break;
