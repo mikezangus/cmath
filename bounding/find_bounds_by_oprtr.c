@@ -47,13 +47,16 @@ static char* find_r_bound(const char *start)
     return (char*)(p - 1);
 }
 
-bool find_bounds_by_oprtr(const char* start, char** l_bound, char** r_bound)
+bool find_bounds_by_oprtr(const char* start, const char* end,
+                          char** l_bound, char** r_bound)
 {
     const char* op_start = (*start == '-') ? start + 1 : start;
     char* op = NULL;
-    if (!(op = strpbrk(op_start, "^"))
-        && !(op = strpbrk(op_start, "*/"))
-        && !(op = strpbrk(op_start, "+-"))) {
+    if (!(op = find_char('^', op_start, end))
+        || !(op = find_char('*', op_start, end))
+        || !(op = find_char('/', op_start, end))
+        || !(op = find_char('+', op_start, end))
+        || !(op = find_char('-', op_start, end))) {
         return false;
     }
     *l_bound = find_l_bound(op - 1, start);
