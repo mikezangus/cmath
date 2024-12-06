@@ -4,96 +4,70 @@
 #include <string.h>
 #include "../../utils/utils.h"
 
-static bool solo_neg_num(const char* oprtr,
-                         const char* l_paren, const char* r_paren)
+static bool solo_num(char** l_paren, char** r_paren, const char* start)
 {
-    if (*oprtr != '-') {
+    /* e.g. 1+(-2)+3 -> 1+-2+3 */
+    if (!find_paren_set(start, l_paren, r_paren)
+        || !l_paren
+        || !r_paren
+        || find_oprtr(*l_paren + 2, *r_paren - 1)) {
         return false;
     }
-    if ((oprtr - 1 == l_paren) && isdigit(*(oprtr + 1))) {
-        return true;
-    }
-    return false;
+    return *(*l_paren) == '(' && *(*r_paren) == ')';;
 }
 
-static bool enclosed_neg_sign(const char* s, char** l_paren, char** r_paren)
+static bool enclosed_neg_sign(char** l_paren, char** r_paren,
+                              const char* start, const char* src)
 {
-    if (*(l_paren - 2) < s) {
+    /* e.g. (-(1*2)) -> -(1*2) */
+    if (!find_paren_set(start, l_paren, r_paren)
+        || !l_paren
+        || !r_paren
+        || *(l_paren - 2) < src
+        || *(*l_paren - 1) != '-'
+        || *(*l_paren - 2) != '('
+        || *(*r_paren + 1) != ')') {
         return false;
     }
-    if (*(*l_paren - 1) == '-'
-        && *(*l_paren - 2) == '('
-        && *(*r_paren + 1) == ')') {
-        (*l_paren)-=2;
-        (*r_paren)++;
-        return true;
-    }
-    return false;
+    return *(*l_paren -= 2) == '(' && *(*r_paren += 1) == ')';
 }
 
-static bool double_parens(const char* l_paren, const char* r_paren)
+static bool double_parens(char** l_paren, char** r_paren, const char* start)
 {
-    if (*(l_paren - 1) == '(' && *(r_paren + 1) == ')') {
-        return true;
-    }
-    return false;
-}
-
-static bool double_outer_parens(const char* s,
-                                char** l_paren, char** r_paren)
-{
-    const char* end = s + strlen(s) - 1;
-    if (*s == '(' && *(s + 1) == '(' && *(end - 1) == ')' && *end == ')') {
-        *l_paren = (char*)s;
-        *r_paren = (char*)end;
-        return true;
-    }
-    return false;
-}
-
-static bool equal_depth_outer_parens(const char* s,
-                                     char** l_paren, char** r_paren)
-{
-    const char* end = s + strlen(s) - 1;
-    if (*s != '(' && *end != ')') {
+    /* e.g. ((1*2)) -> (1*2) */
+    char* l = find_char('(', start, NULL);
+    if (!l || *(++l) != '(') {
         return false;
     }
     int scale = 0;
-    for (const char* p = s; *p && p <= end; p++) {
-        balance_chars(*p, &scale, '(', ')');
+    char* r = l;
+    for (; *r; r++) {
+        balance_chars(*r, &scale, '(', ')');
         if (scale == 0) {
-            if (p != end) {
-                return false;
-            }
-            *l_paren = (char*)s;
-            *r_paren = (char*)end;
-            return true;
+            break;
         }
     }
-    return false;
+    if (*r != ')' || *(r + 1) != ')') {
+        return false;
+    }
+    *l_paren = l;
+    *r_paren = r;
+    return *(*l_paren = l) == '(' && *(*r_paren = r) == ')';
 }
 
 void remove_unneeded_parens(char* s)
 {
-    char* p = s;
-    char* l_paren;
-    char* r_paren;
-    while (*p) {
-        l_paren = r_paren = NULL;
-        if (!find_paren_set(p, &l_paren, &r_paren)) {
-            return;
-        }
-        const char* oprtr = find_oprtr(l_paren + 1, r_paren - 1);
-        if (!oprtr
-            || solo_neg_num(oprtr, l_paren, r_paren)
-            || enclosed_neg_sign(s, &l_paren, &r_paren)
-            || double_parens(l_paren, r_paren)
-            || double_outer_parens(s, &l_paren, &r_paren)) {
+    const char* p = s;
+    char* l_paren, * r_paren;
+    while ((p = strpbrk(p, "()"))) {
+        if (solo_num(&l_paren, &r_paren, p)
+            || enclosed_neg_sign(&l_paren, &r_paren, p, s)
+            || double_parens(&l_paren, &r_paren, p)) {
             collapse_str(l_paren, l_paren);
             collapse_str(r_paren - 1, r_paren - 1);
             p = s;
         } else {
-            p = r_paren + 1;
+            p++;
         }
     }
 }
