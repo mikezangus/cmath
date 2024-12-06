@@ -4,29 +4,27 @@
 
 static void remove_mult_1s(char* s)
 {
-    char* p_oprtr = s;
-    while ((p_oprtr = find_char('*', p_oprtr, NULL)) != NULL) {
-        if ((p_oprtr - 1 < s)
-            || *(p_oprtr - 1) != '1'
-            || ((p_oprtr - 2 >= s) && isdigit(*(p_oprtr - 2)))) {
-            p_oprtr++;
+    char* mult_sign = s + 2;
+    while ((mult_sign = find_char('*', mult_sign, NULL))) {
+        if (*(mult_sign - 1) != '1' || isdigit(*(mult_sign - 2))) {
+            mult_sign++;
             continue;
         }
-        collapse_str(p_oprtr - 1, p_oprtr);
+        collapse_str(mult_sign - 1, mult_sign);
     }
 }
 
 static void remove_div_1s(char* s)
 {
-    char* p_oprtr = s;
-    while ((p_oprtr = find_char('/', p_oprtr, NULL)) != NULL) {
-        if (!*(p_oprtr + 1)
-            || *(p_oprtr + 1) != '1'
-            || (*(p_oprtr + 2) && isdigit(*(p_oprtr + 2)))) {
-            p_oprtr++;
+    char* div_sign = s;
+    while ((div_sign = find_char('/', div_sign, NULL))) {
+        if (!*(div_sign + 1)
+            || *(div_sign + 1) != '1'
+            || (*(div_sign + 2) && isdigit(*(div_sign + 2)))) {
+            div_sign++;
             continue;
         }
-        collapse_str(p_oprtr, p_oprtr + 1);
+        collapse_str(div_sign, div_sign + 1);
     }
 }
 
