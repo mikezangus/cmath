@@ -19,7 +19,7 @@ static void move_to_numerator(char* s, char** div_oprtr, Bounds* b)
         return;
     }
     collapse_str(neg_sign, neg_sign);
-    insert_str(s, "-", b->l);
+    insert_str(s, b->l, "-");
     (*div_oprtr)++;
 }
 
@@ -37,10 +37,10 @@ static void move_to_inside_parens(char* s, Bounds* b)
     }
     b->l--;
     collapse_str(neg_sign, neg_sign);
-    insert_str(s, "-", b->l);
+    insert_str(s, b->l, "-");
 }
 
-void format_frctn_neg_signs(char* s, Bounds* b)
+void format_frctn_neg_signs(char* s, char* div_sign, Bounds* b)
 {
     char* div_oprtr = find_char('/', b->l + 1, b->r - 1);
     if (!div_oprtr) {
