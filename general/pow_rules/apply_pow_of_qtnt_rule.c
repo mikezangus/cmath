@@ -33,7 +33,7 @@ static char* extract_exp(char* dst, char* src)
     return (*p && p > src) ? (char*)(p - 1) : NULL;
 }
 
-void apply_quotient_rule(char* s)
+void apply_pow_of_qtnt_rule(char* s)
 {
     char* p = s;
     char* pow_sign;
