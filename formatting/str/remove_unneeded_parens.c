@@ -55,19 +55,23 @@ static bool double_parens(char** l_paren, char** r_paren, const char* start)
     return *(*l_paren = l) == '(' && *(*r_paren = r) == ')';
 }
 
-void remove_unneeded_parens(char* s)
+bool remove_unneeded_parens(char* s)
 {
+    bool formatted = false;
     const char* p = s;
-    char* l_paren, * r_paren;
-    while ((p = strpbrk(p, "()"))) {
+    char* l_paren;
+    char* r_paren;
+    while ((p = strchr(p, '('))) {
         if (solo_num(&l_paren, &r_paren, p)
             || enclosed_neg_sign(&l_paren, &r_paren, p, s)
             || double_parens(&l_paren, &r_paren, p)) {
             collapse_str(l_paren, l_paren);
             collapse_str(r_paren - 1, r_paren - 1);
+            formatted = true;
             p = s;
         } else {
             p++;
         }
     }
+    return formatted;
 }
