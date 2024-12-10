@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include "../../utils/utils.h"
+#include "../utils/utils.h"
 
 static bool remove_mult_1s(char* s)
 {

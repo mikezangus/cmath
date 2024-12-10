@@ -1,6 +1,6 @@
 #include <stdbool.h>
 #include <string.h>
-#include "../../utils/utils.h"
+#include "../utils/utils.h"
 
 static bool find_insert_pos(const char* p, bool* skip_parens, int* scale)
 {

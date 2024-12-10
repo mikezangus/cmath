@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include "../../utils/utils.h"
+#include "../utils/utils.h"
 
 static bool solo_num(char** l_paren, char** r_paren, const char* start)
 {
