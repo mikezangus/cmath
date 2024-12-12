@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include "../utils.h"
 
 double str_to_d(const char* src)
 {
@@ -14,7 +15,7 @@ double str_to_d(const char* src)
         negative = true;
         src++;
     }
-    for (const char* p = src; *p; p++) {
+    for (const char* p = src; *p && is_num(p, src); p++) {
         if (*p == '.') {
             fractional = true;
             continue;
