@@ -2,11 +2,13 @@
 
 void balance_chars(char c, int* scale, char plus, char minus);
 void collapse_str(char* start, char* end);
-char* extract_num_bwd(char* dst, const char* start, const char* min);
-char* extract_num_fwd(char* dst, const char* start);
+void extract_bounded_str(char* dst, const char* start, const char* end);
+char* extract_num(char* dst, const char* start, const char* src, int direction);
 int get_paren_depth(const char* p1, const char* p2);
-void insert_str(char* dst_str, const char* src_str, const char* insert_pos);
+void insert_str(char* dst, char* insert_pos, const char* src);
 void print_bounded_str(const char* start, const char* end);
+char* walk_num_bwd(const char* start, const char* src);
+char* walk_num_fwd(const char* start);
 
 bool is_num(const char* p, const char* start);
 bool is_oprtr_in_str(const char* s);

@@ -1,27 +1,12 @@
-#include <ctype.h>
-#include <stdio.h>
 #include "utils.h"
 
-char* extract_num_fwd(char* dst, const char* start)
+char* extract_num(char* dst, const char* start, const char* src, int direction)
 {
-    const char* p = start;
-    while (*p && is_num(p, start)) {
-        *dst++ = *p++;
+    const char* l = direction > 0 ? start : walk_num_bwd(start, src);
+    const char* r = l;
+    while (*r && is_num(r, start)) {
+        *dst++ = *r++;
     }
     *dst = '\0';
-    return (char*)(p - 1);
-}
-
-char* extract_num_bwd(char* dst, const char* start, const char* min)
-{
-    const char* p = start;
-    for (; p > min && is_num(p, NULL); p--) {
-        ;;
-    }
-    p = (p == min && (isdigit(*p) || *min == '-')) ? p : p + 1;
-    for (const char* q = p; q <= start; q++) {
-        *dst++ = *q;
-    }
-    *dst = '\0';
-    return (char*)(p);
+    return (char*)(direction > 0 ? r - 1 : l);
 }
