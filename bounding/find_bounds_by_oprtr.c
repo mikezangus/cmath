@@ -1,10 +1,6 @@
 #include <ctype.h>
 #include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
-#include "../main.h"
 #include "../utils/utils.h"
-#include "../workflows/algebraic/algebraic.h"
 
 static bool find_position(const char* p, bool skip_parens, int* scale)
 {
@@ -51,12 +47,12 @@ bool find_bounds_by_oprtr(const char* start, const char* end,
                           char** l_bound, char** r_bound)
 {
     const char* op_start = (*start == '-') ? start + 1 : start;
-    char* op = NULL;
+    char* op;
     if (!(op = find_char('^', op_start, end))
-        || !(op = find_char('*', op_start, end))
-        || !(op = find_char('/', op_start, end))
-        || !(op = find_char('+', op_start, end))
-        || !(op = find_char('-', op_start, end))) {
+        && !(op = find_char('*', op_start, end))
+        && !(op = find_char('/', op_start, end))
+        && !(op = find_char('+', op_start, end))
+        && !(op = find_char('-', op_start, end))) {
         return false;
     }
     *l_bound = find_l_bound(op - 1, start);
