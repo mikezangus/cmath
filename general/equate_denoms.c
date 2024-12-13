@@ -12,7 +12,7 @@ void equate_denoms(double* n1, double* d1, double* n2, double* d2)
     }
     if (*d1 == 0 || *d2 == 0 || isinf(*d1) || isinf(*d2)) {
         fprintf(stderr,
-                "\n%s\nInvalid denominator(s):"
+                "\n%s\nInvalid denominator(s):\n"
                 "  Fraction 1: %.2f/%.2f\n"
                 "  Fraction 2: %.2f/%.2f\n",
                 __FILE__, *n1, *d1, *n2, *d2);
