@@ -5,10 +5,10 @@
 #include "../../main.h"
 #include "../../utils/utils.h"
 
-static char* find_div_sign(const char* start, const char* min)
+static char* find_div_sign(const char* start, const char* src)
 {
-    char* den_start = extract_num_bwd((char[]){0}, start, min);
-    if (den_start - 1 < min || *(den_start - 1) != '/') {
+    char* den_start = walk_num_bwd(start, src);
+    if (den_start - 1 < src || *(den_start - 1) != '/') {
         return NULL;
     }
     return den_start - 1;

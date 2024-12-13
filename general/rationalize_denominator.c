@@ -10,18 +10,18 @@ static void find_bounds(char** l_bound, char** r_bound, const char* div_sign)
     if (*(div_sign + 1) != '(' || !isdigit(*(div_sign + 2))) {
         return;
     }
-    char* pow_sign = extract_num_fwd((char[]){0}, div_sign + 2) + 1;
+    char* pow_sign = walk_num_fwd(div_sign + 2) + 1;
     if (*pow_sign != '^'
         || *(pow_sign + 1) != '('
         || !isdigit(*(pow_sign + 2))) {
         return;
     }
-    char* exp_div_sign = extract_num_fwd((char[]){0}, pow_sign + 2) + 1;
+    char* exp_div_sign = walk_num_fwd(pow_sign + 2) + 1;
     if (*exp_div_sign != '/' || !isdigit(*(exp_div_sign + 1))) {
         return;
     }
     *l_bound = (char*)(div_sign + 1);
-    *r_bound = extract_num_fwd((char[]){0}, exp_div_sign + 1) + 1;
+    *r_bound = walk_num_fwd(exp_div_sign + 1) + 1;
 }
 
 static char* find_mult_1_start(const char* start, const char* min)
@@ -44,9 +44,7 @@ void rationalize_denominator(char* s)
     char den[STR_MAXLEN] = {0};
     char* p_den = den;
     size_t den_len;
-    printf("\n\n\nRationalizing denominator. Start:\n%s\n\n", s);
     while (*p && (div_sign = strchr(p, '/'))) {
-        printf("Loop:\n%s\n\n", div_sign);      
         find_bounds(&l_bound, &r_bound, div_sign);
         if (!l_bound || !r_bound) {
             p = div_sign + 1;
@@ -66,6 +64,5 @@ void rationalize_denominator(char* s)
         insert_str(s, div_sign + den_len + 1, "(");
         insert_str(s, r_bound += 3 + den_len + 1, den);
         p = r_bound + den_len;
-        printf("Rationalized:\n%s\n", s);
     }
 }

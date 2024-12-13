@@ -39,7 +39,7 @@ static void extract_base(char* dst, const char* pow_sign, const char* min)
     const char* p = pow_sign > min + 1 && *(pow_sign - 1) == ')'
         ? pow_sign - 2
         : pow_sign - 1;
-    extract_num_bwd(dst, p, min);
+    extract_num(dst, p, min, -1);
 }
 
 static char* extract_exp(char* dst, const char* pow_sign)
