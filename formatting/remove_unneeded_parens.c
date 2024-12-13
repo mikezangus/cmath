@@ -10,7 +10,7 @@ static bool solo_num(char** l_paren, char** r_paren, const char* start)
     if (!find_paren_set(start, l_paren, r_paren)
         || !l_paren
         || !r_paren
-        || find_oprtr(*l_paren + 2, *r_paren - 1)) {
+        || find_oprtr(*l_paren + 1, *r_paren - 1)) {
         return false;
     }
     return *(*l_paren) == '(' && *(*r_paren) == ')';;
