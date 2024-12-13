@@ -9,9 +9,7 @@
 #include "workflows/algebraic/algebraic.h"
 #include "workflows/arithmetic/arithmetic.h"
 
-Bounds b;
-
-void format_str_alg(char* s)
+static void format_str_alg(char* s)
 {
     char* var = find_var(s, NULL);
     if (!var) {
@@ -25,20 +23,22 @@ void format_str_alg(char* s)
 
 void enter_workflow(char* s)
 {
+    char* l_bound;
+    char* r_bound;
+    char* div_sign;
     format_str_alg(s);
     while (true) {
-        if ((get_paren_depth(s, s + strlen(s))) != 0) {
+        if ((get_paren_depth(s, s + strlen(s)))) {
             return;
         }
         format_vars(s);
         format_str(s);
-        printf("\nStarting: %s\n", s);
-        if (!find_bounds(s, &b.l, &b.r)) {
+        l_bound = r_bound = NULL;
+        if (!find_bounds(s, &l_bound, &r_bound)) {
             return;
         }
-        char* var = find_var(s, NULL);
-        if (!var) {
-            if (!solve_arithmetic(s, &b)) {
+        if (!find_var(s, NULL)) {
+            if (!solve_arithmetic(s, s, &l_bound, &r_bound)) {
                 return;
             }
         } else {

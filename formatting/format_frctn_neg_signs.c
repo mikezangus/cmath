@@ -2,51 +2,53 @@
 #include "../main.h"
 #include "../utils/utils.h"
 
-static void remove_double_neg_signs(char* s, char* div_oprtr, Bounds* b)
+static void remove_doubles(char* s, char* div_oprtr,
+                           char* l_bound, char** r_bound)
 {
-    if (*(b->l) != '-' || *(div_oprtr + 1) != '-') {
+    if (*(l_bound) != '-' || *(div_oprtr + 1) != '-') {
         return;
     }
-    collapse_str(b->l, b->l);
+    collapse_str(l_bound, l_bound);
     collapse_str(div_oprtr, div_oprtr);
-    b->r-=2;
+    (*r_bound)-=2;
 }
 
-static void move_to_numerator(char* s, char** div_oprtr, Bounds* b)
+static void move_to_numerator(char* s, char** div_oprtr, char* l_bound)
 {
     char* neg_sign = *div_oprtr + 1;
     if (*neg_sign != '-') {
         return;
     }
     collapse_str(neg_sign, neg_sign);
-    insert_str(s, b->l, "-");
+    insert_str(s, l_bound, "-");
     (*div_oprtr)++;
 }
 
-static void move_to_inside_parens(char* s, Bounds* b)
+static void move_to_inside_parens(char* s, char** l_bound)
 {
-    if (b->l - 2 < s) {
+    if (*l_bound - 2 < s) {
         return;
     }
-    char* neg_sign = b->l - 2;
+    char* neg_sign = *l_bound - 2;
     if (*neg_sign != '-'
         || *(neg_sign + 1) != '('
-        || neg_sign + 1 != b->l - 1
+        || neg_sign + 1 != *l_bound - 1
         || neg_sign > s && isdigit(*(neg_sign - 1))) {
         return;
     }
-    b->l--;
+    (*l_bound)--;
     collapse_str(neg_sign, neg_sign);
-    insert_str(s, b->l, "-");
+    insert_str(s, *l_bound, "-");
 }
 
-void format_frctn_neg_signs(char* s, char* div_sign, Bounds* b)
+void format_frctn_neg_signs(char* s, char* div_sign,
+                            char** l_bound, char** r_bound)
 {
-    char* div_oprtr = find_char('/', b->l + 1, b->r - 1);
+    char* div_oprtr = find_char('/', *l_bound + 1, *r_bound - 1);
     if (!div_oprtr) {
         return;
     }
-    remove_double_neg_signs(s, div_oprtr, b);
-    move_to_numerator(s, &div_oprtr, b);
-    move_to_inside_parens(s, b);
+    remove_doubles(s, div_oprtr, *l_bound, r_bound);
+    move_to_numerator(s, &div_oprtr, *l_bound);
+    move_to_inside_parens(s, l_bound);
 }
