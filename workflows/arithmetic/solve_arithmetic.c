@@ -10,26 +10,22 @@
 
 OprtnAr o;
 
-static void init_oprtn(OprtnAr* o)
-{
-    memset(o->n1s, '\0', STR_MAXLEN);
-    memset(o->d1s, '\0', STR_MAXLEN);
-    o->oprtr = '\0';
-    memset(o->n2s, '\0', STR_MAXLEN);
-    memset(o->d2s, '\0', STR_MAXLEN);
-    o->n1d = o->d1d = o->n2d = o->d2d = o->rnd = o->rdd = 0.0;
-    memset(o->rns, '\0', STR_MAXLEN);
-    memset(o->rds, '\0', STR_MAXLEN); 
-    memset(o->r, '\0', STR_MAXLEN); 
-}
-
 bool solve_arithmetic(char* start, char* src, char** l_bound, char** r_bound)
 {
+    /* 0. Check arguments and initialize variables */
     if (!start || !src || !l_bound || !r_bound) {
         return false;
     }
-    printf("\n\n\nSolving arithmetic:\n%s\n", src);
-    init_oprtn(&o);
+    memset(o.n1s, '\0', STR_MAXLEN);
+    memset(o.d1s, '\0', STR_MAXLEN);
+    o.oprtr = '\0';
+    memset(o.n2s, '\0', STR_MAXLEN);
+    memset(o.d2s, '\0', STR_MAXLEN);
+    o.n1d = o.d1d = o.n2d = o.d2d = o.rnd = o.rdd = 0.0;
+    memset(o.rns, '\0', STR_MAXLEN);
+    memset(o.rds, '\0', STR_MAXLEN); 
+    memset(o.r, '\0', STR_MAXLEN);
+    printf("\n\n%s\nSolving arithmetic:\n%s\n", DASHES, src);
 
     /* 1. Find bounds */
     if ((!*l_bound || !*r_bound) && !find_bounds(start, l_bound, r_bound)) {
@@ -40,9 +36,6 @@ bool solve_arithmetic(char* start, char* src, char** l_bound, char** r_bound)
 
     /* 2. Parse operation */
     if (!parse_arithmetic(start, src, l_bound, r_bound, &o)) {
-        if (strcmp(o.d1s, "0") || strcmp(o.d2s, "0")) {
-            return false;
-        }
         start = *r_bound + 1;
         *l_bound = *r_bound = NULL;
         return solve_arithmetic(start, src, l_bound, r_bound);
