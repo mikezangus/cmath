@@ -1,7 +1,6 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <string.h>
 #include "../arithmetic.h"
 #include "../../../main.h"
 #include "../../../bounding/bounding.h"
@@ -39,8 +38,7 @@ bool parse_arithmetic(const char* start, const char* src,
 
     /* 5. Operation is not operable - attempt to parse inoperable division */
     if (*oprtr != '/'
-        || strcmp(o->d1s, "0")
-        || strcmp(o->d2s, "0")
+        || *op2 != '0'
         || !parse_inoperable_division(src, op1, op2, l_bound, r_bound, o)
         || !*o->n1s
         || !o->oprtr

@@ -1,24 +1,26 @@
 #include <ctype.h>
+#include <math.h>
 #include <stdio.h>
 #include "../arithmetic.h"
 #include "../../../general/general.h"
 #include "../../../utils/utils.h"
 
-static DivStatus extract_oprtn(const char* min,
+static DivStatus extract_oprtn(const char* src,
                                const char* oprtr, const char* prev_oprtr,
-                               OprtnAr* o, Bounds* b)
+                               char** l_bound, char** r_bound,
+                               OprtnAr* o)
 {
     char op1[STR_MAXLEN] = {0};
     char op2[STR_MAXLEN] = {0};
-    char* l_bound = extract_num_bwd(op1, oprtr - 1, min);
-    char* r_bound = extract_num_fwd(op2, oprtr + 1);
+    char* l = extract_num(op1, oprtr - 1, src, -1);
+    char* r = extract_num(op2, oprtr + 1, src, 1);
     if (!*op1 || !*op2) {
         return FAIL;
     }
-    if (oprtn_is_operable(str_to_d(op1), *oprtr, str_to_d(op2))) {
+    if (is_oprtn_operable(str_to_d(op1), NAN, *oprtr, str_to_d(op2), NAN)) {
         parse_oprtn(o->n1s, &o->oprtr, o->n2s, op1, *oprtr, op2);
-        b->l = l_bound;
-        b->r = r_bound;
+        *l_bound = l;
+        *r_bound = r;
         return PARSED_TO_NEW;
     }
     if (*oprtr != '/') {
@@ -26,83 +28,94 @@ static DivStatus extract_oprtn(const char* min,
     }
     parse_oprtn(o->n2s, NULL, o->d2s, op1, '\0', op2);
     o->oprtr = *prev_oprtr;
-    b->l = (l_bound < b->l) ? l_bound : b->l;
-    b->r = (b->r < r_bound) ? r_bound : b->r;
+    *l_bound = (l < *l_bound) ? l : *l_bound;
+    *r_bound = (*r_bound < r) ? r : *r_bound;
     return (oprtr < prev_oprtr) ? PARSED_L_TO_PREV : PARSED_R_TO_PREV;  
 }
 
-static DivStatus extract_oprtn_l(const char* start, const char* s,
+static DivStatus extract_oprtn_l(const char* start, const char* src,
                                  const char* prev_oprtr,
-                                 OprtnAr* o, Bounds* b)
+                                 char** l_bound, char** r_bound,
+                                 OprtnAr* o)
 {
-    const char* oprtr = find_adj_oprtr(s, b->l, NULL);
+    const char* oprtr = find_adj_oprtr(src, *l_bound, NULL);
     if (!oprtr) {
         return FAIL;
     }
-    return extract_oprtn(s, oprtr, prev_oprtr, o, b);
+    return extract_oprtn(src, oprtr, prev_oprtr, l_bound, r_bound, o);
 }
 
-static DivStatus extract_oprtn_r(const char* start,
-                                 const char* prev_oprtr,
-                                 OprtnAr* o, Bounds* b)
+static DivStatus extract_oprtn_r(const char* start, const char* prev_oprtr,
+                                 char** l_bound, char** r_bound,
+                                 OprtnAr* o)
 {
-    const char* oprtr = find_adj_oprtr(NULL, NULL, start + 1);
+    const char* oprtr = walk_num_fwd(start) + 1;
     if (!oprtr) {
         return FAIL;
     }
-    return extract_oprtn(start, oprtr, prev_oprtr, o, b);
+    return extract_oprtn(start, oprtr, prev_oprtr, l_bound, r_bound, o);
 }
 
-static DivStatus extract_l(const char* s, const char* oprtr,
-                           OprtnAr* o, Bounds* b)
+static DivStatus extract_l(const char* src, const char* oprtr,
+                           char** l_bound, char** r_bound,
+                           OprtnAr* o)
 {
     if (isdigit(*(oprtr - 1))
         || ((*(oprtr - 1) == '-') && (oprtr - 2) && isdigit(*oprtr - 2))) {
-        b->l = extract_num_bwd(o->n1s, oprtr - 1, s);
-        b->r++;
+        *l_bound = extract_num(o->n1s, oprtr - 1, src, -1);
+        (*r_bound)++;
         o->oprtr = *oprtr;
         return PARSED_L_TO_PREV;
     }
-    return extract_oprtn_l((is_paren(*(oprtr - 1)) && oprtr - 2 > s)
+    return extract_oprtn_l((is_paren(*(oprtr - 1)) && oprtr - 2 > src)
                                ? oprtr - 2
                                : oprtr - 1,
-                           s, oprtr, o, b);
+                           src, oprtr, l_bound, r_bound, o);
 }
 
-static DivStatus extract_r(const char* s, const char* oprtr,
-                           OprtnAr* o, Bounds* b)
+static DivStatus extract_r(const char* src, const char* oprtr,
+                           char** l_bound, char** r_bound,
+                           OprtnAr* o)
 {
-    if (isdigit(*(oprtr + 1))
-        || (*(oprtr + 1) == '-' && isdigit(*(oprtr + 2)))) {
-        b->r = extract_num_fwd(o->n2s, oprtr + 1);
-        (b->l > s) ? b->l-- : b->l;
+    if (*(o->d1s) && *oprtr == '^') {
+        return FAIL;
+    }
+    if (isdigit(*(oprtr + 1)) || *(oprtr + 1) == '-' && isdigit(*(oprtr + 2))) {
+        *r_bound = extract_num(o->n2s, oprtr + 1, src, 1);
+        (*l_bound > src) ? (*l_bound)-- : *l_bound;
         o->oprtr = *oprtr;
         return PARSED_R_TO_PREV;
     }
-    return extract_oprtn_r(is_paren(*(oprtr + 1)) ? oprtr + 2 : oprtr + 1,
-                           oprtr, o, b);
+    return extract_oprtn_r(oprtr + 2, oprtr, l_bound, r_bound, o);
 }
 
-static DivStatus extract(const char* s, OprtnAr* o, Bounds* b)
+static DivStatus extract(const char* src,
+                         char** l_bound, char** r_bound,
+                         OprtnAr* o)
 {
-    const char* oprtr = find_adj_oprtr(s, b->l - 1, b->r + 1);
+    const char* oprtr = find_adj_oprtr(src, *l_bound, *r_bound);
     if (!oprtr) {
         return FAIL;
-    } else if (oprtr < b->l) {
-        return extract_l(s, oprtr, o, b);
-    } else if (b->r < oprtr) {
-        return extract_r(s, oprtr, o, b);
-    } else {
-        return FAIL;
     }
+    if (oprtr < *l_bound) {
+        return extract_l(src, oprtr, l_bound, r_bound, o);
+    } else if (*r_bound < oprtr) {
+        return extract_r(src, oprtr, l_bound, r_bound, o);
+    }
+    return FAIL;
 }
 
-bool parse_inoperable_division(const char* s, const char* op1, const char* op2,
-                               OprtnAr* o, Bounds* b)
+bool parse_inoperable_division(const char* src,
+                               const char* op1, const char* op2,
+                               char** l_bound, char** r_bound,
+                               OprtnAr* o)
 {
-    switch (extract(s, o, b)) {
-        case FAIL:
-            return parse_arithmetic(s, b->r + 1, false, o, b);
+    printf("\nParsing inoperable division:\n"
+           "  Str: %s\n"
+           "  Bounds: %.4s ... %.4s\n"
+           "  Parsed: %s / %s\n",
+           src, *l_bound, *r_bound - 3, op1, op2);
+    switch (extract(src, l_bound, r_bound, o)) {
         case PARSED_L_TO_PREV:
             parse_oprtn(o->n2s, NULL, o->d2s, op1, '\0', op2);
             return true;
@@ -111,6 +124,8 @@ bool parse_inoperable_division(const char* s, const char* op1, const char* op2,
             return true;
         case PARSED_TO_NEW:
             return true;
+        case FAIL:
+            break;
     }
     return false;
 }

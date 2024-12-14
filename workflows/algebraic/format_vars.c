@@ -21,16 +21,16 @@ static void insert_base1(char* s, char** var)
     } else if (*(*var - 1) == '*' || isdigit(*(*var - 1))) {
         return;
     }
-    insert_str(s, "1", *var);
+    insert_str(s, *var, "1");
     (*var)++;
 }
 
-static void insert_exp1(char* s, const char* var)
+static void insert_exp1(char* s, char* var)
 {
     if (*(var + 1) == '^' && isdigit(*(var + 2))) {
         return;
     }
-    insert_str(s, "^1", var + 1);
+    insert_str(s, var + 1, "^1");
 }
 
 void format_vars(char* s)

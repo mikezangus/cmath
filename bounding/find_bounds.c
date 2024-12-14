@@ -13,13 +13,16 @@ static bool sequence(const char* start, const char* end,
 
 bool find_bounds(const char* start, char** l_bound, char** r_bound)
 {
-    *l_bound = NULL;
-    *r_bound = NULL;
-    const char* eq_sign = strchr(start, '=');
-    if (!sequence(start, eq_sign, l_bound, r_bound)) {
-        if (!eq_sign) {
-            return false;
-        }
-        return sequence(eq_sign + 1, NULL, l_bound, r_bound);
+    if (!start) {
+        return false;
     }
+    *l_bound = *r_bound = NULL;;
+    const char* eq_sign = strchr(start, '=');
+    if (sequence(start, eq_sign, l_bound, r_bound)) {
+        return true;
+    }
+    if (!eq_sign) {
+        return false;
+    }
+    return sequence(eq_sign + 1, NULL, l_bound, r_bound);
 }

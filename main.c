@@ -15,7 +15,7 @@ static void process(char* input, char* s)
     printf("Solved equation:\n  %s\n\n%s\n", s, DASHES);
 }
 
-static void terminal_input()
+static void terminal_input(void)
 {
     char input[STR_MAXLEN] = {0};
     char s[STR_MAXLEN] = {0};
@@ -24,7 +24,7 @@ static void terminal_input()
     process(input, s);
 }
 
-static void file_input()
+static void file_input(void)
 {
     char input[STR_MAXLEN] = {0};
     char s[STR_MAXLEN] = {0};

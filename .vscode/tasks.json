@@ -18,22 +18,26 @@
         "${workspaceFolder}/bounding/find_bounds_by_parens.c",
         "${workspaceFolder}/bounding/find_bounds.c",
 
-        "${workspaceFolder}/formatting/flip_frctn_divisor.c",
-        "${workspaceFolder}/formatting/format_frctn_neg_signs.c",
+        
+        "${workspaceFolder}/formatting/convert_neg_signs.c",
+        "${workspaceFolder}/formatting/format_str.c",
+        "${workspaceFolder}/formatting/insert_parens.c",
+        "${workspaceFolder}/formatting/move_frctn_neg_signs.c",
+        "${workspaceFolder}/formatting/remove_1_oprtns.c",
+        "${workspaceFolder}/formatting/remove_unneeded_parens.c",
 
-        "${workspaceFolder}/formatting/str/convert_neg_signs.c",
-        "${workspaceFolder}/formatting/str/format_str.c",
-        "${workspaceFolder}/formatting/str/insert_parens.c",
-        "${workspaceFolder}/formatting/str/remove_unneeded_parens.c",
 
-
-        "${workspaceFolder}/general/apply_exp_rule_to_frctns.c",
         "${workspaceFolder}/general/calculate_den.c",
         "${workspaceFolder}/general/calculate_oprtn.c",
         "${workspaceFolder}/general/create_result_str.c",
         "${workspaceFolder}/general/equate_denoms.c",
+        "${workspaceFolder}/general/flip_frctn_divisor.c",
         "${workspaceFolder}/general/is_str_operable.c",
+        "${workspaceFolder}/general/rationalize_denominator.c",
         "${workspaceFolder}/general/reduce_frctn.c",
+
+        "${workspaceFolder}/general/pow_rules/apply_pow_of_qtnt_rule.c",
+        "${workspaceFolder}/general/pow_rules/apply_prdct_of_pows_rule.c",
 
 
         "${workspaceFolder}/utils/checks/is_num.c",
@@ -41,8 +45,7 @@
         "${workspaceFolder}/utils/checks/is_oprtr.c",
         "${workspaceFolder}/utils/checks/is_paren.c",
         "${workspaceFolder}/utils/checks/is_var.c",
-        "${workspaceFolder}/utils/checks/oprtn_is_divisible.c",
-        "${workspaceFolder}/utils/checks/oprtn_is_operable.c",
+        "${workspaceFolder}/utils/checks/is_oprtn_operable.c",
 
         "${workspaceFolder}/utils/conversions/d_to_str.c",
         "${workspaceFolder}/utils/conversions/invert_oprtr.c",
@@ -57,28 +60,29 @@
 
         "${workspaceFolder}/utils/balance_chars.c",
         "${workspaceFolder}/utils/collapse_str.c",
+        "${workspaceFolder}/utils/extract_bounded_str.c",
         "${workspaceFolder}/utils/extract_num.c",
         "${workspaceFolder}/utils/get_paren_depth.c",
         "${workspaceFolder}/utils/insert_str.c",
         "${workspaceFolder}/utils/print_bounded_str.c",
+        "${workspaceFolder}/utils/walk_num.c",
 
 
         "${workspaceFolder}/workflows/algebraic/format_vars.c",
         "${workspaceFolder}/workflows/algebraic/insert_eqzero.c",
-        "${workspaceFolder}/workflows/algebraic/is_alg_oprtn_operable.c",
         "${workspaceFolder}/workflows/algebraic/rearrange.c",
-        "${workspaceFolder}/workflows/algebraic/solve.c",
-        "${workspaceFolder}/workflows/algebraic/parsing/parse.c",
+        "${workspaceFolder}/workflows/algebraic/solve_algebraic.c",
 
         "${workspaceFolder}/workflows/algebraic/isolation/isolate_num_oprtn.c",
         "${workspaceFolder}/workflows/algebraic/isolation/isolate_var_base.c",
         "${workspaceFolder}/workflows/algebraic/isolation/isolate_var_exp.c",
+        "${workspaceFolder}/workflows/algebraic/isolation/isolate.c",
 
 
-        "${workspaceFolder}/workflows/arithmetic/solve.c",
+        "${workspaceFolder}/workflows/arithmetic/solve_arithmetic.c",
         "${workspaceFolder}/workflows/arithmetic/parsing/parse_inoperable_division.c",
         "${workspaceFolder}/workflows/arithmetic/parsing/parse_oprtn.c",
-        "${workspaceFolder}/workflows/arithmetic/parsing/parse.c",
+        "${workspaceFolder}/workflows/arithmetic/parsing/parse_arithmetic.c",
 
 
         "-o",

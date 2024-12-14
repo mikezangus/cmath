@@ -13,7 +13,7 @@ static bool solo_num(char** l_paren, char** r_paren, const char* start)
         || find_oprtr(*l_paren + 1, *r_paren - 1)) {
         return false;
     }
-    return *(*l_paren) == '(' && *(*r_paren) == ')';;
+    return *(*l_paren) == '(' && *(*r_paren) == ')';
 }
 
 static bool enclosed_neg_sign(char** l_paren, char** r_paren,

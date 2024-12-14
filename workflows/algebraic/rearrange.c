@@ -4,14 +4,14 @@
 #include "../../main.h"
 #include "../../utils/utils.h"
 
-static const char* find_insert_pos(const char* s)
+static char* find_insert_pos(const char* s)
 {
     bool var_found = false;
     for (const char* p = s; *p; p++) {
         if (!var_found && is_var(*p)) {
             var_found = true;
         } else if (var_found && *p == ')') {
-            return p + 1;
+            return (char*)(p + 1);
         }
     }
     return NULL;
@@ -54,8 +54,8 @@ static void extract_to_buff(char* buff,
 void rearrange(char* s)
 {
     char* p = s;
-    while (*p && *p != '=') {
-        const char* insert_pos = NULL;
+    while (*p) {
+        char* insert_pos = NULL;
         char* extract_start = NULL;
         char* extract_end = NULL;
         char buff[STR_MAXLEN] = {0};
@@ -67,7 +67,7 @@ void rearrange(char* s)
         }
         extract_to_buff(buff, extract_start, extract_end);
         collapse_str(extract_start, extract_end);
-        insert_str(s, buff, insert_pos);
+        insert_str(s, insert_pos, buff);
         p = (char*)(insert_pos + strlen(buff));
     }
 }
