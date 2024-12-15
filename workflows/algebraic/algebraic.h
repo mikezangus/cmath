@@ -26,15 +26,6 @@ typedef struct OprtnAlg {
 
 } OprtnAlg;
 
-
-
-bool parse_algebraic( char* s,
-                     const char* v1, char* oprtr, const char* v2, Bounds* b);
-
-bool is_alg_oprtn_operable(char v1, const char* e1,
-                           char oprtr,
-                           char v2, const char* e2);
-
 void format_vars(char* s);
 void insert_eqzero(char* s);
 void rearrange(char* s);
@@ -43,5 +34,6 @@ bool solve_algebraic(char* s);
 void isolate_num_oprtn(char* s);
 void isolate_var_base(char* s);
 void isolate_var_exp(char* s);
+void isolate(char* s);
 
 #endif // ALGEBRAIC_H
