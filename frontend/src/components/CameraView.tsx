@@ -1,53 +1,61 @@
-import React, { useRef } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
-import { Camera, useCameraDevice, useCameraPermission } from "react-native-vision-camera";
+import React, { useEffect, useState, useRef } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Camera, useCameraDevices } from "react-native-vision-camera";
+
 
 const styles = StyleSheet.create({
-    container: { flex: 1 },
-    camera: { flex: 1 },
+    container: {
+        flex: 1
+    }
 });
 
-const CameraView = () => {
-    const { hasPermission, requestPermission } = useCameraPermission();
-    const device = useCameraDevice("back");
-    const cameraRef = useRef<Camera>(null);
-    React.useEffect(() => {
-        if (!hasPermission) {
-            requestPermission().then((status) => {
-                if (!status) {
-                    Alert.alert("Camera permission denied");
-                }
-            });
-        }
-    }, [hasPermission, requestPermission]);
-    if (!hasPermission) {
+export default function CameraView()
+{
+    const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+    const devices = useCameraDevices();
+    const device = devices.find((d) => d.position === "back");
+    const camera = useRef<Camera | null>(null);
+
+    useEffect(() => {
+        (async () => {
+            const status = await Camera.requestCameraPermission();
+            setHasPermission(status === "granted");
+        })();
+    }, []);
+
+    if (hasPermission === null) {
         return (
-            <View style={styles.container}>
+            <View>
                 <Text>
-                    No camera permission
+                    Requesting permission...
                 </Text>
             </View>
         );
     }
-    if (!device) {
+    if (hasPermission === false) {
         return (
-            <View style={styles.container}>
+            <View>
                 <Text>
-                    No camera device
+                    No access to camera
                 </Text>
             </View>
+        );
+    }
+    if (device == null) {
+        return (
+            <Text>
+                Loading camera...
+            </Text>
         );
     }
     return (
         <View style={styles.container}>
             <Camera
-                ref={cameraRef}
-                style={styles.camera}
+                ref={camera}
+                style={StyleSheet.absoluteFill}
                 device={device}
                 isActive={true}
             />
         </View>
     );
 }
-
-export default CameraView;

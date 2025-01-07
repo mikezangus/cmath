@@ -1,19 +1,23 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
 import CameraView from "./components/CameraView";
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
+        backgroundColor: "#aaa",
+        alignItems: "center",
+        justifyContent: "center"
+    }
 });
 
 
-export default function App() {
+export default function App()
+{
     return (
-        <View style={styles.container}>
-            <CameraView />
-        </View>
+        <SafeAreaView style={styles.container}>
+            <Text>tes</Text>
+            {/* <CameraView /> */}
+        </SafeAreaView>
     );
 }
