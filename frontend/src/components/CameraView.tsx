@@ -3,14 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
 
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    }
-});
-
-export default function CameraView()
-{
+export default function CameraView() {
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const devices = useCameraDevices();
     const device = devices.find((d) => d.position === "back");
@@ -25,20 +18,16 @@ export default function CameraView()
 
     if (hasPermission === null) {
         return (
-            <View>
-                <Text>
-                    Requesting permission...
-                </Text>
-            </View>
+            <Text>
+                Requesting permission...
+            </Text>
         );
     }
     if (hasPermission === false) {
         return (
-            <View>
-                <Text>
-                    No access to camera
-                </Text>
-            </View>
+            <Text>
+                No access to camera
+            </Text>
         );
     }
     if (device == null) {
@@ -48,14 +37,13 @@ export default function CameraView()
             </Text>
         );
     }
+
     return (
-        <View style={styles.container}>
-            <Camera
-                ref={camera}
-                style={StyleSheet.absoluteFill}
-                device={device}
-                isActive={true}
-            />
-        </View>
+        <Camera
+            ref={camera}
+            style={StyleSheet.absoluteFill}
+            device={device}
+            isActive={true}
+        />
     );
 }
